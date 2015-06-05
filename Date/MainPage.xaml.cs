@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Navigation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
+
+
 namespace Date
 {
     /// <summary>
@@ -27,7 +29,10 @@ namespace Date
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
+            int a;
         }
+
+
 
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。

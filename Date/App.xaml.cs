@@ -36,7 +36,6 @@ namespace Date
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
 
-            int b;
         }
 
         /// <summary>

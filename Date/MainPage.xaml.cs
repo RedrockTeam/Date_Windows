@@ -29,7 +29,6 @@ namespace Date
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            int a;
         }
 
 

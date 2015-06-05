@@ -29,6 +29,7 @@ namespace Date
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
+            //微软大法好
         }
 
 

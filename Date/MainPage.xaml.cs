@@ -30,6 +30,7 @@ namespace Date
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
             int a;
+            int windosp;
         }
 
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -40,26 +42,36 @@ namespace Date
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            if (StuNumTextBox.Text == "" || IdNumPasswordBox.Password=="")
+            if (StuNumTextBox.Text == "" || IdNumPasswordBox.Password == "")
             {
                 Util.Utils.Toast("参数错误");
             }
             else
             {
                 LoginProgressBar.Visibility = Visibility.Visible;
-               
 
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                paramList.Add(new KeyValuePair<string, string>("username", "2013211594"));
-                paramList.Add(new KeyValuePair<string, string>("password", "160155"));
+                paramList.Add(new KeyValuePair<string, string>("username", StuNumTextBox.Text));
+                paramList.Add(new KeyValuePair<string, string>("password", IdNumPasswordBox.Password));
 
                 string content = await Util.NetWork.getHttpWebRequest("/public/login", paramList);
-
                 content = Util.Utils.ConvertUnicodeStringToChinese(content);
+                Debug.WriteLine("aaaaaaaaaaaa" + content);
 
-                Debug.WriteLine("aaaaaaaaaaaa"+content);
 
-                Frame.Navigate(typeof(MainPage));
+                JObject obj = JObject.Parse(content);
+                if (Int32.Parse(obj["status"].ToString()) != 200)
+                {
+                    Util.Utils.Message(obj["info"].ToString());
+                    LoginProgressBar.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    LoginProgressBar.Visibility = Visibility.Collapsed;
+                    Frame.Navigate(typeof(MainPage));
+                }
+
+
 
 
             }

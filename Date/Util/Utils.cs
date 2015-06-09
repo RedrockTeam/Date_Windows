@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
+using Windows.UI.Popups;
 
 namespace Date.Util
 {
@@ -51,6 +52,11 @@ namespace Date.Util
             char outStr = Char.MinValue;
             outStr = (char)int.Parse(str.Remove(0, 2), System.Globalization.NumberStyles.HexNumber);
             return outStr;
+        }
+
+        public async static void Message(string text)
+        {
+            await new MessageDialog(text).ShowAsync();
         }
     }
 }

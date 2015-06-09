@@ -6,9 +6,71 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="#1c1c1c">
 
     <Grid>
+        <TextBlock Text="约" Foreground="White" FontSize="20" Margin="20,5,0,20"/>
+        <Hub Margin="0,50,0,0">
+            <HubSection>
+                <HubSection.Header>
+                        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <TextBlock Text="约列表" Foreground="White" FontSize="30" FontWeight="Light"/>
+                            <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <ListView></ListView>
+                            </ScrollViewer>
+                        </StackPanel>
+                </HubSection.Header>
+            </HubSection>
+
+            <HubSection>
+                <HubSection.Header>
+                    <StackPanel>
+                        <TextBlock Text="我" Foreground="White" FontSize="30" FontWeight="Light"/>
+                        <GridView>
+                            <GridView.Items>
+                                <Grid Background="Black" Width="150" Height="150" Margin="5"></Grid>
+                                <Grid Background="Black" Width="150" Height="150" Margin="5"></Grid>
+                                <Grid Background="Black" Width="150" Height="150" Margin="5"></Grid>
+                                <Grid Background="Black" Width="150" Height="150" Margin="5"></Grid>
+                            </GridView.Items>
+
+                        </GridView>
+                    </StackPanel>
+                </HubSection.Header>
+            </HubSection>
+
+            <HubSection>
+                <HubSection.Header>
+                    <StackPanel>
+                        <TextBlock Text="更多" Foreground="White" FontSize="30" FontWeight="Light"/>
+                        <GridView>
+                            <GridView.Items>
+                                <Grid Background="Red" Width="150" Height="150" Margin="5">
+                                    <TextBlock Text="个人资料" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                </Grid>
+                                <Grid Background="Red" Width="150" Height="150" Margin="5">
+                                    <TextBlock Text="我的消息" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                </Grid>
+                                <Grid Background="Red" Width="150" Height="150" Margin="5">
+                                    <TextBlock Text="我的收藏" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                </Grid>
+                                <Grid Background="Red" Width="150" Height="150" Margin="5">
+                                    <TextBlock Text="关于" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                </Grid>
+                                <Grid Background="Red" Width="150" Height="150" Margin="5">
+                                    <TextBlock Text="设置" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                </Grid>
+                                <Grid Background="Red" Width="150" Height="150" Margin="5">
+                                    <TextBlock Text="关于" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                </Grid>
+                            </GridView.Items>
+
+                        </GridView>
+                    </StackPanel>
+                </HubSection.Header>
+            </HubSection>
+        </Hub>
 
     </Grid>
+
 </Page>

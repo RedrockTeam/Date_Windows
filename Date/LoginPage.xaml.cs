@@ -43,7 +43,11 @@ namespace Date
                 Util.Utils.Toast("参数错误");
                     
             }
-            LoginProgressBar.Visibility = Visibility.Visible;
+            else
+            {
+                LoginProgressBar.Visibility = Visibility.Visible;
+                Frame.Navigate(typeof(MainPage));
+            }
         }
     }
 }

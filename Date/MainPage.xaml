@@ -10,10 +10,8 @@
 
     <Grid>
 
-        <Hub >
-            <Hub.Header>
-        <TextBlock Text="约" Foreground="Red" FontSize="{StaticResource HubHeaderFontSize}" Margin="20,5,0,0"/>
-            </Hub.Header>
+        <TextBlock Text="约" Foreground="Red" FontSize="20" Margin="20,5,0,20"/>
+        <Hub Margin="0,50,0,0">
             <HubSection>
                 <HubSection.Header>
                         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

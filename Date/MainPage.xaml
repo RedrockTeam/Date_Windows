@@ -6,15 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="#1c1c1c">
+    Background="#f8f8f8">
 
     <Grid>
-        <TextBlock Text="约" Foreground="White" FontSize="20" Margin="20,5,0,20"/>
-        <Hub Margin="0,50,0,0">
+
+        <Hub >
+            <Hub.Header>
+        <TextBlock Text="约" Foreground="Red" FontSize="{StaticResource HubHeaderFontSize}" Margin="20,5,0,0"/>
+            </Hub.Header>
             <HubSection>
                 <HubSection.Header>
                         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <TextBlock Text="约列表" Foreground="White" FontSize="30" FontWeight="Light"/>
+                        <TextBlock Text="约列表" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
                             <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                 <ListView></ListView>
                             </ScrollViewer>
@@ -25,13 +28,13 @@
             <HubSection>
                 <HubSection.Header>
                     <StackPanel>
-                        <TextBlock Text="我" Foreground="White" FontSize="30" FontWeight="Light"/>
+                        <TextBlock Text="我" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
                         <GridView>
                             <GridView.Items>
-                                <Grid Background="Black" Width="150" Height="150" Margin="5"></Grid>
-                                <Grid Background="Black" Width="150" Height="150" Margin="5"></Grid>
-                                <Grid Background="Black" Width="150" Height="150" Margin="5"></Grid>
-                                <Grid Background="Black" Width="150" Height="150" Margin="5"></Grid>
+                                <Grid Background="#F25022" Width="150" Height="150" Margin="5"></Grid>
+                                <Grid Background="#7FBA00" Width="150" Height="150" Margin="5"></Grid>
+                                <Grid Background="#01A4EF" Width="150" Height="150" Margin="5"></Grid>
+                                <Grid Background="#FFB901" Width="150" Height="150" Margin="5"></Grid>
                             </GridView.Items>
 
                         </GridView>
@@ -42,7 +45,7 @@
             <HubSection>
                 <HubSection.Header>
                     <StackPanel>
-                        <TextBlock Text="更多" Foreground="White" FontSize="30" FontWeight="Light"/>
+                        <TextBlock Text="更多" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
                         <GridView>
                             <GridView.Items>
                                 <Grid Background="Red" Width="150" Height="150" Margin="5">

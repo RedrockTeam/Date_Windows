@@ -14,12 +14,12 @@
         <Hub Margin="0,50,0,0">
             <HubSection>
                 <HubSection.Header>
-                        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <TextBlock Text="约列表" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
-                            <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                <ListView></ListView>
-                            </ScrollViewer>
-                        </StackPanel>
+                        <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <ListView></ListView>
+                        </ScrollViewer>
+                    </StackPanel>
                 </HubSection.Header>
             </HubSection>
 
@@ -39,6 +39,7 @@
                     </StackPanel>
                 </HubSection.Header>
             </HubSection>
+
 
             <HubSection>
                 <HubSection.Header>

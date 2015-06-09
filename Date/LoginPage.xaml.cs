@@ -53,7 +53,9 @@ namespace Date
                 paramList.Add(new KeyValuePair<string, string>("username", "2013211594"));
                 paramList.Add(new KeyValuePair<string, string>("password", "160155"));
 
-                string content = await Util.NetWork.getHttpWebRequest("/public/grade", paramList);
+                string content = await Util.NetWork.getHttpWebRequest("/public/login", paramList);
+
+                content = Util.Utils.ConvertUnicodeStringToChinese(content);
 
                 Debug.WriteLine("aaaaaaaaaaaa"+content);
 

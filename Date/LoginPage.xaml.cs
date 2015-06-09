@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -36,17 +38,28 @@ namespace Date
         {
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             if (StuNumTextBox.Text == "" || IdNumPasswordBox.Password=="")
             {
                 Util.Utils.Toast("参数错误");
-                    
             }
             else
             {
                 LoginProgressBar.Visibility = Visibility.Visible;
+               
+
+                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                paramList.Add(new KeyValuePair<string, string>("username", "2013211594"));
+                paramList.Add(new KeyValuePair<string, string>("password", "160155"));
+
+                string content = await Util.NetWork.getHttpWebRequest("/public/grade", paramList);
+
+                Debug.WriteLine("aaaaaaaaaaaa"+content);
+
                 Frame.Navigate(typeof(MainPage));
+
+
             }
         }
     }

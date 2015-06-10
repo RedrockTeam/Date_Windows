@@ -16,8 +16,22 @@
                 <HubSection.Header>
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <TextBlock Text="约列表" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
+
                         <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <ListView></ListView>
+                            <StackPanel>
+                                <FlipView Height="200" VerticalAlignment="Top" >
+                                    <FlipViewItem>
+                                        <Image Source="Assets/bg_nav.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"></Image>
+                                    </FlipViewItem>
+                                    <FlipViewItem>
+                                        <Image Source="Assets/bg_nav3.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"></Image>
+                                    </FlipViewItem>
+                                    <FlipViewItem>
+                                        <Image Source="Assets/bg_nav2.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"></Image>
+                                    </FlipViewItem>
+                                </FlipView>
+                                <ListView></ListView>
+                            </StackPanel>
                         </ScrollViewer>
                     </StackPanel>
                 </HubSection.Header>

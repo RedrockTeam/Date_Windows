@@ -98,6 +98,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\bg_nav.jpg" />
+    <Content Include="Assets\bg_nav2.jpg" />
+    <Content Include="Assets\bg_nav3.jpg" />
     <Content Include="Assets\ic_date.png" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />

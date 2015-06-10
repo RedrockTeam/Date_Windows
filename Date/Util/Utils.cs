@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
+using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 
@@ -12,6 +13,8 @@ namespace Date.Util
 {
     class Utils
     {
+
+
         public async static void Toast(string text)
         {
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText01);
@@ -58,5 +61,7 @@ namespace Date.Util
         {
             await new MessageDialog(text).ShowAsync();
         }
+
+
     }
 }

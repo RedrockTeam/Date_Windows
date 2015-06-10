@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,9 +27,13 @@ namespace Date
     /// </summary>
     public sealed partial class LoginPage : Page
     {
+        private ApplicationDataContainer appSetting;
+
         public LoginPage()
         {
             this.InitializeComponent();
+            appSetting = ApplicationData.Current.LocalSettings; //本地存储
+
         }
 
         /// <summary>
@@ -68,6 +73,9 @@ namespace Date
                 else
                 {
                     LoginProgressBar.Visibility = Visibility.Collapsed;
+                    appSetting.Values["uid"] = obj["uid"].ToString();
+                    appSetting.Values["token"] = obj["token"].ToString();
+
                     Frame.Navigate(typeof(MainPage));
                 }
 

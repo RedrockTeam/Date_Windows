@@ -9,8 +9,6 @@
     Background="#f8f8f8">
 
     <Grid>
-
-        <TextBlock Text="约" Foreground="Red" FontSize="20" Margin="20,5,0,20"/>
         <Hub Margin="0,50,0,0">
             <HubSection>
                 <HubSection.Header>
@@ -31,7 +29,7 @@
                                             <Image Source="Assets/bg_nav2.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"></Image>
                                         </FlipViewItem>
                                     </FlipView>
-                                    
+
                                 </Grid>
                                 <ListView></ListView>
                             </StackPanel>

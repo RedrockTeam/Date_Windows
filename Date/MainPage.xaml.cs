@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -30,6 +32,7 @@ namespace Date
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
+             Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
         }
 
 
@@ -39,9 +42,9 @@ namespace Date
         /// </summary>
         /// <param name="e">描述如何访问此页的事件数据。
         /// 此参数通常用于配置页。</param>
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected  override void OnNavigatedTo(NavigationEventArgs e)
         {
-            await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
+
         }
 
 

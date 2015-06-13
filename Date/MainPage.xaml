@@ -34,7 +34,7 @@
                                             <Image Source="Assets/bg_nav2.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"></Image>
                                         </FlipViewItem>
                                     </FlipView>
-
+                                    
                                 </Grid>
                                 <ListView></ListView>
                             </StackPanel>

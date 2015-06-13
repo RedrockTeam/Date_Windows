@@ -6,8 +6,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 
 namespace Date.Util
 {
@@ -56,7 +58,21 @@ namespace Date.Util
             outStr = (char)int.Parse(str.Remove(0, 2), System.Globalization.NumberStyles.HexNumber);
             return outStr;
         }
+        public static async Task ShowSystemTrayAsync(Color backgroundColor, Color foregroundColor,
+    double opacity = 1, string text = "", bool isIndeterminate = false)
+        {
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+            statusBar.BackgroundColor = backgroundColor;
+            statusBar.ForegroundColor = foregroundColor;
+            statusBar.BackgroundOpacity = opacity;
 
+            statusBar.ProgressIndicator.Text = text;
+            if (!isIndeterminate)
+            {
+                statusBar.ProgressIndicator.ProgressValue = 0;
+            }
+            await statusBar.ProgressIndicator.ShowAsync();
+        }
         public async static void Message(string text)
         {
             await new MessageDialog(text).ShowAsync();

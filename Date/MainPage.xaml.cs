@@ -40,7 +40,8 @@ namespace Date
     {
         private ApplicationDataContainer appSetting;
         private bool isLogin = false;
-        ObservableCollection<Banner> BannerList = new ObservableCollection<Banner>();
+        List<Banner> BannerList = new List<Banner>();
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -129,12 +130,13 @@ namespace Date
         private async void InitFlipView()
         {
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            string banner = await NetWork.getHttpWebRequest("/public/banner",paramList);
+            List<FlipViewThing> flipViewThing = new List<FlipViewThing>();
+            string banner = await NetWork.getHttpWebRequest("/public/banner", paramList);
             Debug.WriteLine("banner" + banner);
             if (banner != "")
             {
                 JObject obj = JObject.Parse(banner);
-                if (Int32.Parse(obj["status"].ToString()) != 200)
+                if (Int32.Parse(obj["status"].ToString()) == 200)
                 {
                     JObject jObject = (JObject)JsonConvert.DeserializeObject(banner);
                     string json = jObject["data"].ToString();
@@ -144,7 +146,7 @@ namespace Date
                         JObject jobj = (JObject)jArray[i];
                         var b = new Banner();
                         b.Url = jobj["url"].ToString();
-                        b.Src = jobj["src"].ToString();
+                        b.Src = jobj["src"].ToString().Replace("\\","");
                         BannerList.Add(b);
                     }
                 }
@@ -154,15 +156,7 @@ namespace Date
 
             }
 
-            List<FlipViewThing> flipViewThing = new List<FlipViewThing>
-            {
-                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav3.jpg"},
-                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav.jpg"},  
-                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav2.jpg"},  
-                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav3.jpg"},
-                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav.jpg"}
-            };
-            dataFlipView.ItemsSource = flipViewThing;
+            dataFlipView.ItemsSource = BannerList;
             dataFlipView.SelectedIndex = 1;
         }
 
@@ -185,13 +179,13 @@ namespace Date
 
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dataFlipView.SelectedIndex == ((List<FlipViewThing>)dataFlipView.ItemsSource).Count - 1)
+            if (dataFlipView.SelectedIndex == ((List<Banner>)dataFlipView.ItemsSource).Count - 1)
             {
                 dataFlipView.SelectedIndex = 1;
             }
             if (dataFlipView.SelectedIndex == 0)
             {
-                dataFlipView.SelectedIndex = ((List<FlipViewThing>)dataFlipView.ItemsSource).Count - 2;
+                dataFlipView.SelectedIndex = ((List<Banner>)dataFlipView.ItemsSource).Count - 2;
             }
         }
 

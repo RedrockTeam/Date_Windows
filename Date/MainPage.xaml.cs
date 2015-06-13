@@ -129,7 +129,6 @@ namespace Date
         private async void InitFlipView()
         {
             string banner = await NetWork.getHttpWebRequest("/public/banner");
-            banner = "{}";
             if (banner != "")
             {
                 JObject obj = JObject.Parse(banner);

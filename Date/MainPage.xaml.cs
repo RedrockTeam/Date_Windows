@@ -53,7 +53,7 @@ namespace Date
         /// 此参数通常用于配置页。</param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
+            //await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
             if (e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
                 LoginProgressBar.Visibility = Visibility.Visible;

@@ -22,11 +22,17 @@
 
                         <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                             <StackPanel>
+                                <StackPanel.Resources>
+                                    <Storyboard x:Name="Hideimg">
+                                        <DoubleAnimation Storyboard.TargetName="HoldPlaceImg" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </StackPanel.Resources>
                                 <Grid>
+                                    <Image x:Name="HoldPlaceImg" Source="Assets/bg_nav2.jpg" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
                                     <FlipView Name="dataFlipView" Height="200" VerticalAlignment="Top" SelectionChanged="dataFlipView_SelectionChanged" >
                                         <FlipView.ItemTemplate>
                                             <DataTemplate>
-                                                <Image Source="{Binding Src}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
+                                                <Image x:Name="BannerImage" Source="{Binding Src}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                             </DataTemplate>
                                         </FlipView.ItemTemplate>
                                     </FlipView>

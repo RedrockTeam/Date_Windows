@@ -11,7 +11,6 @@ using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -46,7 +45,6 @@ namespace Date
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
 
         }
@@ -60,6 +58,9 @@ namespace Date
         /// 此参数通常用于配置页。</param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            await Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
+            //这里要改，注销再登陆，按返回，又要登录了
+            Frame.BackStack.Clear();
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             if (!isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
@@ -139,7 +140,7 @@ namespace Date
                     JObject jObject = (JObject)JsonConvert.DeserializeObject(banner);
                     string json = jObject["data"].ToString();
                     JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
-                    BannerList.Add(new Banner { Url = ((JObject)jArray[jArray.Count-1])["url"].ToString(), Src = ((JObject)jArray[jArray.Count-1])["src"].ToString() });
+                    BannerList.Add(new Banner { Url = ((JObject)jArray[jArray.Count - 1])["url"].ToString(), Src = ((JObject)jArray[jArray.Count - 1])["src"].ToString() });
                     for (int i = 0; i < jArray.Count; i++)
                     {
                         JObject jobj = (JObject)jArray[i];
@@ -149,14 +150,15 @@ namespace Date
                         BannerList.Add(b);
                     }
                     BannerList.Add(new Banner { Url = ((JObject)jArray[0])["url"].ToString(), Src = ((JObject)jArray[0])["src"].ToString() });
+                    Hideimg.Begin();
                 }
             }
             else
             {
 
             }
-
             dataFlipView.ItemsSource = BannerList;
+            //HoldPlaceImg.Visibility = Visibility.Collapsed;
             dataFlipView.SelectedIndex = 1;
         }
 
@@ -179,13 +181,18 @@ namespace Date
 
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dataFlipView.SelectedIndex == ((List<Banner>)dataFlipView.ItemsSource).Count - 1)
+            var itemsSource = (List<Banner>)dataFlipView.ItemsSource;
+            if (itemsSource == null) return;
+            else
             {
-                dataFlipView.SelectedIndex = 1;
-            }
-            if (dataFlipView.SelectedIndex == 0)
-            {
-                dataFlipView.SelectedIndex = ((List<Banner>)dataFlipView.ItemsSource).Count - 2;
+                if (dataFlipView.SelectedIndex == itemsSource.Count - 1)
+                {
+                    dataFlipView.SelectedIndex = 1;
+                }
+                if (dataFlipView.SelectedIndex == 0)
+                {
+                    dataFlipView.SelectedIndex = itemsSource.Count - 2;
+                }
             }
         }
 
@@ -193,7 +200,6 @@ namespace Date
         {
             Frame.Navigate(typeof(grzxPage));
         }
-
 
     }
 }

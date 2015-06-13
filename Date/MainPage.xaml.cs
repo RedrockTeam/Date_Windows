@@ -159,13 +159,13 @@ namespace Date
 
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dataFlipView.SelectedIndex == 4)
+            if (dataFlipView.SelectedIndex == ((List<Mode.FlipViewThing>)dataFlipView.ItemsSource).Count -1)
             {
                 dataFlipView.SelectedIndex = 1;
             }
-            if(dataFlipView.SelectedIndex == 0)
+            if (dataFlipView.SelectedIndex == 0)
             {
-                dataFlipView.SelectedIndex = 3;
+                dataFlipView.SelectedIndex = ((List<Mode.FlipViewThing>)dataFlipView.ItemsSource).Count - 2;
             }
         }
 

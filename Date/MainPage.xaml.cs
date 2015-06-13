@@ -55,6 +55,7 @@ namespace Date
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             //await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             if (e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
                 LoginProgressBar.Visibility = Visibility.Visible;
@@ -119,7 +120,24 @@ namespace Date
             //{
 
             //}
-            HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
+
+
+            InitFlipView();
+
+        }
+
+        private void InitFlipView()
+        {
+            List<Mode.FlipViewThing> flipViewThing = new List<Mode.FlipViewThing>
+            {
+                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav3.jpg"},
+                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav.jpg"},  
+                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav2.jpg"},  
+                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav3.jpg"},
+                new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav.jpg"}
+            };
+            dataFlipView.ItemsSource = flipViewThing;
+            dataFlipView.SelectedIndex = 1;
         }
 
         //离开页面时，取消事件
@@ -141,6 +159,14 @@ namespace Date
 
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (dataFlipView.SelectedIndex == 4)
+            {
+                dataFlipView.SelectedIndex = 1;
+            }
+            if(dataFlipView.SelectedIndex == 0)
+            {
+                dataFlipView.SelectedIndex = 3;
+            }
         }
 
         private void grzxGrid_Tapped(object sender, TappedRoutedEventArgs e)

@@ -24,17 +24,13 @@
                             <StackPanel>
                                 <Grid>
                                     <FlipView Name="dataFlipView" Height="200" VerticalAlignment="Top" SelectionChanged="dataFlipView_SelectionChanged" >
-                                        <FlipViewItem>
-                                            <Image Source="Assets/bg_nav.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"></Image>
-                                        </FlipViewItem>
-                                        <FlipViewItem>
-                                            <Image Source="Assets/bg_nav3.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"></Image>
-                                        </FlipViewItem>
-                                        <FlipViewItem>
-                                            <Image Source="Assets/bg_nav2.jpg" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"></Image>
-                                        </FlipViewItem>
+                                        <FlipView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Image Source="{Binding FlipViewImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
+                                            </DataTemplate>
+                                        </FlipView.ItemTemplate>
                                     </FlipView>
-                                    
+
                                 </Grid>
                                 <ListView></ListView>
                             </StackPanel>

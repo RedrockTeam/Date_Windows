@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.Phone.UI.Input;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
@@ -118,11 +119,33 @@ namespace Date
             //{
 
             //}
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
+        }
+
+        //离开页面时，取消事件
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+        }
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame != null && rootFrame.CanGoBack)
+            {
+                rootFrame.GoBack();
+                e.Handled = true;
+            }
+
         }
 
 
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+        }
+
+        private void grzxGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(grzxPage));
         }
 
 

@@ -24,7 +24,6 @@ using Windows.Phone.UI.Input;
 using System.Diagnostics;
 using Date.DataModel;
 using Date.Util;
-using Date.Mode;
 using System.Collections.ObjectModel;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
@@ -130,7 +129,6 @@ namespace Date
         private async void InitFlipView()
         {
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            List<FlipViewThing> flipViewThing = new List<FlipViewThing>();
             string banner = await NetWork.getHttpWebRequest("/public/banner", paramList);
             Debug.WriteLine("banner" + banner);
             if (banner != "")

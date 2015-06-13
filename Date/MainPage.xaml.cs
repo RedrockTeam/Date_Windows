@@ -83,13 +83,13 @@ namespace Date
             paramList.Add(new KeyValuePair<string, string>("username", appSetting.Values["username"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("password", appSetting.Values["password"].ToString()));
 
-            string content = await NetWork.getHttpWebRequest("/public/login", paramList);
-            content = Util.Utils.ConvertUnicodeStringToChinese(content);
-            Debug.WriteLine("login" + content);
+            string login = await NetWork.getHttpWebRequest("/public/login", paramList);
+            login = Util.Utils.ConvertUnicodeStringToChinese(login);
+            Debug.WriteLine("login" + login);
 
-            if (content != "")
+            if (login != "")
             {
-                JObject obj = JObject.Parse(content);
+                JObject obj = JObject.Parse(login);
                 if (Int32.Parse(obj["status"].ToString()) != 200)
                 {
                     Util.Utils.Message(obj["info"].ToString());
@@ -128,7 +128,9 @@ namespace Date
 
         private async void InitFlipView()
         {
-            string banner = await NetWork.getHttpWebRequest("/public/banner");
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            string banner = await NetWork.getHttpWebRequest("/public/banner",paramList);
+            Debug.WriteLine("banner" + banner);
             if (banner != "")
             {
                 JObject obj = JObject.Parse(banner);

@@ -24,7 +24,7 @@
                             <StackPanel>
                                 <StackPanel.Resources>
                                     <Storyboard x:Name="Hideimg">
-                                        <DoubleAnimation Storyboard.TargetName="HoldPlaceImg" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.5" />
+                                        <DoubleAnimation Storyboard.TargetName="HoldPlaceImg" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:1" />
                                     </Storyboard>
                                 </StackPanel.Resources>
                                 <Grid>

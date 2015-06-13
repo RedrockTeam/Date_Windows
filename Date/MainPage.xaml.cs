@@ -36,7 +36,7 @@ namespace Date
     public sealed partial class MainPage : Page
     {
         private ApplicationDataContainer appSetting;
-        ObservableCollection<Banner> BannerList=new ObservableCollection<Banner>();
+        ObservableCollection<Banner>  BannerList=new ObservableCollection<Banner>();
         public MainPage()
         {
             this.InitializeComponent();
@@ -44,7 +44,7 @@ namespace Date
             this.NavigationCacheMode = NavigationCacheMode.Required;
             Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-            
+
         }
 
 
@@ -56,9 +56,8 @@ namespace Date
         /// 此参数通常用于配置页。</param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-            if (e.Parameter != null && e.Parameter.ToString() == "autologin")
+            if (!isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
                 LoginProgressBar.Visibility = Visibility.Visible;
                 LoginTextBlock.Visibility = Visibility.Visible;
@@ -88,6 +87,7 @@ namespace Date
                     {
                         appSetting.Values["uid"] = obj["uid"].ToString();
                         appSetting.Values["token"] = obj["token"].ToString();
+                        isLogin = true;
 
                         LoginProgressBar.Visibility = Visibility.Collapsed;
                         LoginTextBlock.Text = "登陆成功...";
@@ -110,7 +110,7 @@ namespace Date
             }
 
             string banner = await Util.NetWork.getHttpWebRequest("/public/banner");
-            banner = "{}";
+
             if (banner != "")
             {
                 JObject obj = JObject.Parse(banner);
@@ -172,13 +172,13 @@ namespace Date
 
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dataFlipView.SelectedIndex == 4)
+            if (dataFlipView.SelectedIndex == ((List<Mode.FlipViewThing>)dataFlipView.ItemsSource).Count - 1)
             {
                 dataFlipView.SelectedIndex = 1;
             }
             if (dataFlipView.SelectedIndex == 0)
             {
-                dataFlipView.SelectedIndex = 3;
+                dataFlipView.SelectedIndex = ((List<Mode.FlipViewThing>)dataFlipView.ItemsSource).Count - 2;
             }
         }
 

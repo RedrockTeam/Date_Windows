@@ -26,7 +26,7 @@
                                     <FlipView Name="dataFlipView" Height="200" VerticalAlignment="Top" SelectionChanged="dataFlipView_SelectionChanged" >
                                         <FlipView.ItemTemplate>
                                             <DataTemplate>
-                                                <Image Source="{Binding FlipViewImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
+                                                <Image Source="{Binding Src}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
                                             </DataTemplate>
                                         </FlipView.ItemTemplate>
                                     </FlipView>

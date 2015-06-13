@@ -139,14 +139,16 @@ namespace Date
                     JObject jObject = (JObject)JsonConvert.DeserializeObject(banner);
                     string json = jObject["data"].ToString();
                     JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
+                    BannerList.Add(new Banner { Url = ((JObject)jArray[jArray.Count-1])["url"].ToString(), Src = ((JObject)jArray[jArray.Count-1])["src"].ToString() });
                     for (int i = 0; i < jArray.Count; i++)
                     {
                         JObject jobj = (JObject)jArray[i];
                         var b = new Banner();
                         b.Url = jobj["url"].ToString();
-                        b.Src = jobj["src"].ToString().Replace("\\","");
+                        b.Src = jobj["src"].ToString();
                         BannerList.Add(b);
                     }
+                    BannerList.Add(new Banner { Url = ((JObject)jArray[0])["url"].ToString(), Src = ((JObject)jArray[0])["src"].ToString() });
                 }
             }
             else

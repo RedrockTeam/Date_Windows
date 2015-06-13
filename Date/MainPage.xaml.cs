@@ -21,6 +21,11 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.Phone.UI.Input;
+using System.Diagnostics;
+using Date.DataModel;
+using Date.Util;
+using Date.Mode;
+using System.Collections.ObjectModel;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
@@ -35,6 +40,7 @@ namespace Date
     {
         private ApplicationDataContainer appSetting;
         private bool isLogin = false;
+        ObservableCollection<Banner> BannerList = new ObservableCollection<Banner>();
         public MainPage()
         {
             this.InitializeComponent();
@@ -57,78 +63,97 @@ namespace Date
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             if (!isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
-                LoginProgressBar.Visibility = Visibility.Visible;
-                LoginTextBlock.Visibility = Visibility.Visible;
-                LoginStackPanel.Background = null;
-
-                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                paramList.Add(new KeyValuePair<string, string>("username", appSetting.Values["username"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("password", appSetting.Values["password"].ToString()));
-
-                string content = await Util.NetWork.getHttpWebRequest("/public/login", paramList);
-                content = Util.Utils.ConvertUnicodeStringToChinese(content);
-
-                if (content != "")
-                {
-                    JObject obj = JObject.Parse(content);
-                    if (Int32.Parse(obj["status"].ToString()) != 200)
-                    {
-                        Util.Utils.Message(obj["info"].ToString());
-                        LoginProgressBar.Visibility = Visibility.Collapsed;
-                        LoginTextBlock.Text = "登陆失败...";
-
-                        await Task.Delay(2000);
-                        LoginTextBlock.Visibility = Visibility.Collapsed;
-                        Frame.Navigate(typeof(LoginPage));
-                    }
-                    else
-                    {
-                        appSetting.Values["uid"] = obj["uid"].ToString();
-                        appSetting.Values["token"] = obj["token"].ToString();
-                        isLogin = true;
-
-                        LoginProgressBar.Visibility = Visibility.Collapsed;
-                        LoginTextBlock.Text = "登陆成功...";
-
-                        await Task.Delay(2000);
-                        LoginTextBlock.Visibility = Visibility.Collapsed;
-                    }
-                }
-                else
-                {
-                    LoginProgressBar.Visibility = Visibility.Collapsed;
-                    LoginStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
-                    LoginTextBlock.Text = "网络未连接...";
-
-                    await Task.Delay(2000);
-                    LoginTextBlock.Visibility = Visibility.Collapsed;
-                    LoginStackPanel.Visibility = Visibility.Collapsed;
-
-                }
+                Login();
             }
 
-            //string banner = await Util.NetWork.getHttpWebRequest("/public/banner");
-            //if (banner != "")
-            //{
-            //    JObject obj = JObject.Parse(banner);
-            //    if (Int32.Parse(obj["status"].ToString()) != 200)
-            //    {
-            //        JArray ja = (JArray)JsonConvert.DeserializeObject(banner);
-            //    }
-            //}
-            //else
-            //{
-
-            //}
 
 
             InitFlipView();
 
         }
 
-        private void InitFlipView()
+        private async void Login()
         {
-            List<Mode.FlipViewThing> flipViewThing = new List<Mode.FlipViewThing>
+
+            LoginProgressBar.Visibility = Visibility.Visible;
+            LoginTextBlock.Visibility = Visibility.Visible;
+            LoginStackPanel.Background = null;
+
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("username", appSetting.Values["username"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("password", appSetting.Values["password"].ToString()));
+
+            string content = await NetWork.getHttpWebRequest("/public/login", paramList);
+            content = Util.Utils.ConvertUnicodeStringToChinese(content);
+            Debug.WriteLine("login" + content);
+
+            if (content != "")
+            {
+                JObject obj = JObject.Parse(content);
+                if (Int32.Parse(obj["status"].ToString()) != 200)
+                {
+                    Util.Utils.Message(obj["info"].ToString());
+                    LoginProgressBar.Visibility = Visibility.Collapsed;
+                    LoginTextBlock.Text = "登陆失败...";
+
+                    await Task.Delay(2000);
+                    LoginTextBlock.Visibility = Visibility.Collapsed;
+                    Frame.Navigate(typeof(LoginPage));
+                }
+                else
+                {
+                    appSetting.Values["uid"] = obj["uid"].ToString();
+                    appSetting.Values["token"] = obj["token"].ToString();
+                    isLogin = true;
+
+                    LoginProgressBar.Visibility = Visibility.Collapsed;
+                    LoginTextBlock.Text = "登陆成功...";
+
+                    await Task.Delay(2000);
+                    LoginTextBlock.Visibility = Visibility.Collapsed;
+                }
+            }
+            else
+            {
+                LoginProgressBar.Visibility = Visibility.Collapsed;
+                LoginStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                LoginTextBlock.Text = "网络未连接...";
+
+                await Task.Delay(2000);
+                LoginTextBlock.Visibility = Visibility.Collapsed;
+                LoginStackPanel.Visibility = Visibility.Collapsed;
+
+            }
+        }
+
+        private async void InitFlipView()
+        {
+            string banner = await NetWork.getHttpWebRequest("/public/banner");
+            banner = "{}";
+            if (banner != "")
+            {
+                JObject obj = JObject.Parse(banner);
+                if (Int32.Parse(obj["status"].ToString()) != 200)
+                {
+                    JObject jObject = (JObject)JsonConvert.DeserializeObject(banner);
+                    string json = jObject["data"].ToString();
+                    JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
+                    for (int i = 0; i < jArray.Count; i++)
+                    {
+                        JObject jobj = (JObject)jArray[i];
+                        var b = new Banner();
+                        b.Url = jobj["url"].ToString();
+                        b.Src = jobj["src"].ToString();
+                        BannerList.Add(b);
+                    }
+                }
+            }
+            else
+            {
+
+            }
+
+            List<FlipViewThing> flipViewThing = new List<FlipViewThing>
             {
                 new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav3.jpg"},
                 new Mode.FlipViewThing{FlipViewImageSource = "Assets/bg_nav.jpg"},  
@@ -159,13 +184,13 @@ namespace Date
 
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dataFlipView.SelectedIndex == ((List<Mode.FlipViewThing>)dataFlipView.ItemsSource).Count - 1)
+            if (dataFlipView.SelectedIndex == ((List<FlipViewThing>)dataFlipView.ItemsSource).Count - 1)
             {
                 dataFlipView.SelectedIndex = 1;
             }
             if (dataFlipView.SelectedIndex == 0)
             {
-                dataFlipView.SelectedIndex = ((List<Mode.FlipViewThing>)dataFlipView.ItemsSource).Count - 2;
+                dataFlipView.SelectedIndex = ((List<FlipViewThing>)dataFlipView.ItemsSource).Count - 2;
             }
         }
 

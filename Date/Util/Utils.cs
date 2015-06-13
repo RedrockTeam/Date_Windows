@@ -58,6 +58,7 @@ namespace Date.Util
             outStr = (char)int.Parse(str.Remove(0, 2), System.Globalization.NumberStyles.HexNumber);
             return outStr;
         }
+
         public static async Task ShowSystemTrayAsync(Color backgroundColor, Color foregroundColor,
     double opacity = 1, string text = "", bool isIndeterminate = false)
         {

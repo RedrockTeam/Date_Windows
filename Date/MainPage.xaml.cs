@@ -39,7 +39,7 @@ namespace Date
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-             Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
+            Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
 
         }
@@ -51,7 +51,7 @@ namespace Date
         /// </summary>
         /// <param name="e">描述如何访问此页的事件数据。
         /// 此参数通常用于配置页。</param>
-        protected  override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
             if (e.Parameter != null && e.Parameter.ToString() == "autologin")

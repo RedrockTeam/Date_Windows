@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -21,6 +22,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.Phone.UI.Input;
+using Date.DataModel;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
@@ -34,7 +36,7 @@ namespace Date
     public sealed partial class MainPage : Page
     {
         private ApplicationDataContainer appSetting;
-
+        ObservableCollection<Banner> BannerList=new ObservableCollection<Banner>();
         public MainPage()
         {
             this.InitializeComponent();
@@ -42,7 +44,7 @@ namespace Date
             this.NavigationCacheMode = NavigationCacheMode.Required;
             Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-
+            
         }
 
 
@@ -107,19 +109,30 @@ namespace Date
                 }
             }
 
-            //string banner = await Util.NetWork.getHttpWebRequest("/public/banner");
-            //if (banner != "")
-            //{
-            //    JObject obj = JObject.Parse(banner);
-            //    if (Int32.Parse(obj["status"].ToString()) != 200)
-            //    {
-            //        JArray ja = (JArray)JsonConvert.DeserializeObject(banner);
-            //    }
-            //}
-            //else
-            //{
+            string banner = await Util.NetWork.getHttpWebRequest("/public/banner");
+            banner = "{}";
+            if (banner != "")
+            {
+                JObject obj = JObject.Parse(banner);
+                if (Int32.Parse(obj["status"].ToString()) != 200)
+                {
+                    JObject jObject = (JObject)JsonConvert.DeserializeObject(banner);
+                    string json = jObject["data"].ToString();
+                    JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
+                    for (int i = 0; i < jArray.Count; i++)
+                    {
+                        JObject jobj = (JObject) jArray[i];
+                        var b=new Banner();
+                        b.Url = jobj["url"].ToString();
+                        b.Src = jobj["src"].ToString();
+                        BannerList.Add(b);
+                    }
+                }
+            }
+            else
+            {
 
-            //}
+            }
 
 
             InitFlipView();
@@ -163,7 +176,7 @@ namespace Date
             {
                 dataFlipView.SelectedIndex = 1;
             }
-            if(dataFlipView.SelectedIndex == 0)
+            if (dataFlipView.SelectedIndex == 0)
             {
                 dataFlipView.SelectedIndex = 3;
             }

@@ -82,6 +82,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\Banner.cs" />
     <Compile Include="grzxPage.xaml.cs">
       <DependentUpon>grzxPage.xaml</DependentUpon>
     </Compile>

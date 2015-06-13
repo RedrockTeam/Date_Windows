@@ -34,7 +34,7 @@ namespace Date
     public sealed partial class MainPage : Page
     {
         private ApplicationDataContainer appSetting;
-
+        private bool isLogin = false;
         public MainPage()
         {
             this.InitializeComponent();
@@ -54,9 +54,8 @@ namespace Date
         /// 此参数通常用于配置页。</param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-            if (e.Parameter != null && e.Parameter.ToString() == "autologin")
+            if (!isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
                 LoginProgressBar.Visibility = Visibility.Visible;
                 LoginTextBlock.Visibility = Visibility.Visible;
@@ -86,6 +85,7 @@ namespace Date
                     {
                         appSetting.Values["uid"] = obj["uid"].ToString();
                         appSetting.Values["token"] = obj["token"].ToString();
+                        isLogin = true;
 
                         LoginProgressBar.Visibility = Visibility.Collapsed;
                         LoginTextBlock.Text = "登陆成功...";
@@ -159,7 +159,7 @@ namespace Date
 
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dataFlipView.SelectedIndex == ((List<Mode.FlipViewThing>)dataFlipView.ItemsSource).Count -1)
+            if (dataFlipView.SelectedIndex == ((List<Mode.FlipViewThing>)dataFlipView.ItemsSource).Count - 1)
             {
                 dataFlipView.SelectedIndex = 1;
             }

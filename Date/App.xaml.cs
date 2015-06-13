@@ -97,7 +97,7 @@ namespace Date
                 // 新页面
                 if (appSetting.Values.ContainsKey("uid"))
                 {
-                    if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                    if (!rootFrame.Navigate(typeof(MainPage),"autologin"))
                     {
                         throw new Exception("Failed to create initial page");
                     }

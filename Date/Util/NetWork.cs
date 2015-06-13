@@ -7,22 +7,37 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.System;
+using Windows.UI.Popups;
 
 namespace Date.Util
 {
     class NetWork
     {
-        public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList)
+        public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null)
         {
             string content = "";
             return await Task.Run(() =>
-            {
-                HttpClient httpClient = new HttpClient();
-                string uri = "http://106.184.7.12:8002/index.php/api" + api;
-                HttpResponseMessage response = httpClient.PostAsync(new Uri(uri), new FormUrlEncodedContent(paramList)).Result;
-                content = response.Content.ReadAsStringAsync().Result;
-                return content;
-            });
+           {
+               if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+               {
+                   try
+                   {
+                       HttpClient httpClient = new HttpClient();
+                       string uri = "http://106.184.7.12:8002/index.php/api" + api;
+                       HttpResponseMessage response = httpClient.PostAsync(new Uri(uri), new FormUrlEncodedContent(paramList)).Result;
+                       content = response.Content.ReadAsStringAsync().Result;
+                   }
+                   catch (Exception)
+                   {
+                   }
+               }
+               else
+               {
+               }
+               return content;
+
+           });
         }
 
     }

@@ -7,9 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -61,24 +63,36 @@ namespace Date
 
                 string content = await Util.NetWork.getHttpWebRequest("/public/login", paramList);
                 content = Util.Utils.ConvertUnicodeStringToChinese(content);
-                Debug.WriteLine("aaaaaaaaaaaa" + content);
+                Debug.WriteLine("LoginMessage" + content);
 
-
-                JObject obj = JObject.Parse(content);
-                if (Int32.Parse(obj["status"].ToString()) != 200)
+                if (content != "")
                 {
-                    Util.Utils.Message(obj["info"].ToString());
-                    LoginProgressBar.Visibility = Visibility.Collapsed;
+                    JObject obj = JObject.Parse(content);
+                    if (Int32.Parse(obj["status"].ToString()) != 200)
+                    {
+                        Util.Utils.Message(obj["info"].ToString());
+                        LoginProgressBar.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        LoginProgressBar.Visibility = Visibility.Collapsed;
+                        appSetting.Values["username"] = StuNumTextBox.Text;
+                        appSetting.Values["password"] = IdNumPasswordBox.Password;
+                        appSetting.Values["uid"] = obj["uid"].ToString();
+                        appSetting.Values["token"] = obj["token"].ToString();
+
+                        Frame.Navigate(typeof(MainPage));
+                    }
                 }
                 else
                 {
                     LoginProgressBar.Visibility = Visibility.Collapsed;
-                    appSetting.Values["uid"] = obj["uid"].ToString();
-                    appSetting.Values["token"] = obj["token"].ToString();
+                    LoginStackPanel.Visibility = Visibility.Visible;
+                    LoginStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                    await Task.Delay(2000);
+                    LoginStackPanel.Visibility = Visibility.Collapsed;
 
-                    Frame.Navigate(typeof(MainPage));
                 }
-
 
 
             }

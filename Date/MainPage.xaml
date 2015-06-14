@@ -28,7 +28,7 @@
                                     </Storyboard>
                                 </StackPanel.Resources>
                                 <Grid>
-                                    <Image x:Name="HoldPlaceImg" Source="Assets/bg_nav2.jpg" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
+                                    <Image x:Name="HoldPlaceImg"  Height="200" Source="Assets/bg_nav2.jpg" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
                                     <FlipView Name="dataFlipView" Height="200" VerticalAlignment="Top" SelectionChanged="dataFlipView_SelectionChanged" >
                                         <FlipView.ItemTemplate>
                                             <DataTemplate>

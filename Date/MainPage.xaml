@@ -14,7 +14,7 @@
             <TextBlock Name="LoginTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,0"  Visibility="Collapsed"/>
         </StackPanel>
         <!--<TextBlock Text="约" Foreground="Red" FontSize="20" Margin="20,20,0,20"/>-->
-        <Hub Name="DateHub" Margin="0,50,0,0" SectionsInViewChanged="DateHub_SectionsInViewChanged" >
+        <Hub Name="DateHub" Margin="0,50,0,0" SectionsInViewChanged="DateHub_SectionsInViewChanged">
             <HubSection Name="DateListHubSection">
                 <HubSection.Header>
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

@@ -39,7 +39,7 @@ namespace Date
         private ApplicationDataContainer appSetting;
         private bool isLogin = false;
         List<Banner> BannerList = new List<Banner>();
-        private int HubChange = 1;
+        private string hubSectionChange = "DateListHubSection";
 
         public MainPage()
         {
@@ -199,35 +199,37 @@ namespace Date
 
         private void DateHub_SectionsInViewChanged(object sender, SectionsInViewChangedEventArgs e)
         {
-            //var hubSection = DateHub.Sections[0];
-            //Debug.WriteLine(HubChange+"  "+hubSection.Name);
-            //if (HubChange % 2 != 0)
-            //{
-            //    CommandBar commandbar = ((CommandBar)this.BottomAppBar);
-            //    ((CommandBar)this.BottomAppBar).PrimaryCommands.Clear();
-            //    ((CommandBar)this.BottomAppBar).SecondaryCommands.Clear();
+            var hubSection = DateHub.SectionsInView[0];
+            Debug.WriteLine(hubSection.Name);
+            CommandBar commandbar = ((CommandBar)this.BottomAppBar);
 
+            if (hubSection.Name != hubSectionChange)
+            {
+                ((CommandBar)this.BottomAppBar).PrimaryCommands.Clear();
+                //((CommandBar)this.BottomAppBar).SecondaryCommands.Clear();
+                switch (hubSection.Name)
+                {
+                    case "DateListHubSection":
+                        commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
+                        AppBarButton BarAddButton = new AppBarButton();
+                        BarAddButton.Icon = new SymbolIcon(Symbol.Add);
+                        BarAddButton.Label = "新建";
+                        //BarAddButton.Click += AppBarButton_Accept_Click;
+                        commandbar.PrimaryCommands.Add(BarAddButton);
 
-                
-            //    switch (hubSection.Name)
-            //    {
-            //        case "DateListHubSection":
-            //            AppBarButton BarAddButton = new AppBarButton();
-            //            BarAddButton.Icon = new SymbolIcon(Symbol.Add);
-            //            BarAddButton.Label = "新建";
-            //            //BarAddButton.Click += AppBarButton_Accept_Click;
-            //            commandbar.PrimaryCommands.Add(BarAddButton);
-
-            //            break;
-            //        case "MeHubSection":
-            //            break;
-            //        case "MoreHubSection":
-            //            break;
-            //    }
-            //}
-            //HubChange++;
-
+                        break;
+                    case "MeHubSection":
+                        commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
+                        break;
+                    case "MoreHubSection":
+                        commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
+                        break;
+                }
+            }
+            hubSectionChange = hubSection.Name;
         }
+
+
 
 
     }

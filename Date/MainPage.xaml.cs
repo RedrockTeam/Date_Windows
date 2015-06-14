@@ -40,6 +40,7 @@ namespace Date
         private bool isLogin = false;
         List<Banner> BannerList = new List<Banner>();
         private string hubSectionChange = "DateListHubSection";
+        DispatcherTimer _timer = new DispatcherTimer();//定义一个定时器
 
         public MainPage()
         {
@@ -47,7 +48,26 @@ namespace Date
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
+            _timer.Interval = TimeSpan.FromSeconds(5.0);
+            _timer.Tick += ChangeImage;
 
+
+        }
+
+        private void ChangeImage(object sender, object e)
+        {
+
+            if (dataFlipView.Items != null && dataFlipView.SelectedIndex < dataFlipView.Items.Count - 1)
+            {
+                dataFlipView.SelectionChanged -= dataFlipView_SelectionChanged;
+                dataFlipView.SelectedIndex++;
+            }
+            else
+            {
+                dataFlipView.SelectionChanged -= dataFlipView_SelectionChanged;
+                dataFlipView.SelectedIndex = 1;
+            }
+                dataFlipView.SelectionChanged += dataFlipView_SelectionChanged;
 
         }
 
@@ -61,6 +81,7 @@ namespace Date
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             await Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
+
             //这里要改，注销再登陆，按返回，又要登录了
             Frame.BackStack.Clear();
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
@@ -71,6 +92,7 @@ namespace Date
 
 
 
+            _timer.Start();
             InitFlipView();
 
         }
@@ -152,7 +174,14 @@ namespace Date
                         BannerList.Add(b);
                     }
                     BannerList.Add(new Banner { Url = ((JObject)jArray[0])["url"].ToString(), Src = ((JObject)jArray[0])["src"].ToString() });
-                    Hideimg.Begin();
+                    if (Math.Abs(HoldPlaceImg.Opacity) > 0)
+                    {
+                        Hideimg.Begin();
+                    }
+                    else
+                    {
+                        HoldPlaceImg.Visibility = Visibility.Collapsed;
+                    }
                 }
             }
             else
@@ -178,7 +207,7 @@ namespace Date
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var itemsSource = (List<Banner>)dataFlipView.ItemsSource;
-            if (itemsSource == null) return;
+            if (itemsSource == null || itemsSource.Count == 1) return;
             else
             {
                 if (dataFlipView.SelectedIndex == itemsSource.Count - 1)
@@ -233,6 +262,7 @@ namespace Date
         {
             Frame.Navigate(typeof(AddDatePage));
         }
+
 
 
 

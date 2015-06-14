@@ -32,7 +32,12 @@
                                     <FlipView Name="dataFlipView" Height="200" VerticalAlignment="Top" SelectionChanged="dataFlipView_SelectionChanged" >
                                         <FlipView.ItemTemplate>
                                             <DataTemplate>
-                                                <Image x:Name="BannerImage" Source="{Binding Src}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                <Grid>
+                                                    <Image x:Name="BannerImage" Source="{Binding Src}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    <Border Background="#A5000000" Height="40" VerticalAlignment="Bottom">
+                                                        <TextBlock Text="{Binding Url}" FontSize="20" Foreground="#88FFFFFF"  Padding="5,5"/>
+                                                    </Border>
+                                                </Grid>
                                             </DataTemplate>
                                         </FlipView.ItemTemplate>
                                     </FlipView>
@@ -94,7 +99,7 @@
         </Hub>
 
     </Grid>
-    
+
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Name="AddAppBarButton" Icon="Add" Label="新建" Click="AddAppBarButton_Click"></AppBarButton>

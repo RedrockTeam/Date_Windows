@@ -97,7 +97,7 @@
     
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Icon="Add" Label="新建"></AppBarButton>
+            <AppBarButton Name="AddAppBarButton" Icon="Add" Label="新建" Click="AddAppBarButton_Click"></AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

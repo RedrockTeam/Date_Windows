@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="Date.AddDatePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Date"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="#f8f8f8">
+
+    <Grid>
+        <ScrollViewer Background="#efefef">
+            <Grid>
+                <StackPanel>
+                    <Grid Margin="0,15" Background="White">
+                        <TextBlock Margin="15" Text="约什么" Foreground="#ff3f47"  FontSize="15"></TextBlock>
+                        <TextBox VerticalAlignment="Center" IsEnabled="False" FontSize="15" TextAlignment="Right" PlaceholderText="点击更改" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                    </Grid>
+                    <StackPanel Margin="0,15" Background="White">
+                        <Grid>
+                            <TextBlock VerticalAlignment="Center" Margin="15" FontSize="15" Text="标题" Foreground="Black"></TextBlock>
+                            <TextBox VerticalAlignment="Center"  FontSize="15" PlaceholderText="请输入" Foreground="Gray" TextAlignment="Right" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                        </Grid>
+                        <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
+                        <TextBox  FontSize="15" Height="150" PlaceholderText="内容" Foreground="Gray" BorderThickness="0" Margin="10" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,15" Background="White">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Image Source="Assets/ic_time.png" Width="20" Margin="15,0,5,0"></Image>
+                                <TextBlock  Text="约会时间" Foreground="Black" FontSize="15"></TextBlock>
+                            </StackPanel>
+                            <TextBox IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                        </Grid>
+                        
+                        <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
+                        <Grid >
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Image Source="Assets/ic_address.png" Width="20" Margin="15,0,5,0"></Image>
+                                <TextBlock  Text="约会地点" Foreground="Black" FontSize="15"></TextBlock>
+                            </StackPanel>
+                            <TextBox VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
+                        </Grid>
+                        
+                        
+                        <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
+                        <Grid >
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+                                <Image Source="Assets/ic_person.png" Width="20" Margin="15,0,5,0"></Image>
+                                <TextBlock  Text="约会人数" Foreground="Black" FontSize="15"></TextBlock>
+                            </StackPanel>
+                            <TextBox InputScope="Number" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
+                        </Grid>
+                        
+                        
+                        <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
+                        <Grid >
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Image Source="Assets/ic_cost.png" Width="20" Margin="15,0,5,0"></Image>
+                                <TextBlock  Text="花费" Foreground="Black" FontSize="15"></TextBlock>
+                            </StackPanel>
+                            <TextBox VerticalAlignment="Center" FontSize="15" PlaceholderText="请选择" TextAlignment="Right" IsEnabled="False" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                        </Grid>
+                        
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

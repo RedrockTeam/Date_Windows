@@ -79,6 +79,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AddDatePage.xaml.cs">
+      <DependentUpon>AddDatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -105,7 +108,11 @@
     <Content Include="Assets\bg_nav.jpg" />
     <Content Include="Assets\bg_nav2.jpg" />
     <Content Include="Assets\bg_nav3.jpg" />
+    <Content Include="Assets\ic_address.png" />
+    <Content Include="Assets\ic_cost.png" />
     <Content Include="Assets\ic_date.png" />
+    <Content Include="Assets\ic_person.png" />
+    <Content Include="Assets\ic_time.png" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\point_Black.png" />
     <Content Include="Assets\point_Gray.png" />
@@ -120,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AddDatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="grzxPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

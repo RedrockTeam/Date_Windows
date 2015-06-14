@@ -214,7 +214,7 @@ namespace Date
                         AppBarButton BarAddButton = new AppBarButton();
                         BarAddButton.Icon = new SymbolIcon(Symbol.Add);
                         BarAddButton.Label = "新建";
-                        //BarAddButton.Click += AppBarButton_Accept_Click;
+                        BarAddButton.Click += AddAppBarButton_Click;
                         commandbar.PrimaryCommands.Add(BarAddButton);
 
                         break;
@@ -227,6 +227,11 @@ namespace Date
                 }
             }
             hubSectionChange = hubSection.Name;
+        }
+
+        private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(AddDatePage));
         }
 
 

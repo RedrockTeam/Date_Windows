@@ -14,8 +14,8 @@
         </StackPanel>
         <Image Source="Assets/ic_date.png" VerticalAlignment="Top" Margin="25" Height="150" Width="150"></Image>
         <StackPanel VerticalAlignment="Center" Margin="30,-55,30,0">
-            <TextBox Name="StuNumTextBox" InputScope="Number" PlaceholderText="学号" Foreground="Black"></TextBox>
-            <PasswordBox x:Name="IdNumPasswordBox" PlaceholderText="身份证后六位" Foreground="Black"/>
+            <TextBox Name="StuNumTextBox" InputScope="Number" PlaceholderText="学号" Foreground="Black" TabIndex="1" IsTabStop="True"></TextBox>
+            <PasswordBox x:Name="IdNumPasswordBox" PlaceholderText="身份证后六位" Foreground="Black" TabIndex="2" IsTabStop="True"/>
             <Grid Margin="0,25,0,0" >
                 <Button Background="Red" Name="LoginButton" Content="登陆" HorizontalAlignment="Stretch" Click="LoginButton_Click" ></Button>
                 <ProgressBar VerticalAlignment="Center" Name="LoginProgressBar" Visibility="Collapsed" IsIndeterminate="True" Margin="0,5,0,0" />

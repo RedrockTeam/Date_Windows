@@ -14,8 +14,8 @@
             <TextBlock Name="LoginTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,0"  Visibility="Collapsed"/>
         </StackPanel>
         <!--<TextBlock Text="约" Foreground="Red" FontSize="20" Margin="20,20,0,20"/>-->
-        <Hub Margin="0,50,0,0">
-            <HubSection>
+        <Hub Name="DateHub" Margin="0,50,0,0" SectionsInViewChanged="DateHub_SectionsInViewChanged" >
+            <HubSection Name="DateListHubSection">
                 <HubSection.Header>
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <TextBlock Text="约列表" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
@@ -45,7 +45,7 @@
                 </HubSection.Header>
             </HubSection>
 
-            <HubSection>
+            <HubSection Name="MeHubSection">
                 <HubSection.Header>
                     <StackPanel>
                         <TextBlock Text="我" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
@@ -73,7 +73,7 @@
             </HubSection>
 
 
-            <HubSection>
+            <HubSection Name="MoreHubSection">
                 <HubSection.Header>
                     <StackPanel>
                         <TextBlock Text="更多" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
@@ -94,5 +94,10 @@
         </Hub>
 
     </Grid>
-
+    
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Add" Label="新建"></AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

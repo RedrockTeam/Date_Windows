@@ -39,6 +39,7 @@ namespace Date
         private ApplicationDataContainer appSetting;
         private bool isLogin = false;
         List<Banner> BannerList = new List<Banner>();
+        private int HubChange = 1;
 
         public MainPage()
         {
@@ -46,6 +47,7 @@ namespace Date
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
+
 
         }
 
@@ -194,6 +196,39 @@ namespace Date
         {
             Frame.Navigate(typeof(grzxPage));
         }
+
+        private void DateHub_SectionsInViewChanged(object sender, SectionsInViewChangedEventArgs e)
+        {
+            //var hubSection = DateHub.Sections[0];
+            //Debug.WriteLine(HubChange+"  "+hubSection.Name);
+            //if (HubChange % 2 != 0)
+            //{
+            //    CommandBar commandbar = ((CommandBar)this.BottomAppBar);
+            //    ((CommandBar)this.BottomAppBar).PrimaryCommands.Clear();
+            //    ((CommandBar)this.BottomAppBar).SecondaryCommands.Clear();
+
+
+                
+            //    switch (hubSection.Name)
+            //    {
+            //        case "DateListHubSection":
+            //            AppBarButton BarAddButton = new AppBarButton();
+            //            BarAddButton.Icon = new SymbolIcon(Symbol.Add);
+            //            BarAddButton.Label = "新建";
+            //            //BarAddButton.Click += AppBarButton_Accept_Click;
+            //            commandbar.PrimaryCommands.Add(BarAddButton);
+
+            //            break;
+            //        case "MeHubSection":
+            //            break;
+            //        case "MoreHubSection":
+            //            break;
+            //    }
+            //}
+            //HubChange++;
+
+        }
+
 
     }
 }

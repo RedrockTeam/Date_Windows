@@ -48,7 +48,8 @@ namespace Date
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-            _timer.Interval = TimeSpan.FromSeconds(5.0);
+            _timer.Interval = TimeSpan.FromSeconds(7.0);
+            InitFlipView();
             _timer.Tick += ChangeImage;
 
 
@@ -57,17 +58,18 @@ namespace Date
         private void ChangeImage(object sender, object e)
         {
 
-            if (dataFlipView.Items != null && dataFlipView.SelectedIndex < dataFlipView.Items.Count - 1)
+            dataFlipView.SelectionChanged -= dataFlipView_SelectionChanged;
+            if (dataFlipView.Items != null && dataFlipView.Items.Count>1&& dataFlipView.SelectedIndex < dataFlipView.Items.Count - 1)
             {
-                dataFlipView.SelectionChanged -= dataFlipView_SelectionChanged;
+
                 dataFlipView.SelectedIndex++;
             }
             else
             {
-                dataFlipView.SelectionChanged -= dataFlipView_SelectionChanged;
                 dataFlipView.SelectedIndex = 1;
             }
-                dataFlipView.SelectionChanged += dataFlipView_SelectionChanged;
+            Debug.WriteLine(dataFlipView.SelectedIndex);
+            dataFlipView.SelectionChanged += dataFlipView_SelectionChanged;
 
         }
 
@@ -89,11 +91,7 @@ namespace Date
             {
                 Login();
             }
-
-
-
             _timer.Start();
-            InitFlipView();
 
         }
 
@@ -197,6 +195,7 @@ namespace Date
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+            _timer.Stop();
         }
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
         {
@@ -210,6 +209,8 @@ namespace Date
             if (itemsSource == null || itemsSource.Count == 1) return;
             else
             {
+                Debug.WriteLine(dataFlipView.SelectedIndex);
+
                 if (dataFlipView.SelectedIndex == itemsSource.Count - 1)
                 {
                     dataFlipView.SelectedIndex = 1;

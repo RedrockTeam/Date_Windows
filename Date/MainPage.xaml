@@ -18,7 +18,7 @@
             <HubSection Name="DateListHubSection">
                 <HubSection.Header>
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <TextBlock Text="约列表" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
+                        <TextBlock Text="约列表" Foreground="#ff3d3d" FontSize="30" FontWeight="Light"/>
 
                         <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                             <StackPanel>
@@ -53,7 +53,7 @@
             <HubSection Name="MeHubSection">
                 <HubSection.Header>
                     <StackPanel>
-                        <TextBlock Text="我" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
+                        <TextBlock Text="我" Foreground="#ff3d3d" FontSize="30" FontWeight="Light"/>
                         <GridView>
                             <GridView.Items>
                                 <Grid Background="#F25022" Width="150" Height="150" Margin="5">
@@ -81,13 +81,13 @@
             <HubSection Name="MoreHubSection">
                 <HubSection.Header>
                     <StackPanel>
-                        <TextBlock Text="更多" Foreground="OrangeRed" FontSize="30" FontWeight="Light"/>
+                        <TextBlock Text="更多" Foreground="#ff3d3d" FontSize="30" FontWeight="Light"/>
                         <GridView>
                             <GridView.Items>
-                                <Grid Background="Red" Width="150" Height="150" Margin="5">
+                                <Grid Background="#ff3d3d" Width="150" Height="150" Margin="5">
                                     <TextBlock Text="设置" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
                                 </Grid>
-                                <Grid Background="Red" Width="150" Height="150" Margin="5">
+                                <Grid Background="#ff3d3d" Width="150" Height="150" Margin="5">
                                     <TextBlock Text="关于" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
                                 </Grid>
                             </GridView.Items>

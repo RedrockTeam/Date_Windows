@@ -82,9 +82,8 @@ namespace Date
         /// 此参数通常用于配置页。</param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            await Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
+            await Util.Utils.ShowSystemTrayAsync(Color.FromArgb(255,255,61,61), Colors.White, text: "约");
 
-            //这里要改，注销再登陆，按返回，又要登录了
             Frame.BackStack.Clear();
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             if (!isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")

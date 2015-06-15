@@ -10,6 +10,7 @@ using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace Date.Util
 {
@@ -79,6 +80,17 @@ namespace Date.Util
             await new MessageDialog(text).ShowAsync();
         }
 
+        public static double getPhoneHeight()
+        {
+            return Window.Current.Bounds.Height;
+        }
+
+        public static double getPhoneWidth()
+        {
+            return Window.Current.Bounds.Width;
+        }
 
     }
+
+
 }

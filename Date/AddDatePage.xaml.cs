@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Date.Util;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -23,9 +25,18 @@ namespace Date
     /// </summary>
     public sealed partial class AddDatePage : Page
     {
+        private DateTimeOffset addDate;
+        private TimeSpan addTime;
+
         public AddDatePage()
         {
             this.InitializeComponent();
+            initScrollViewer();
+        }
+
+        private void initScrollViewer()
+        {
+            AddDateScrollViewer.Height = Utils.getPhoneHeight() - 60 - 70;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -45,6 +56,30 @@ namespace Date
                 rootFrame.GoBack();
                 e.Handled = true;
             }
+        }
+
+        private void AddDateTimeGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            DatePickerFlyout datePickerFlyout = new DatePickerFlyout();
+            datePickerFlyout.MinYear = DateTime.Now;
+            datePickerFlyout.DatePicked += datePickerFlyout_DatePicked;
+            datePickerFlyout.ShowAt(Frame);
+        }
+
+        private void datePickerFlyout_DatePicked(DatePickerFlyout sender, DatePickedEventArgs args)
+        {
+            TimePickerFlyout timePickerFlyout = new TimePickerFlyout();
+            timePickerFlyout.TimePicked += timePickerFlyout_TimePicked;
+            timePickerFlyout.ShowAt(Frame);
+            addDate = args.NewDate;
+            Debug.WriteLine(addDate.Date.ToString());
+        }
+
+        private void timePickerFlyout_TimePicked(TimePickerFlyout sender, TimePickedEventArgs args)
+        {
+            addTime = args.NewTime;
+            Debug.WriteLine(addTime.ToString());
+
         }
     }
 }

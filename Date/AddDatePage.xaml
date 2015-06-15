@@ -9,11 +9,19 @@
     Background="#f8f8f8">
 
     <Grid>
-        <ScrollViewer Background="#efefef">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="#ff3d3d" Height="60">
+            <TextBlock Text="发布约" FontSize="30" VerticalAlignment="Center" Margin="15,0"/>
+        </Grid>
+        <ScrollViewer Name="AddDateScrollViewer" Background="#efefef" Grid.Row="1"  >
             <Grid>
                 <StackPanel>
                     <Grid Margin="0,15" Background="White">
-                        <TextBlock Margin="15" Text="约什么" Foreground="#ff3f47"  FontSize="15"></TextBlock>
+                        <TextBlock Margin="15" Text="约什么" Foreground="#ff3d3d"  FontSize="15"></TextBlock>
                         <TextBox VerticalAlignment="Center" IsEnabled="False" FontSize="15" TextAlignment="Right" PlaceholderText="点击更改" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                     </Grid>
                     <StackPanel Margin="0,15" Background="White">
@@ -22,17 +30,21 @@
                             <TextBox VerticalAlignment="Center"  FontSize="15" PlaceholderText="请输入" Foreground="Gray" TextAlignment="Right" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                         </Grid>
                         <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
-                        <TextBox  FontSize="15" Height="150" PlaceholderText="内容" Foreground="Gray" BorderThickness="0" Margin="10" TextWrapping="Wrap"/>
+                        <TextBox  FontSize="15" Height="150" PlaceholderText="内容" Foreground="Gray" BorderThickness="0" Margin="10" TextWrapping="Wrap" FontFamily="Global User Interface"/>
                     </StackPanel>
+
+
                     <StackPanel Margin="0,15" Background="White">
-                        <Grid>
+                        <!--约会时间-->
+                        <Grid Name="AddDateTimeGrid" Tapped="AddDateTimeGrid_Tapped" Background="White">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Image Source="Assets/ic_time.png" Width="20" Margin="15,0,5,0"></Image>
                                 <TextBlock  Text="约会时间" Foreground="Black" FontSize="15"></TextBlock>
                             </StackPanel>
                             <TextBox IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                         </Grid>
-                        
+
+                        <!--约会地点-->
                         <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
                         <Grid >
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -41,8 +53,8 @@
                             </StackPanel>
                             <TextBox VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
                         </Grid>
-                        
-                        
+
+                        <!--约会人数-->
                         <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
                         <Grid >
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
@@ -51,20 +63,26 @@
                             </StackPanel>
                             <TextBox InputScope="Number" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
                         </Grid>
-                        
-                        
+
+                        <!--花费-->
                         <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
-                        <Grid >
+                        <Grid Background="White">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Image Source="Assets/ic_cost.png" Width="20" Margin="15,0,5,0"></Image>
                                 <TextBlock  Text="花费" Foreground="Black" FontSize="15"></TextBlock>
                             </StackPanel>
                             <TextBox VerticalAlignment="Center" FontSize="15" PlaceholderText="请选择" TextAlignment="Right" IsEnabled="False" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                         </Grid>
-                        
+
                     </StackPanel>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Name="PublishAppBarButton" Label="发布" Icon="Accept"></AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

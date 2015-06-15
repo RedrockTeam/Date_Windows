@@ -40,6 +40,7 @@ namespace Date
         private bool isLogin = false;
         List<Banner> BannerList = new List<Banner>();
         private string hubSectionChange = "DateListHubSection";
+        DispatcherTimer _timer = new DispatcherTimer();//定义一个定时器
 
         public MainPage()
         {
@@ -47,7 +48,28 @@ namespace Date
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
+            _timer.Interval = TimeSpan.FromSeconds(7.0);
+            InitFlipView();
+            _timer.Tick += ChangeImage;
 
+
+        }
+
+        private void ChangeImage(object sender, object e)
+        {
+
+            dataFlipView.SelectionChanged -= dataFlipView_SelectionChanged;
+            if (dataFlipView.Items != null && dataFlipView.Items.Count > 1 && dataFlipView.SelectedIndex < dataFlipView.Items.Count - 1)
+            {
+
+                dataFlipView.SelectedIndex++;
+            }
+            else
+            {
+                dataFlipView.SelectedIndex = 1;
+            }
+            Debug.WriteLine(dataFlipView.SelectedIndex);
+            dataFlipView.SelectionChanged += dataFlipView_SelectionChanged;
 
         }
 
@@ -61,6 +83,7 @@ namespace Date
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             await Util.Utils.ShowSystemTrayAsync(Colors.Red, Colors.White, text: "约");
+
             //这里要改，注销再登陆，按返回，又要登录了
             Frame.BackStack.Clear();
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
@@ -68,10 +91,7 @@ namespace Date
             {
                 Login();
             }
-
-
-
-            InitFlipView();
+            _timer.Start();
 
         }
 
@@ -152,23 +172,33 @@ namespace Date
                         BannerList.Add(b);
                     }
                     BannerList.Add(new Banner { Url = ((JObject)jArray[0])["url"].ToString(), Src = ((JObject)jArray[0])["src"].ToString() });
-                    Hideimg.Begin();
+                    if (Math.Abs(HoldPlaceImg.Opacity) > 0)
+                    {
+                        Hideimg.Begin();
+                    }
+                    else
+                    {
+                        HoldPlaceImg.Visibility = Visibility.Collapsed;
+                    }
                 }
+                else
+                {
+                }
+                try
+                {
+                    dataFlipView.ItemsSource = BannerList;
+                    //HoldPlaceImg.Visibility = Visibility.Collapsed;
+                    dataFlipView.SelectedIndex = 1;
+                }
+                catch (Exception) { }
             }
-
-            try
-            {
-                dataFlipView.ItemsSource = BannerList;
-                //HoldPlaceImg.Visibility = Visibility.Collapsed;
-                dataFlipView.SelectedIndex = 1;
-            }
-            catch (Exception) { }
         }
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+            _timer.Stop();
         }
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
         {
@@ -179,9 +209,11 @@ namespace Date
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var itemsSource = (List<Banner>)dataFlipView.ItemsSource;
-            if (itemsSource == null) return;
+            if (itemsSource == null || itemsSource.Count == 1) return;
             else
             {
+                Debug.WriteLine(dataFlipView.SelectedIndex);
+
                 if (dataFlipView.SelectedIndex == itemsSource.Count - 1)
                 {
                     dataFlipView.SelectedIndex = 1;
@@ -234,6 +266,7 @@ namespace Date
         {
             Frame.Navigate(typeof(AddDatePage));
         }
+
 
 
 

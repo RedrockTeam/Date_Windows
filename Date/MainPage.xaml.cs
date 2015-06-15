@@ -155,13 +155,14 @@ namespace Date
                     Hideimg.Begin();
                 }
             }
-            else
-            {
 
+            try
+            {
+                dataFlipView.ItemsSource = BannerList;
+                //HoldPlaceImg.Visibility = Visibility.Collapsed;
+                dataFlipView.SelectedIndex = 1;
             }
-            dataFlipView.ItemsSource = BannerList;
-            //HoldPlaceImg.Visibility = Visibility.Collapsed;
-            dataFlipView.SelectedIndex = 1;
+            catch (Exception) { }
         }
 
         //离开页面时，取消事件

@@ -57,20 +57,22 @@ namespace Date
 
         private void ChangeImage(object sender, object e)
         {
-
-            dataFlipView.SelectionChanged -= dataFlipView_SelectionChanged;
-            if (dataFlipView.Items != null && dataFlipView.Items.Count > 1 && dataFlipView.SelectedIndex < dataFlipView.Items.Count - 1)
+            try
             {
+                dataFlipView.SelectionChanged -= dataFlipView_SelectionChanged;
+                if (dataFlipView.Items != null && dataFlipView.Items.Count > 1 && dataFlipView.SelectedIndex < dataFlipView.Items.Count - 1)
+                {
 
-                dataFlipView.SelectedIndex++;
+                    dataFlipView.SelectedIndex++;
+                }
+                else
+                {
+                    dataFlipView.SelectedIndex = 1;
+                }
+                Debug.WriteLine(dataFlipView.SelectedIndex);
+                dataFlipView.SelectionChanged += dataFlipView_SelectionChanged;
             }
-            else
-            {
-                dataFlipView.SelectedIndex = 1;
-            }
-            Debug.WriteLine(dataFlipView.SelectedIndex);
-            dataFlipView.SelectionChanged += dataFlipView_SelectionChanged;
-
+            catch (Exception) { }
         }
 
 

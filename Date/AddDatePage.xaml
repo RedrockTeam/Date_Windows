@@ -41,7 +41,7 @@
                                 <Image Source="Assets/ic_time.png" Width="20" Margin="15,0,5,0"></Image>
                                 <TextBlock  Text="约会时间" Foreground="Black" FontSize="15"></TextBlock>
                             </StackPanel>
-                            <TextBox IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                            <TextBox Name="AddDateTimeTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                         </Grid>
 
                         <!--约会地点-->
@@ -66,12 +66,12 @@
 
                         <!--花费-->
                         <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
-                        <Grid Background="White">
+                        <Grid Background="White" Name="AddDateCostGrid" Tapped="AddDateCostGrid_Tapped">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Image Source="Assets/ic_cost.png" Width="20" Margin="15,0,5,0"></Image>
                                 <TextBlock  Text="花费" Foreground="Black" FontSize="15"></TextBlock>
                             </StackPanel>
-                            <TextBox VerticalAlignment="Center" FontSize="15" PlaceholderText="请选择" TextAlignment="Right" IsEnabled="False" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                            <TextBox Name="AddDateCostTextBox" VerticalAlignment="Center" FontSize="15" PlaceholderText="请选择" TextAlignment="Right" IsEnabled="False" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                         </Grid>
 
                     </StackPanel>

@@ -79,7 +79,37 @@ namespace Date
         {
             addTime = args.NewTime;
             Debug.WriteLine(addTime.ToString());
-
+            AddDateTimeTextBox.Text = addDate.Date.Year + "年" + addDate.Date.Month + "月" + addDate.Date.Day + "日  " + addTime.Hours + "点" + addTime.Minutes + "分";
         }
+
+        private void AddDateCostGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MenuFlyout costMenuFlyout = new MenuFlyout();
+            MenuFlyoutItem AAmenuFlyoutItem = new MenuFlyoutItem();
+            MenuFlyoutItem YoumenuFlyoutItem = new MenuFlyoutItem();
+            MenuFlyoutItem MemenuFlyoutItem = new MenuFlyoutItem();
+
+            AAmenuFlyoutItem.Text = "AA";
+            AAmenuFlyoutItem.Click += menuFlyoutItem_click;
+            costMenuFlyout.Items.Add(AAmenuFlyoutItem);
+
+            YoumenuFlyoutItem.Text = "你买单";
+            YoumenuFlyoutItem.Click += menuFlyoutItem_click;
+            costMenuFlyout.Items.Add(YoumenuFlyoutItem);
+
+            MemenuFlyoutItem.Text = "我请客";
+            MemenuFlyoutItem.Click += menuFlyoutItem_click;
+            costMenuFlyout.Items.Add(MemenuFlyoutItem);
+
+            costMenuFlyout.ShowAt(AddDateCostGrid);
+        }
+
+        private void menuFlyoutItem_click(object sender, RoutedEventArgs e)
+        {
+            MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
+            AddDateCostTextBox.Text = menuFlyoutItem.Text;
+        }
+
+
     }
 }

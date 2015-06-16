@@ -168,33 +168,38 @@ namespace Date
 
         private void AddDateGradeGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            MenuFlyout GradeMenuFlyout = new MenuFlyout();
-
-            GradeMenuFlyout.Items.Add(getGradeMenuFlyoutItem("大一"));
-            GradeMenuFlyout.Items.Add(getGradeMenuFlyoutItem("大二"));
-            GradeMenuFlyout.Items.Add(getGradeMenuFlyoutItem("大三"));
-            GradeMenuFlyout.Items.Add(getGradeMenuFlyoutItem("大四"));
-            GradeMenuFlyout.ShowAt(AddDateGradeGrid);
+            AddDateGradeFlyout.ShowAt(AddDateGradeGrid);
+            AddDateGradeTextBox.Text = "";
         }
 
-        private MenuFlyoutItem getGradeMenuFlyoutItem(string text)
+        private void FlyoutButton_Click(object sender, RoutedEventArgs e)
         {
-            MenuFlyoutItem menuFlyoutItem = new MenuFlyoutItem();
-            menuFlyoutItem.Text = text;
-            menuFlyoutItem.Click += GradeMenuFlyoutItem_click;
-            return menuFlyoutItem;
+            AddDateGradeFlyout.Hide();
         }
 
-        private void GradeMenuFlyoutItem_click(object sender, RoutedEventArgs e)
+        private void AddDateGradeFlyout_Closed(object sender, object e)
         {
-            MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
-            AddDateGradeTextBox.Text = menuFlyoutItem.Text;
+            if(oneCheckBox.IsChecked ==true)
+            {
+                AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大一 ";
+            }
+            if (twoCheckBox.IsChecked == true)
+            {
+                AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大二 ";
+            }
+            if (threeCheckBox.IsChecked == true)
+            {
+                AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大三 ";
+            }
+            if (fourCheckBox.IsChecked == true)
+            {
+                AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大四 ";
+            }
         }
-
 
         private async void PublishAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (AddDateTypeTextBox.Text != "" && AddDateTitleTextBox.Text != "" && AddDateContentTextBox.Text != "" && AddDateTimeTextBox.Text != "" && AddDatePlaceTextBox.Text != "" && Int32.Parse(AddDatePeopleTextBox.Text.ToString()) >0 && AddDateTypeTextBox.Text != "" && AddDateSexTextBox.Text != "" && AddDateGradeTextBox.Text != "")
+            if (AddDateTypeTextBox.Text != "" && AddDateTitleTextBox.Text != "" && AddDateContentTextBox.Text != "" && AddDateTimeTextBox.Text != "" && AddDatePlaceTextBox.Text != "" && Int32.Parse(AddDatePeopleTextBox.Text.ToString()) > 0 && AddDateTypeTextBox.Text != "" && AddDateSexTextBox.Text != "" && AddDateGradeTextBox.Text != "")
             {
                 //这里提交
                 Debug.WriteLine("完成");
@@ -220,5 +225,8 @@ namespace Date
                 rootFrame.GoBack();
             }
         }
+
+
+
     }
 }

@@ -85,6 +85,26 @@
                         <!--年级要求-->
                         <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
                         <Grid Name="AddDateGradeGrid" Tapped="AddDateGradeGrid_Tapped" Background="White">
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout x:Name="AddDateGradeFlyout" Placement="Bottom" Closed="AddDateGradeFlyout_Closed" >
+                                    <Grid Background="White" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1 *"/>
+                                            <ColumnDefinition Width="1 *"/>
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox Foreground="Black" Background="#FFFF3D3D" Name="oneCheckBox" Content="大一" Grid.Column="0" Grid.Row="0" Margin="20,0"/>
+                                        <CheckBox Foreground="Black" Background="#FFFF3D3D" Name="twoCheckBox" Content="大二" Grid.Column="1" Grid.Row="0"/>
+                                        <CheckBox Foreground="Black" Background="#FFFF3D3D" Name="threeCheckBox" Content="大三" Grid.Column="0" Grid.Row="1" Margin="20,0"/>
+                                        <CheckBox Foreground="Black" Background="#FFFF3D3D" Name="fourCheckBox" Content="大四" Grid.Column="1" Grid.Row="1"/>
+                                        <Button Name="FlyoutButton" Content="确定" Background="Black" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="15,0" Click="FlyoutButton_Click"></Button>
+                                    </Grid>
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
                             <TextBlock  Text="年级要求" Foreground="Black" FontSize="15" VerticalAlignment="Center" Margin="20,0"></TextBlock>
                             <TextBox Name="AddDateGradeTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                         </Grid>

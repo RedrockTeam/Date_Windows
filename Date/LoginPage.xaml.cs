@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Date.Util;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace Date
                 paramList.Add(new KeyValuePair<string, string>("username", StuNumTextBox.Text));
                 paramList.Add(new KeyValuePair<string, string>("password", IdNumPasswordBox.Password));
 
-                string content = await Util.NetWork.getHttpWebRequest("/public/login", paramList);
+                string content = await NetWork.getHttpWebRequest("/public/login", paramList);
                 content = Util.Utils.ConvertUnicodeStringToChinese(content);
                 Debug.WriteLine("LoginMessage" + content);
 
@@ -91,7 +92,6 @@ namespace Date
                     LoginStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
                     await Task.Delay(2000);
                     LoginStackPanel.Visibility = Visibility.Collapsed;
-
                 }
 
 

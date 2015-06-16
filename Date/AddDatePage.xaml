@@ -20,17 +20,17 @@
         <ScrollViewer Name="AddDateScrollViewer" Background="#efefef" Grid.Row="1"  >
             <Grid>
                 <StackPanel>
-                    <Grid Margin="0,15" Background="White">
+                    <Grid Name="AddDateTypeGrid" Margin="0,15" Background="White" Tapped="AddDateTypeGrid_Tapped">
                         <TextBlock Margin="15" Text="约什么" Foreground="#ff3d3d"  FontSize="15"></TextBlock>
-                        <TextBox VerticalAlignment="Center" IsEnabled="False" FontSize="15" TextAlignment="Right" PlaceholderText="点击更改" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                        <TextBox Name="AddDateTypeTextBox" VerticalAlignment="Center" IsEnabled="False" FontSize="15" TextAlignment="Right" PlaceholderText="点击更改" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                     </Grid>
                     <StackPanel Margin="0,15" Background="White">
                         <Grid>
                             <TextBlock VerticalAlignment="Center" Margin="15" FontSize="15" Text="标题" Foreground="Black"></TextBlock>
-                            <TextBox VerticalAlignment="Center"  FontSize="15" PlaceholderText="请输入" Foreground="Gray" TextAlignment="Right" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                            <TextBox Name="AddDateTitleTextBox" VerticalAlignment="Center"  FontSize="15" PlaceholderText="请输入" Foreground="Gray" TextAlignment="Right" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                         </Grid>
                         <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
-                        <TextBox  FontSize="15" Height="150" PlaceholderText="内容" Foreground="Gray" BorderThickness="0" Margin="10" TextWrapping="Wrap" FontFamily="Global User Interface"/>
+                        <TextBox Name="AddDateContentTextBox" FontSize="15" Height="150" PlaceholderText="内容" Foreground="Gray" BorderThickness="0" Margin="10" TextWrapping="Wrap" FontFamily="Global User Interface"/>
                     </StackPanel>
 
 
@@ -51,7 +51,7 @@
                                 <Image Source="Assets/ic_address.png" Width="20" Margin="15,0,5,0"></Image>
                                 <TextBlock  Text="约会地点" Foreground="Black" FontSize="15"></TextBlock>
                             </StackPanel>
-                            <TextBox VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
+                            <TextBox Name="AddDatePlaceTextBox" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
                         </Grid>
 
                         <!--约会人数-->
@@ -61,7 +61,7 @@
                                 <Image Source="Assets/ic_person.png" Width="20" Margin="15,0,5,0"></Image>
                                 <TextBlock  Text="约会人数" Foreground="Black" FontSize="15"></TextBlock>
                             </StackPanel>
-                            <TextBox InputScope="Number" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
+                            <TextBox Name="AddDatePeopleTextBox" InputScope="Number" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
                         </Grid>
 
                         <!--花费-->
@@ -73,8 +73,27 @@
                             </StackPanel>
                             <TextBox Name="AddDateCostTextBox" VerticalAlignment="Center" FontSize="15" PlaceholderText="请选择" TextAlignment="Right" IsEnabled="False" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                         </Grid>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,15" Background="White">
+                        <!--性别要求-->
+                        <Grid Name="AddDateSexGrid" Tapped="AddDateSexGrid_Tapped" Background="White">
+                            <TextBlock  Text="性别要求" Foreground="Black" FontSize="15" VerticalAlignment="Center" Margin="20,0"></TextBlock>
+                            <TextBox Name="AddDateSexTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                        </Grid>
+
+                        <!--年级要求-->
+                        <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
+                        <Grid Name="AddDateGradeGrid" Tapped="AddDateGradeGrid_Tapped" Background="White">
+                            <TextBlock  Text="年级要求" Foreground="Black" FontSize="15" VerticalAlignment="Center" Margin="20,0"></TextBlock>
+                            <TextBox Name="AddDateGradeTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                        </Grid>
 
                     </StackPanel>
+
+
+
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>
@@ -82,7 +101,7 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Name="PublishAppBarButton" Label="发布" Icon="Accept"></AppBarButton>
+            <AppBarButton Name="PublishAppBarButton" Label="发布" Icon="Accept" Click="PublishAppBarButton_Click"></AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

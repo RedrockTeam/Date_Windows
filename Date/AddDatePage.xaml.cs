@@ -31,12 +31,19 @@ namespace Date
         private DateTimeOffset addDate;
         private TimeSpan addTime;
 
+        private string DateTimeStamp;
+
+        private int gender_limit = 0;
+        private string grade_limit;
+        private int grade_choose = 0;
+        private int cost_model = 0;
+
+
         public AddDatePage()
         {
             this.InitializeComponent();
             initScrollViewer();
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-
         }
 
         private void initScrollViewer()
@@ -85,6 +92,8 @@ namespace Date
             addTime = args.NewTime;
             Debug.WriteLine(addTime.ToString());
             AddDateTimeTextBox.Text = addDate.Date.Year + "年" + addDate.Date.Month + "月" + addDate.Date.Day + "日  " + addTime.Hours + "点" + addTime.Minutes + "分";
+            DateTimeStamp = Utils.GetTimeStamp(addDate, addTime);
+            Debug.WriteLine(DateTimeStamp);
         }
 
         private void AddDateCostGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -109,6 +118,18 @@ namespace Date
         {
             MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
             AddDateCostTextBox.Text = menuFlyoutItem.Text;
+            switch (menuFlyoutItem.Text)
+            {
+                case "AA":
+                    cost_model = 1;
+                    break;
+                case "你请客":
+                    cost_model = 2;
+                    break;
+                case "我买单":
+                    cost_model = 3;
+                    break;
+            }
         }
 
         private void AddDateTypeGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -164,12 +185,26 @@ namespace Date
         {
             MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
             AddDateSexTextBox.Text = menuFlyoutItem.Text;
+            switch (menuFlyoutItem.Text)
+            {
+                case "男":
+                    gender_limit = 1;
+                    break;
+                case "女":
+                    gender_limit = 2;
+                    break;
+                default:
+                    gender_limit = 0;
+                    break;
+            }
         }
 
         private void AddDateGradeGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             AddDateGradeFlyout.ShowAt(AddDateGradeGrid);
             AddDateGradeTextBox.Text = "";
+            grade_limit = "";
+            grade_choose = 0;
         }
 
         private void FlyoutButton_Click(object sender, RoutedEventArgs e)
@@ -179,21 +214,29 @@ namespace Date
 
         private void AddDateGradeFlyout_Closed(object sender, object e)
         {
-            if(oneCheckBox.IsChecked ==true)
+            if (oneCheckBox.IsChecked == true)
             {
                 AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大一 ";
+                grade_limit = grade_limit + "1,";
+                grade_choose++;
             }
             if (twoCheckBox.IsChecked == true)
             {
                 AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大二 ";
+                grade_limit = grade_limit + "2,";
+                grade_choose++;
             }
             if (threeCheckBox.IsChecked == true)
             {
                 AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大三 ";
+                grade_limit = grade_limit + "3,";
+                grade_choose++;
             }
             if (fourCheckBox.IsChecked == true)
             {
                 AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大四 ";
+                grade_limit = grade_limit + "4,";
+                grade_choose++;
             }
         }
 
@@ -207,19 +250,24 @@ namespace Date
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                 paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("date_type", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("title", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("content", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("date_time", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("date_place", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("date_people", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("gender_limit", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("grade_limit", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("grade_select_model", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("cost_model", appSetting.Values["token"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("date_type", "1"));
+                paramList.Add(new KeyValuePair<string, string>("title", AddDateTitleTextBox.Text));
+                paramList.Add(new KeyValuePair<string, string>("content", AddDateContentTextBox.Text));
+                paramList.Add(new KeyValuePair<string, string>("date_time", DateTimeStamp));
+                paramList.Add(new KeyValuePair<string, string>("date_place", AddDatePlaceTextBox.Text));
+                paramList.Add(new KeyValuePair<string, string>("date_people", AddDatePeopleTextBox.Text));
+                paramList.Add(new KeyValuePair<string, string>("gender_limit", gender_limit.ToString()));
 
-                string content = await NetWork.getHttpWebRequest("/public/login", paramList);
-                content = Util.Utils.ConvertUnicodeStringToChinese(content);
+                if (grade_choose != 4)
+                {
+                    paramList.Add(new KeyValuePair<string, string>("grade_limit", grade_limit));
+                    paramList.Add(new KeyValuePair<string, string>("grade_select_model", "2"));
+                }
+                paramList.Add(new KeyValuePair<string, string>("cost_model", cost_model.ToString()));
+
+                string AddDate = await NetWork.getHttpWebRequest("/date/createdate", paramList);
+                AddDate = Util.Utils.ConvertUnicodeStringToChinese(AddDate);
+                Debug.WriteLine(AddDate);
 
                 Frame rootFrame = Window.Current.Content as Frame;
                 rootFrame.GoBack();

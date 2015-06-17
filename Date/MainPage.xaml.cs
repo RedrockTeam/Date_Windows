@@ -95,7 +95,20 @@ namespace Date
                 Login();
             }
             _timer.Start();
+            UmengSDK.UmengAnalytics.TrackPageStart("MainPage");
+        }
 
+
+        //离开页面时，取消事件
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+            UmengSDK.UmengAnalytics.TrackPageEnd("MainPage");
+            _timer.Stop();
+        }
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
+        {
+            Application.Current.Exit();
         }
 
         private async void Login()
@@ -197,16 +210,6 @@ namespace Date
             }
         }
 
-        //离开页面时，取消事件
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
-            _timer.Stop();
-        }
-        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
-        {
-            Application.Current.Exit();
-        }
 
 
         private void dataFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)

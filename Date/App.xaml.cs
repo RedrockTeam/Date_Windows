@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UmengSDK;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -37,9 +38,16 @@ namespace Date
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+            this.Resuming += this.OnResuming;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
 
         }
+
+        private async void OnResuming(object sender, object e)
+        {
+            await UmengAnalytics.StartTrackAsync("558183b467e58ef41f0030ea", "Marketplace");
+        }
+
 
         /// <summary>
         /// 在应用程序由最终用户正常启动时进行调用。
@@ -47,7 +55,7 @@ namespace Date
         /// 将使用其他入口点。
         /// </summary>
         /// <param name="e">有关启动请求和过程的详细信息。</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -113,6 +121,7 @@ namespace Date
 
             // 确保当前窗口处于活动状态
             Window.Current.Activate();
+            await UmengAnalytics.StartTrackAsync("558183b467e58ef41f0030ea", "Marketplace");
         }
 
         /// <summary>
@@ -134,12 +143,15 @@ namespace Date
         /// </summary>
         /// <param name="sender">挂起的请求的源。</param>
         /// <param name="e">有关挂起的请求的详细信息。</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 
             // TODO: 保存应用程序状态并停止任何后台活动
+            await UmengAnalytics.EndTrackAsync();
             deferral.Complete();
         }
+
+
     }
 }

@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -48,12 +49,13 @@ namespace Date
 
         private void initScrollViewer()
         {
-            AddDateScrollViewer.Height = Utils.getPhoneHeight() - 60 - 70;
+            AddDateScrollViewer.Height = Utils.getPhoneHeight() - 60 - 80;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
+            await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 255, 61, 61), Colors.White, text: "约");
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {

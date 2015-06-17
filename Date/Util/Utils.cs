@@ -72,6 +72,7 @@ namespace Date.Util
             StatusBar statusBar = StatusBar.GetForCurrentView();
             statusBar.BackgroundColor = backgroundColor;
             statusBar.ForegroundColor = foregroundColor;
+            statusBar.BackgroundOpacity = opacity; 
 
             statusBar.ProgressIndicator.Text = text;
             if (!isIndeterminate)

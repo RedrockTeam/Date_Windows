@@ -48,6 +48,8 @@ namespace Date
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
+
+
             _timer.Interval = TimeSpan.FromSeconds(7.0);
             InitFlipView();
             _timer.Tick += ChangeImage;
@@ -84,7 +86,7 @@ namespace Date
         /// 此参数通常用于配置页。</param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            await Util.Utils.ShowSystemTrayAsync(Color.FromArgb(255,255,61,61), Colors.White, text: "约");
+            await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 255, 61, 61), Colors.White, text: "约");
 
             Frame.BackStack.Clear();
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件

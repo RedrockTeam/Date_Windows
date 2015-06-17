@@ -85,7 +85,7 @@ namespace Date
                     JObject obj = JObject.Parse(content);
                     if (Int32.Parse(obj["status"].ToString()) != 200)
                     {
-                        Util.Utils.Message(obj["info"].ToString());
+                        Utils.Message(obj["info"].ToString());
                         LoginProgressBar.Visibility = Visibility.Collapsed;
                     }
                     else

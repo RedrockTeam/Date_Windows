@@ -86,9 +86,9 @@ namespace Date.Util
         /// 弹出对话框
         /// </summary>
         /// <param name="text"></param>
-        public async static void Message(string text)
+        public async static void Message(string text,string title="错误")
         {
-            await new MessageDialog(text).ShowAsync();
+            await new MessageDialog(text, title).ShowAsync();
         }
 
         /// <summary>

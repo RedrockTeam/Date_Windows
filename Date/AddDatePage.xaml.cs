@@ -1,4 +1,5 @@
 ﻿using Date.Util;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -104,7 +105,7 @@ namespace Date
         {
             MenuFlyout costMenuFlyout = new MenuFlyout();
 
-            costMenuFlyout.Items.Add(getCostMenuFlyoutItem("AA"));
+            costMenuFlyout.Items.Add(getCostMenuFlyoutItem("AA制"));
             costMenuFlyout.Items.Add(getCostMenuFlyoutItem("你请客"));
             costMenuFlyout.Items.Add(getCostMenuFlyoutItem("我买单"));
             costMenuFlyout.ShowAt(AddDateCostGrid);
@@ -273,8 +274,23 @@ namespace Date
                 AddDate = Util.Utils.ConvertUnicodeStringToChinese(AddDate);
                 Debug.WriteLine(AddDate);
 
-                Frame rootFrame = Window.Current.Content as Frame;
-                rootFrame.GoBack();
+
+                JObject obj = JObject.Parse(AddDate);
+                if (Int32.Parse(obj["status"].ToString()) != 200)
+                {
+                    Utils.Message(obj["info"].ToString());
+                }
+                else
+                {
+                    Utils.Toast("发布成功");
+                    Frame rootFrame = Window.Current.Content as Frame;
+                    rootFrame.GoBack();
+                }
+                
+            }
+            else
+            {
+                Utils.Message("信息不完全");
             }
         }
 

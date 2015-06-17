@@ -49,7 +49,7 @@ namespace Date
 
         private void initScrollViewer()
         {
-            AddDateScrollViewer.Height = Utils.getPhoneHeight() - 60 - 80;
+            AddDateScrollViewer.Height = Utils.getPhoneHeight() - 60 - 85;
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)

@@ -62,6 +62,8 @@ namespace Date
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
+            //Umeng的调试模式
+            //UmengSDK.UmengAnalytics.IsDebug = true;
 #endif
 
             Frame rootFrame = Window.Current.Content as Frame;

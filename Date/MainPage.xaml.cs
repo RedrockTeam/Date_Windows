@@ -81,6 +81,10 @@ namespace Date
                 datetypelist.Add(b);
             }
             Debug.WriteLine("datetype" + datetype);
+
+            //TODO:List键值对查询
+            //DateType dateType = datetypelist.Find(p => p.Type.Equals("打牌"));
+            //Debug.WriteLine(dateType.Id.ToString());
         }
 
         private async void getGradeInfor()
@@ -103,7 +107,6 @@ namespace Date
 
         private async void getAcademyInfor()
         {
-            //TODO:academy:学院列表，grade:年纪列表，datetype:约会类型列表。。。。求json解析。
             string academy = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/academy", new List<KeyValuePair<String, String>>()));
             JArray academyArray = Utils.ReadJso(academy);
 

@@ -50,12 +50,24 @@ namespace Date
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
 
+            getInfor(); //获取学院，约分类等列表
 
             _timer.Interval = TimeSpan.FromSeconds(7.0);
             InitFlipView();
             _timer.Tick += ChangeImage;
 
 
+        }
+
+        private async void getInfor()
+        {
+            //TODO:academy:学院列表，grade:年纪列表，datetype:约会类型列表。。。。求json解析。
+            string academy = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/academy", new List<KeyValuePair<String, String>>()));
+            Debug.WriteLine("academy" + academy);
+            string grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
+            Debug.WriteLine("grade" + grade);
+            string datetype = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datetype", new List<KeyValuePair<String, String>>()));
+            Debug.WriteLine("datetype" + datetype);
         }
 
         private void ChangeImage(object sender, object e)
@@ -136,8 +148,7 @@ namespace Date
             paramList.Add(new KeyValuePair<string, string>("username", appSetting.Values["username"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("password", appSetting.Values["password"].ToString()));
 
-            string login = await NetWork.getHttpWebRequest("/public/login", paramList);
-            login = Util.Utils.ConvertUnicodeStringToChinese(login);
+            string login = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/login", paramList));
             Debug.WriteLine("login" + login);
 
             if (login != "")
@@ -180,8 +191,7 @@ namespace Date
 
         private async void InitFlipView()
         {
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            string banner = await NetWork.getHttpWebRequest("/public/banner", paramList);
+            string banner = Utils.ConvertUnicodeStringToChinese( await NetWork.getHttpWebRequest("/public/banner", new List<KeyValuePair<String, String>>()));
             Debug.WriteLine("banner" + banner);
             if (banner != "")
             {

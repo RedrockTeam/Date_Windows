@@ -53,7 +53,10 @@ namespace Date
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
 
-            getInfor(); //获取学院，约分类等列表
+            getAcademyInfor(); //获取学院列表
+            getGradeInfor(); //获取年级列表
+            getDatetypeInfor(); //获取约分类列表
+
 
             _timer.Interval = TimeSpan.FromSeconds(7.0);
             InitFlipView();
@@ -62,7 +65,43 @@ namespace Date
 
         }
 
-        private async void getInfor()
+        private async void getDatetypeInfor()
+        {
+
+            //约会类型
+            string datetype = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datetype", new List<KeyValuePair<String, String>>()));
+            JArray datetypeArray = Utils.ReadJso(datetype);
+
+            for (int i = 0; i < datetypeArray.Count; i++)
+            {
+                JObject jobj = (JObject)datetypeArray[i];
+                var b = new DateType();
+                b.Id = Convert.ToInt32(jobj["id"].ToString());
+                b.Type = jobj["type"].ToString();
+                datetypelist.Add(b);
+            }
+            Debug.WriteLine("datetype" + datetype);
+        }
+
+        private async void getGradeInfor()
+        {
+            //年级
+            string grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
+            JArray gradeArray = Utils.ReadJso(grade);
+            for (int i = 0; i < gradeArray.Count; i++)
+            {
+                JObject jobj = (JObject)gradeArray[i];
+                var b = new GradeList
+                {
+                    Id = Convert.ToInt32(jobj["id"].ToString()),
+                    Name = jobj["name"].ToString()
+                };
+                gradelist.Add(b);
+            }
+            Debug.WriteLine("grade" + grade);
+        }
+
+        private async void getAcademyInfor()
         {
             //TODO:academy:学院列表，grade:年纪列表，datetype:约会类型列表。。。。求json解析。
             string academy = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/academy", new List<KeyValuePair<String, String>>()));
@@ -79,33 +118,6 @@ namespace Date
                 acalist.Add(b);
             }
             Debug.WriteLine("academy" + academy);
-            //年级
-            string grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
-            JArray gradeArray = Utils.ReadJso(grade);
-            for (int i = 0; i < gradeArray.Count; i++)
-            {
-                JObject jobj = (JObject)gradeArray[i];
-                var b = new GradeList
-                {
-                    Id = Convert.ToInt32(jobj["id"].ToString()),
-                    Name = jobj["name"].ToString()
-                };
-                gradelist.Add(b);
-            }
-            Debug.WriteLine("grade" + grade);
-            //约会类型
-            string datetype = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datetype", new List<KeyValuePair<String, String>>()));
-            JArray datetypeArray = Utils.ReadJso(datetype);
-
-            for (int i = 0; i < datetypeArray.Count; i++)
-            {
-                JObject jobj = (JObject)datetypeArray[i];
-                var b = new DateType();
-                b.Id = Convert.ToInt32(jobj["id"].ToString());
-                b.Type = jobj["type"].ToString();
-                datetypelist.Add(b);
-            }
-            Debug.WriteLine("datetype" + datetype);
         }
 
         private void ChangeImage(object sender, object e)

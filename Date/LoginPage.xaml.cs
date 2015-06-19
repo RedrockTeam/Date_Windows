@@ -77,8 +77,7 @@ namespace Date
                 paramList.Add(new KeyValuePair<string, string>("username", StuNumTextBox.Text));
                 paramList.Add(new KeyValuePair<string, string>("password", IdNumPasswordBox.Password));
 
-                string content = await NetWork.getHttpWebRequest("/public/login", paramList);
-                content = Util.Utils.ConvertUnicodeStringToChinese(content);
+                string content = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/login", paramList));
                 Debug.WriteLine("LoginMessage" + content);
 
                 if (content != "")
@@ -99,7 +98,7 @@ namespace Date
 
                         //Umeng统计
 
-                        UmengSDK.UmengAnalytics.TrackEvent("Login"); 
+                        UmengSDK.UmengAnalytics.TrackEvent("Login");
 
                         Frame.Navigate(typeof(MainPage));
                     }

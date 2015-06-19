@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using UmengSDK;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
@@ -95,6 +96,10 @@ namespace Date
                         appSetting.Values["password"] = IdNumPasswordBox.Password;
                         appSetting.Values["uid"] = obj["uid"].ToString();
                         appSetting.Values["token"] = obj["token"].ToString();
+
+                        //Umeng统计
+
+                        UmengSDK.UmengAnalytics.TrackEvent("Login"); 
 
                         Frame.Navigate(typeof(MainPage));
                     }

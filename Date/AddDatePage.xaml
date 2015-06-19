@@ -86,8 +86,8 @@
                         <!--年级要求-->
                         <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
                         <Grid Name="AddDateGradeGrid" Tapped="AddDateGradeGrid_Tapped" Background="White">
-                            <FlyoutBase.AttachedFlyout>
-                                <Flyout x:Name="AddDateGradeFlyout"  Closed="AddDateGradeFlyout_Closed" >
+                            <FlyoutBase.AttachedFlyout >
+                                <Flyout x:Name="AddDateGradeFlyout"  Closed="AddDateGradeFlyout_Closed" Placement="Left">
                                     <Grid Background="White"  >
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"/>
@@ -116,7 +116,7 @@
     </Grid>
 
     <Page.BottomAppBar >
-        <CommandBar > 
+        <CommandBar >
             <AppBarButton Name="PublishAppBarButton" Label="发布" Icon="Accept" Click="PublishAppBarButton_Click"></AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>

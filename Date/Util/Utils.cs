@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,17 +12,20 @@ using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Date.DataModel;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Date.Util
 {
-    class Utils
+    internal class Utils
     {
 
         /// <summary>
         /// Toast
         /// </summary>
         /// <param name="text"></param>
-        public async static void Toast(string text)
+        public static async void Toast(string text)
         {
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText01);
             XmlNodeList elements = toastXml.GetElementsByTagName("text");
@@ -67,12 +71,13 @@ namespace Date.Util
             return outStr;
         }
 
-        public static async Task ShowSystemTrayAsync(Color backgroundColor, Color foregroundColor, double opacity = 1, string text = "", bool isIndeterminate = false)
+        public static async Task ShowSystemTrayAsync(Color backgroundColor, Color foregroundColor, double opacity = 1,
+            string text = "", bool isIndeterminate = false)
         {
             StatusBar statusBar = StatusBar.GetForCurrentView();
             statusBar.BackgroundColor = backgroundColor;
             statusBar.ForegroundColor = foregroundColor;
-            statusBar.BackgroundOpacity = opacity; 
+            statusBar.BackgroundOpacity = opacity;
 
             statusBar.ProgressIndicator.Text = text;
             if (!isIndeterminate)
@@ -86,7 +91,7 @@ namespace Date.Util
         /// 弹出对话框
         /// </summary>
         /// <param name="text"></param>
-        public async static void Message(string text,string title="错误")
+        public static async void Message(string text, string title = "错误")
         {
             await new MessageDialog(text, title).ShowAsync();
         }
@@ -118,12 +123,35 @@ namespace Date.Util
         public static string GetTimeStamp(DateTimeOffset date, TimeSpan time)
         {
             DateTime nowdate = new DateTime(date.Year, date.Month, date.Day, time.Hours, time.Minutes, 0);
-            TimeSpan ts = nowdate.ToUniversalTime() -new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            TimeSpan ts = nowdate.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
 
+        public static JArray ReadJso(string jsonstring)
+        {
+            if (jsonstring != "")
+            {
+                JObject obj = JObject.Parse(jsonstring);
+                if (Int32.Parse(obj["status"].ToString()) == 200)
+                {
+                    JObject jObject = (JObject)JsonConvert.DeserializeObject(jsonstring);
+                    string json = jObject["data"].ToString();
+                    JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
+                    return jArray;
+                }
+                else
+                {
+                    Message("请求失败","失败");
+                    return null;
+                }
+            }
+
+            else
+            {
+                Message("网络错误！", "错误");
+                return null;
+            }
+        }
 
     }
-
-
 }

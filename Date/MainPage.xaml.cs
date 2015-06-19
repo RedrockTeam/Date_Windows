@@ -38,6 +38,7 @@ namespace Date
     {
         private ApplicationDataContainer appSetting;
         private bool isLogin = false;
+        private bool isExit = false; //用于双击退出
         List<Banner> BannerList = new List<Banner>();
         private string hubSectionChange = "DateListHubSection";
         DispatcherTimer _timer = new DispatcherTimer();//定义一个定时器
@@ -106,17 +107,30 @@ namespace Date
             UmengSDK.UmengAnalytics.TrackPageEnd("MainPage");
             _timer.Stop();
         }
-        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
+        private async void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
         {
-            Application.Current.Exit();
+            e.Handled = true;
+            if (!isExit)
+            {
+                isExit = true;
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                StatusTextBlock.Visibility = Visibility.Visible;
+                StatusTextBlock.Text = "再次点击返回键退出...";
+                await Task.Delay(2000);
+                isExit = false;
+                StatusTextBlock.Visibility = Visibility.Collapsed;
+                StatusStackPanel.Background = null;
+            }
+            else
+                Application.Current.Exit();
         }
 
         private async void Login()
         {
 
-            LoginProgressBar.Visibility = Visibility.Visible;
-            LoginTextBlock.Visibility = Visibility.Visible;
-            LoginStackPanel.Background = null;
+            StatusProgressBar.Visibility = Visibility.Visible;
+            StatusTextBlock.Visibility = Visibility.Visible;
+            StatusStackPanel.Background = null;
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("username", appSetting.Values["username"].ToString()));
@@ -132,11 +146,11 @@ namespace Date
                 if (Int32.Parse(obj["status"].ToString()) != 200)
                 {
                     Util.Utils.Message(obj["info"].ToString());
-                    LoginProgressBar.Visibility = Visibility.Collapsed;
-                    LoginTextBlock.Text = "登陆失败...";
+                    StatusProgressBar.Visibility = Visibility.Collapsed;
+                    StatusTextBlock.Text = "登陆失败...";
 
                     await Task.Delay(2000);
-                    LoginTextBlock.Visibility = Visibility.Collapsed;
+                    StatusTextBlock.Visibility = Visibility.Collapsed;
                     Frame.Navigate(typeof(LoginPage));
                 }
                 else
@@ -145,22 +159,21 @@ namespace Date
                     appSetting.Values["token"] = obj["token"].ToString();
                     isLogin = true;
 
-                    LoginProgressBar.Visibility = Visibility.Collapsed;
-                    LoginTextBlock.Text = "登陆成功...";
+                    StatusProgressBar.Visibility = Visibility.Collapsed;
+                    StatusTextBlock.Text = "登陆成功...";
 
                     await Task.Delay(2000);
-                    LoginTextBlock.Visibility = Visibility.Collapsed;
+                    StatusTextBlock.Visibility = Visibility.Collapsed;
                 }
             }
             else
             {
-                LoginProgressBar.Visibility = Visibility.Collapsed;
-                LoginStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
-                LoginTextBlock.Text = "网络未连接...";
+                StatusProgressBar.Visibility = Visibility.Collapsed;
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                StatusTextBlock.Text = "网络未连接...";
 
                 await Task.Delay(2000);
-                LoginTextBlock.Visibility = Visibility.Collapsed;
-                LoginStackPanel.Visibility = Visibility.Collapsed;
+                StatusTextBlock.Visibility = Visibility.Collapsed;
 
             }
         }

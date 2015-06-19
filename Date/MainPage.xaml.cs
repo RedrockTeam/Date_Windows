@@ -43,9 +43,9 @@ namespace Date
         List<Banner> BannerList = new List<Banner>();
         private string hubSectionChange = "DateListHubSection";
         DispatcherTimer _timer = new DispatcherTimer();//定义一个定时器
-         List<GradeList> gradelist = new List<GradeList>();
-         List<AcademyList> acalist = new List<AcademyList>();
-         List<DateType> datetypelist = new List<DateType>();
+        List<GradeList> gradelist = new List<GradeList>();
+        List<AcademyList> acalist = new List<AcademyList>();
+        List<DateType> datetypelist = new List<DateType>();
         public MainPage()
         {
             this.InitializeComponent();
@@ -65,8 +65,8 @@ namespace Date
         private async void getInfor()
         {
             //TODO:academy:学院列表，grade:年纪列表，datetype:约会类型列表。。。。求json解析。
-          string academy = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/academy", new List<KeyValuePair<String, String>>()));
-            JArray academyArray =Utils.ReadJso(academy);
+            string academy = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/academy", new List<KeyValuePair<String, String>>()));
+            JArray academyArray = Utils.ReadJso(academy);
 
             for (int i = 0; i < academyArray.Count; i++)
             {
@@ -82,7 +82,7 @@ namespace Date
             //年级
             string grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
             JArray gradeArray = Utils.ReadJso(grade);
-           for (int i = 0; i < gradeArray.Count; i++)
+            for (int i = 0; i < gradeArray.Count; i++)
             {
                 JObject jobj = (JObject)gradeArray[i];
                 var b = new GradeList
@@ -229,7 +229,7 @@ namespace Date
 
         private async void InitFlipView()
         {
-            string banner = Utils.ConvertUnicodeStringToChinese( await NetWork.getHttpWebRequest("/public/banner", new List<KeyValuePair<String, String>>()));
+            string banner = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/banner", new List<KeyValuePair<String, String>>()));
             Debug.WriteLine("banner" + banner);
             if (banner != "")
             {

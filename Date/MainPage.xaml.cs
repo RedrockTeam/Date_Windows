@@ -70,17 +70,21 @@ namespace Date
 
             //约会类型
             string datetype = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datetype", new List<KeyValuePair<String, String>>()));
-            JArray datetypeArray = Utils.ReadJso(datetype);
-
-            for (int i = 0; i < datetypeArray.Count; i++)
-            {
-                JObject jobj = (JObject)datetypeArray[i];
-                var b = new DateType();
-                b.Id = Convert.ToInt32(jobj["id"].ToString());
-                b.Type = jobj["type"].ToString();
-                datetypelist.Add(b);
-            }
             Debug.WriteLine("datetype" + datetype);
+            if (datetype != "")
+            {
+                JArray datetypeArray = Utils.ReadJso(datetype);
+
+                for (int i = 0; i < datetypeArray.Count; i++)
+                {
+                    JObject jobj = (JObject)datetypeArray[i];
+                    var b = new DateType();
+                    b.Id = Convert.ToInt32(jobj["id"].ToString());
+                    b.Type = jobj["type"].ToString();
+                    datetypelist.Add(b);
+                }
+                appSetting.Values["datetype_json"] = datetype;
+            }
 
             //TODO:List键值对查询
             //DateType dateType = datetypelist.Find(p => p.Type.Equals("打牌"));
@@ -91,36 +95,43 @@ namespace Date
         {
             //年级
             string grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
-            JArray gradeArray = Utils.ReadJso(grade);
-            for (int i = 0; i < gradeArray.Count; i++)
-            {
-                JObject jobj = (JObject)gradeArray[i];
-                var b = new GradeList
-                {
-                    Id = Convert.ToInt32(jobj["id"].ToString()),
-                    Name = jobj["name"].ToString()
-                };
-                gradelist.Add(b);
-            }
             Debug.WriteLine("grade" + grade);
+            if (grade != "")
+            {
+                JArray gradeArray = Utils.ReadJso(grade);
+                for (int i = 0; i < gradeArray.Count; i++)
+                {
+                    JObject jobj = (JObject)gradeArray[i];
+                    var b = new GradeList
+                    {
+                        Id = Convert.ToInt32(jobj["id"].ToString()),
+                        Name = jobj["name"].ToString()
+                    };
+                    gradelist.Add(b);
+                }
+                appSetting.Values["grade_json"] = grade;
+            }
         }
 
         private async void getAcademyInfor()
         {
             string academy = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/academy", new List<KeyValuePair<String, String>>()));
-            JArray academyArray = Utils.ReadJso(academy);
-
-            for (int i = 0; i < academyArray.Count; i++)
-            {
-                JObject jobj = (JObject)academyArray[i];
-                var b = new AcademyList
-                {
-                    Id = Convert.ToInt32(jobj["id"].ToString()),
-                    Name = jobj["name"].ToString()
-                };
-                acalist.Add(b);
-            }
             Debug.WriteLine("academy" + academy);
+            if (academy != "")
+            {
+                JArray academyArray = Utils.ReadJso(academy);
+                for (int i = 0; i < academyArray.Count; i++)
+                {
+                    JObject jobj = (JObject)academyArray[i];
+                    var b = new AcademyList
+                    {
+                        Id = Convert.ToInt32(jobj["id"].ToString()),
+                        Name = jobj["name"].ToString()
+                    };
+                    acalist.Add(b);
+                }
+                appSetting.Values["academy_json"] = academy;
+            }
         }
 
         private void ChangeImage(object sender, object e)

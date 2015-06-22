@@ -1,4 +1,5 @@
-﻿using Date.Util;
+﻿using Date.Data;
+using Date.Util;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
@@ -40,6 +42,7 @@ namespace Date
         private int grade_choose = 0;
         private int cost_model = 0;
 
+        List<DateType> datetypelist = new List<DateType>();
 
         public AddDatePage()
         {
@@ -72,6 +75,27 @@ namespace Date
             {
                 rootFrame.GoBack();
                 e.Handled = true;
+            }
+        }
+
+        private async void showStatus(string text, int value, Windows.UI.Xaml.Visibility ProgressBarvisibility)
+        {
+            StatusStackPanel.Visibility = Visibility.Visible;
+            StatusProgressBar.Visibility = ProgressBarvisibility;
+            StatusTextBlock.Visibility = Visibility.Visible;
+            if (value == 1)
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+            else
+                StatusStackPanel.Background = null;
+            StatusTextBlock.Text = text;
+
+            if (ProgressBarvisibility == Visibility.Collapsed)
+            {
+                await Task.Delay(2000);
+                StatusTextBlock.Visibility = Visibility.Collapsed;
+                StatusStackPanel.Visibility = Visibility.Collapsed;
+                StatusProgressBar.Visibility = Visibility.Collapsed;
+                StatusStackPanel.Background = null;
             }
         }
 
@@ -137,22 +161,46 @@ namespace Date
             }
         }
 
-        private void AddDateTypeGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void AddDateTypeGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MenuFlyout typeMenuFlyout = new MenuFlyout();
+            bool isType = true;
+            try
+            {
+                string datetype = appSetting.Values["datetype_json"].ToString();
+                if (datetype != "")
+                {
+                    JArray datetypeArray = Utils.ReadJso(datetype);
 
-            typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("出行"));
-            typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("饮食"));
-            typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("娱乐"));
-            typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("棋牌"));
-            typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("活动"));
-            typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("竞赛"));
-            typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("运动"));
-            typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("自习"));
-            typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("其他"));
+                    for (int i = 0; i < datetypeArray.Count; i++)
+                    {
+                        JObject jobj = (JObject)datetypeArray[i];
+                        typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem(jobj["type"].ToString()));
+                        var b = new DateType();
+                        datetypelist.Add(new DateType { Id = Convert.ToInt32(jobj["id"].ToString()), Type = jobj["type"].ToString() });
+                    }
+                    typeMenuFlyout.ShowAt(AddDateTypeGrid);
+                }
+                else
+                    isType = false;
 
-            typeMenuFlyout.ShowAt(AddDateTypeGrid);
+            }
+            catch (Exception)
+            {
+                isType = false;
+            }
+            if (!isType)
+            {
+                showStatus("分类数据加载失败", 1, Visibility.Collapsed);
+                appSetting.Values["datetype_json"] = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datetype", new List<KeyValuePair<String, String>>()));
+            }
+
         }
+
+
+
+
+
 
         private MenuFlyoutItem getTypeMenuFlyoutItem(string text)
         {
@@ -252,10 +300,12 @@ namespace Date
                 //这里提交
                 Debug.WriteLine("完成");
 
+                showStatus("提交中...", 0, Visibility.Visible);
+
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                 paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("date_type", "1"));
+                paramList.Add(new KeyValuePair<string, string>("date_type", (datetypelist.Find(p => p.Type.Equals("打牌"))).Id.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("title", AddDateTitleTextBox.Text));
                 paramList.Add(new KeyValuePair<string, string>("content", AddDateContentTextBox.Text));
                 paramList.Add(new KeyValuePair<string, string>("date_time", DateTimeStamp));
@@ -279,14 +329,17 @@ namespace Date
                 if (Int32.Parse(obj["status"].ToString()) != 200)
                 {
                     Utils.Message(obj["info"].ToString());
+
                 }
                 else
                 {
-                    Utils.Toast("发布成功");
+                    //Utils.Toast("发布成功");
+                    showStatus("发布成功", 1, Visibility.Collapsed);
+                    await Task.Delay(1500);
                     Frame rootFrame = Window.Current.Content as Frame;
                     rootFrame.GoBack();
                 }
-                
+
             }
             else
             {

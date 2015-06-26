@@ -329,7 +329,8 @@ namespace Date
                 if (Int32.Parse(obj["status"].ToString()) != 200)
                 {
                     Utils.Message(obj["info"].ToString());
-
+                    StatusTextBlock.Visibility = Visibility.Collapsed;
+                    StatusProgressBar.Visibility = Visibility.Collapsed;
                 }
                 else
                 {

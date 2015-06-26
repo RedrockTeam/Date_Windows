@@ -28,8 +28,8 @@
                         </Grid>
                         <StackPanel Margin="0,15" Background="White">
                             <Grid>
-                                <TextBlock VerticalAlignment="Center" Margin="15" FontSize="15" Text="标题" Foreground="Black"></TextBlock>
-                                <TextBox Name="AddDateTitleTextBox" VerticalAlignment="Center"  FontSize="15" PlaceholderText="请输入" Foreground="Gray" TextAlignment="Right" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                                <TextBlock VerticalAlignment="Center" Margin="15" FontSize="15" Text="标题(限10字)" Foreground="Black"></TextBlock>
+                                <TextBox Name="AddDateTitleTextBox" VerticalAlignment="Center" MaxLength="10"   FontSize="15" PlaceholderText="请输入" Foreground="Gray" TextAlignment="Right" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
                             </Grid>
                             <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
                             <TextBox Name="AddDateContentTextBox" FontSize="15" Height="150" PlaceholderText="内容" Foreground="Gray" BorderThickness="0" Margin="10" TextWrapping="Wrap" FontFamily="Global User Interface"/>

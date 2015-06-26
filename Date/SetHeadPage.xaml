@@ -9,6 +9,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <StackPanel Name="StatusStackPanel" VerticalAlignment="Top">
+            <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
+            <TextBlock Name="StatusTextBlock" Foreground="Gray" FontSize="15" Margin="20,5"  Visibility="Collapsed"/>
+        </StackPanel>
         <ScrollViewer Name="headScrollViewer" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" MinZoomFactor="0.5" MaxZoomFactor="3"  >
             <Image Name="headImage"/>
         </ScrollViewer>

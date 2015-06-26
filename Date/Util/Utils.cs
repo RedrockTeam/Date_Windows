@@ -15,6 +15,8 @@ using Windows.UI.Xaml;
 using Date.DataModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Windows.UI.Xaml.Media.Imaging;
+using System.IO;
 
 namespace Date.Util
 {
@@ -152,6 +154,7 @@ namespace Date.Util
                 return null;
             }
         }
+
 
     }
 }

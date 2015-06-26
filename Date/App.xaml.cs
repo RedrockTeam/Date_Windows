@@ -105,7 +105,7 @@ namespace Date
                 // 当导航堆栈尚未还原时，导航到第一页，
                 // 并通过将所需信息作为导航参数传入来配置
                 // 新页面
-                if (appSetting.Values.ContainsKey("uid"))
+                if (appSetting.Values.ContainsKey("username"))
                 {
                     if (!rootFrame.Navigate(typeof(MainPage),"autologin"))
                     {
@@ -119,6 +119,7 @@ namespace Date
                         throw new Exception("Failed to create initial page");
                     }
                 }
+
             }
 
             // 确保当前窗口处于活动状态
@@ -153,6 +154,18 @@ namespace Date
             await UmengAnalytics.EndTrackAsync();
             deferral.Complete();
         }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            if (args is FileOpenPickerContinuationEventArgs)
+            {
+                Frame rootFrame = Window.Current.Content as Frame;
+                var p = rootFrame.Content as grzxPage;
+                p.FilePickerEvent = (FileOpenPickerContinuationEventArgs)args;
+            }
+            Window.Current.Activate();
+        }
+
 
 
     }

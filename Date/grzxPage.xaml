@@ -9,12 +9,18 @@
     Background="#f8f8f8">
 
     <Grid>
-
+        <StackPanel Name="StatusStackPanel" VerticalAlignment="Top">
+            <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
+            <TextBlock Name="StatusTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,5"  Visibility="Collapsed"/>
+        </StackPanel>
+        <Image Name="img"></Image>
     </Grid>
     
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Name="logoutAppBarButton" Label="注销登陆" Icon="Accept" Click="logoutAppBarButton_Click"></AppBarButton>
+            <AppBarButton Name="headAppBarButton" Label="头像" Icon="Upload" Click="headAppBarButton_Click"></AppBarButton>
+
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

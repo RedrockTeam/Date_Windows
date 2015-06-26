@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="Date.SetHeadPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Date"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <ScrollViewer Name="headScrollViewer" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" MinZoomFactor="0.5" MaxZoomFactor="3"  >
+            <Image Name="headImage"/>
+        </ScrollViewer>
+    </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Name="AcceptAppBarButton" Icon="Accept" Label="确认" Click="AcceptAppBarButton_Click"></AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

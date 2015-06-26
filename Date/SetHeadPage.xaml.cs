@@ -55,12 +55,16 @@ namespace Date
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             BitmapImage bitmapImage = new BitmapImage(new Uri(((StorageFile)e.Parameter).Path));
             headImage.Source = bitmapImage;
+            UmengSDK.UmengAnalytics.TrackPageStart("SetHeadPage");
+
         }
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+            UmengSDK.UmengAnalytics.TrackPageEnd("SetHeadPage");
+
         }
 
 

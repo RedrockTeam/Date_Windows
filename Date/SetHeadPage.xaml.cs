@@ -117,7 +117,7 @@ namespace Date
                 HttpStreamContent streamContent = new HttpStreamContent(stream1);
                 HttpMultipartFormDataContent fileContent = new HttpMultipartFormDataContent();
 
-                fileContent.Add(streamContent, "photo", "蓝屏.png");
+                fileContent.Add(streamContent, "photo", "head.png");
                 fileContent.Add(uidStringContent, "uid");
                 fileContent.Add(tokenStringContent, "token");
 

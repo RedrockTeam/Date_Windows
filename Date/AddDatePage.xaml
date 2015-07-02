@@ -122,8 +122,8 @@
         </Grid>
     </Grid>
 
-    <Page.BottomAppBar >
-        <CommandBar >
+    <Page.BottomAppBar>
+        <CommandBar Name="PublishCommandBar">
             <AppBarButton Name="PublishAppBarButton" Label="发布" Icon="Accept" Click="PublishAppBarButton_Click"></AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>

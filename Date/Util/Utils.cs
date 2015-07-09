@@ -117,7 +117,7 @@ namespace Date.Util
         }
 
         /// <summary>
-        /// 时间戳
+        /// 时间转时间戳
         /// </summary>
         /// <param name="date"></param>
         /// <param name="time"></param>
@@ -127,6 +127,19 @@ namespace Date.Util
             DateTime nowdate = new DateTime(date.Year, date.Month, date.Day, time.Hours, time.Minutes, 0);
             TimeSpan ts = nowdate.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
+        }
+
+        /// <summary>
+        /// 时间戳转时间
+        /// </summary>
+        /// <param name="timeStamp">Unix时间戳格式</param>
+        /// <returns>C#格式时间</returns>
+        public static DateTime GetTime(string timeStamp)
+        {
+            DateTime dtStart = new DateTime(1970, 1, 1);
+            long lTime = long.Parse(timeStamp + "0000000");
+            TimeSpan toNow = new TimeSpan(lTime);
+            return dtStart.Add(toNow);
         }
 
         public static JArray ReadJso(string jsonstring)

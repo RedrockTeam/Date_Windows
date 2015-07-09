@@ -20,7 +20,7 @@
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <TextBlock Text="约列表" Foreground="#ff3d3d" FontSize="30" FontWeight="Light"/>
 
-                        <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <ScrollViewer Name="dateScrollViewer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                             <StackPanel>
                                 <StackPanel.Resources>
                                     <Storyboard x:Name="Hideimg">
@@ -41,9 +41,61 @@
                                             </DataTemplate>
                                         </FlipView.ItemTemplate>
                                     </FlipView>
-
                                 </Grid>
-                                <ListView></ListView>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Line Y1="0" Y2="30"  Stroke="Black" StrokeThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Name="typeTextBlock" Text="全部分类" Foreground="Black"  HorizontalAlignment="Center" Grid.Column="0" Margin="10" FontWeight="Normal" Tapped="typeTextBlock_Tapped"/>
+                                    <TextBlock Name="sortTextBlock" Text="默认排序" Foreground="Black" HorizontalAlignment="Center" Grid.Column="1" Margin="10" FontWeight="Normal" Tapped="sortTextBlock_Tapped"/>
+                                </Grid>
+                                <ListView Name="dateListView">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Background="#efefef" Margin="0,5">
+                                                <Line Stroke="#efefef" X2="99999" StrokeThickness="1"></Line>
+                                                <StackPanel Margin="5" Background="White">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="{Binding Head}" Width="50"></Image>
+                                                        <StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding Nickname}" Foreground="Black"></TextBlock>
+                                                                <Image Source="{Binding Gender}"></Image>
+                                                            </StackPanel>
+                                                            <TextBlock Text="{Binding Signature}"></TextBlock>
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                    <TextBlock Text="{Binding Title}" Foreground="Black"></TextBlock>
+
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="Assets/ic_address.png" Width="20"></Image>
+                                                        <TextBlock Text="地点:" Foreground="Black"></TextBlock>
+                                                        <TextBlock Text="{Binding Place}" Foreground="Black" ></TextBlock>
+                                                    </StackPanel>
+
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="Assets/ic_time.png" Width="20"></Image>
+                                                        <TextBlock Text="时间:" Foreground="Black"></TextBlock>
+                                                        <TextBlock Text="{Binding Date_time}" Foreground="Black"></TextBlock>
+                                                    </StackPanel>
+
+                                                    <Grid>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="Assets/ic_cost.png" Width="20"></Image>
+                                                            <TextBlock Text="费用:" Foreground="Black"></TextBlock>
+                                                            <TextBlock Text="{Binding Cost_model}" Foreground="Black"></TextBlock>
+                                                        </StackPanel>
+                                                        <TextBlock HorizontalAlignment="Right" Text="1天" Foreground="Black" FontFamily="Global User Interface"></TextBlock>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+
+                                </ListView>
                             </StackPanel>
                         </ScrollViewer>
                     </StackPanel>

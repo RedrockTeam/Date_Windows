@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Data\AademyList.cs" />
     <Compile Include="Data\Banner.cs" />
+    <Compile Include="Data\DateList.cs" />
     <Compile Include="Data\DateType.cs" />
     <Compile Include="Data\GradeList.cs" />
     <Compile Include="grzxPage.xaml.cs">
@@ -117,8 +118,10 @@
     <Content Include="Assets\ic_address.png" />
     <Content Include="Assets\ic_cost.png" />
     <Content Include="Assets\ic_date.png" />
+    <Content Include="Assets\ic_man.png" />
     <Content Include="Assets\ic_person.png" />
     <Content Include="Assets\ic_time.png" />
+    <Content Include="Assets\ic_woman.png" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\point_Black.png" />
     <Content Include="Assets\point_Gray.png" />

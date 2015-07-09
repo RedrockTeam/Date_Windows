@@ -46,6 +46,7 @@ namespace Date
         List<GradeList> gradelist = new List<GradeList>();
         List<AcademyList> acalist = new List<AcademyList>();
         List<DateType> datetypelist = new List<DateType>();
+        List<DateList> mdatelist = new List<DateList>();
         public MainPage()
         {
             this.InitializeComponent();
@@ -53,9 +54,12 @@ namespace Date
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
 
+            dateScrollViewer.Height = Utils.getPhoneHeight() - 100 - 85;
+
             getAcademyInfor(); //获取学院列表
             getGradeInfor(); //获取年级列表
             getDatetypeInfor(); //获取约分类列表
+            getDatelist(0); //获取约列表
 
 
             _timer.Interval = TimeSpan.FromSeconds(7.0);
@@ -63,6 +67,45 @@ namespace Date
             _timer.Tick += ChangeImage;
 
 
+        }
+
+        private async void getDatelist(int date_type)
+        {
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("date_type", date_type.ToString()));
+            string datelist = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datelist",paramList));
+            Debug.WriteLine("datelist" + datelist);
+            if (datelist != "")
+            {
+                JArray dateListArray = Utils.ReadJso(datelist);
+
+                for (int i = 0; i < dateListArray.Count; i++)
+                {
+                    JObject jobj = (JObject)dateListArray[i];
+                    DateList d = new DateList();
+                    d.Head = jobj["head"].ToString();
+                    d.Nickname = jobj["nickname"].ToString();
+                    if (jobj["nickname"].ToString() == "1")
+                        d.Gender = "ms-appx:///Assets/ic_man.png";
+                    else if ((jobj["nickname"].ToString() == "2"))
+                        d.Gender = "ms-appx:///Assets/ic_woman.png";
+                    d.Signature = jobj["signature"].ToString();
+                    d.Title = jobj["title"].ToString();
+                    d.Place = jobj["place"].ToString();
+                    d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
+                    if (jobj["cost_model"].ToString() == "1")
+                        d.Cost_model = "AA";
+                    else if ((jobj["cost_model"].ToString() == "2"))
+                        d.Cost_model = "你请客";
+                    else if ((jobj["cost_model"].ToString() == "3"))
+                        d.Cost_model = "我买单";
+                    d.Date_type = jobj["date_type"].ToString();
+                    mdatelist.Add(d);
+                }
+                dateListView.ItemsSource = mdatelist;
+            }
         }
 
         private async void getDatetypeInfor()
@@ -360,6 +403,97 @@ namespace Date
             Frame.Navigate(typeof(AddDatePage));
         }
 
+        private void typeTextBlock_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MenuFlyout typeMenuFlyout = new MenuFlyout();
+            bool isType = true;
+            try
+            {
+                string datetype = appSetting.Values["datetype_json"].ToString();
+                if (datetype != "")
+                {
+                    JArray datetypeArray = Utils.ReadJso(datetype);
+                    datetypelist.Add(new DateType { Id = 0, Type = "全部分类" });
+                    for (int i = 0; i < datetypeArray.Count; i++)
+                    {
+                        JObject jobj = (JObject)datetypeArray[i];
+                        typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem(jobj["type"].ToString()));
+                        var b = new DateType();
+                        datetypelist.Add(new DateType { Id = Convert.ToInt32(jobj["id"].ToString()), Type = jobj["type"].ToString() });
+                    }
+                    typeMenuFlyout.ShowAt(typeTextBlock);
+                }
+                else
+                    isType = false;
+            }
+            catch (Exception)
+            {
+                isType = false;
+            }
+            if (!isType)
+            {
+                showStatus("分类数据加载失败", 1, Visibility.Collapsed);
+                getDatetypeInfor();
+            }
+        }
+
+        private MenuFlyoutItem getTypeMenuFlyoutItem(string text)
+        {
+            MenuFlyoutItem menuFlyoutItem = new MenuFlyoutItem();
+            menuFlyoutItem.Text = text;
+            menuFlyoutItem.Click += typeMenuFlyoutItem_click;
+            return menuFlyoutItem;
+        }
+
+        private void typeMenuFlyoutItem_click(object sender, RoutedEventArgs e)
+        {
+            MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
+            typeTextBlock.Text = menuFlyoutItem.Text;
+        }
+
+        private void sortTextBlock_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MenuFlyout sortMenuFlyout = new MenuFlyout();
+            sortMenuFlyout.Items.Add(getsortMenuFlyoutItem("默认排序"));
+            sortMenuFlyout.Items.Add(getsortMenuFlyoutItem("时间排序"));
+            sortMenuFlyout.ShowAt(sortTextBlock);
+
+        }
+
+        private MenuFlyoutItem getsortMenuFlyoutItem(string text)
+        {
+            MenuFlyoutItem menuFlyoutItem = new MenuFlyoutItem();
+            menuFlyoutItem.Text = text;
+            menuFlyoutItem.Click += sortMenuFlyoutItem_click;
+            return menuFlyoutItem;
+        }
+
+        private void sortMenuFlyoutItem_click(object sender, RoutedEventArgs e)
+        {
+            MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
+            sortTextBlock.Text = menuFlyoutItem.Text;
+        }
+
+        private async void showStatus(string text, int value, Windows.UI.Xaml.Visibility ProgressBarvisibility)
+        {
+            StatusStackPanel.Visibility = Visibility.Visible;
+            StatusProgressBar.Visibility = ProgressBarvisibility;
+            StatusTextBlock.Visibility = Visibility.Visible;
+            if (value == 1)
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+            else
+                StatusStackPanel.Background = null;
+            StatusTextBlock.Text = text;
+
+            if (ProgressBarvisibility == Visibility.Collapsed)
+            {
+                await Task.Delay(2000);
+                StatusTextBlock.Visibility = Visibility.Collapsed;
+                StatusStackPanel.Visibility = Visibility.Collapsed;
+                StatusProgressBar.Visibility = Visibility.Collapsed;
+                StatusStackPanel.Background = null;
+            }
+        }
 
 
 

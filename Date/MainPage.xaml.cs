@@ -243,7 +243,7 @@ namespace Date
                 StatusTextBlock.Text = "再次点击返回键退出...";
                 await Task.Delay(2000);
                 isExit = false;
-                StatusTextBlock.Visibility = Visibility.Collapsed;
+                StatusTextBlock.Text = "";
                 StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
             }
             else
@@ -274,7 +274,7 @@ namespace Date
                     StatusTextBlock.Text = "登陆失败...";
 
                     await Task.Delay(2000);
-                    StatusTextBlock.Visibility = Visibility.Collapsed;
+                    StatusTextBlock.Text = "";
                     Frame.Navigate(typeof(LoginPage));
                 }
                 else
@@ -287,7 +287,8 @@ namespace Date
                     StatusTextBlock.Text = "登陆成功...";
 
                     await Task.Delay(2000);
-                    StatusTextBlock.Visibility = Visibility.Collapsed;
+                    StatusTextBlock.Text = "";
+
                 }
             }
             else
@@ -297,9 +298,8 @@ namespace Date
                 StatusTextBlock.Text = "网络未连接...";
 
                 await Task.Delay(2000);
-                StatusTextBlock.Visibility = Visibility.Collapsed;
+                StatusTextBlock.Text = "";
                 StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
-
             }
         }
 
@@ -495,7 +495,7 @@ namespace Date
             if (ProgressBarvisibility == Visibility.Collapsed)
             {
                 await Task.Delay(2000);
-                StatusTextBlock.Visibility = Visibility.Collapsed;
+                StatusTextBlock.Text = ""; ;
                 StatusStackPanel.Visibility = Visibility.Collapsed;
                 StatusProgressBar.Visibility = Visibility.Collapsed;
                 StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));

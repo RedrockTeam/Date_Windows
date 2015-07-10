@@ -58,38 +58,48 @@
                                                 <Line Stroke="#efefef" X2="99999" StrokeThickness="1"></Line>
                                                 <StackPanel Margin="5" Background="White">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="{Binding Head}" Width="50"></Image>
+                                                        <!--头像-->
+                                                        <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,0">
+                                                            <Rectangle.Fill>
+                                                                <ImageBrush Stretch="Fill" ImageSource ="{Binding  Head}"/>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <!--昵称，创建时间，个性签名-->
                                                         <StackPanel>
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Text="{Binding Nickname}" Foreground="Black"></TextBlock>
+                                                            <StackPanel Orientation="Vertical" Margin="10,15,5,0">
+                                                                <TextBlock Text="{Binding Nickname}" Foreground="Black" FontSize="18" />
+                                                                <TextBlock Text="这里加创建时间" Foreground="Black" FontSize="14"></TextBlock>
                                                                 <Image Source="{Binding Gender}"></Image>
                                                             </StackPanel>
                                                             <TextBlock Text="{Binding Signature}"></TextBlock>
                                                         </StackPanel>
                                                     </StackPanel>
-
-                                                    <TextBlock Text="{Binding Title}" Foreground="Black"></TextBlock>
-
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Image Source="Assets/ic_address.png" Width="20"></Image>
-                                                        <TextBlock Text="地点:" Foreground="Black"></TextBlock>
-                                                        <TextBlock Text="{Binding Place}" Foreground="Black" ></TextBlock>
-                                                    </StackPanel>
-
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Image Source="Assets/ic_time.png" Width="20"></Image>
-                                                        <TextBlock Text="时间:" Foreground="Black"></TextBlock>
-                                                        <TextBlock Text="{Binding Date_time}" Foreground="Black"></TextBlock>
-                                                    </StackPanel>
-
-                                                    <Grid>
+                                                    <!--约会详情-->
+                                                    <StackPanel x:Name="DateDetail" Margin="10,0,5,5">
+                                                        <!--标题-->
+                                                        <TextBlock Text="{Binding Title}" Foreground="Coral" FontSize="17" Margin="5"></TextBlock>
+                                                        <!--地点-->
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Image Source="Assets/ic_cost.png" Width="20"></Image>
-                                                            <TextBlock Text="费用:" Foreground="Black"></TextBlock>
-                                                            <TextBlock Text="{Binding Cost_model}" Foreground="Black"></TextBlock>
+                                                            <Image Source="Assets/ic_address.png" Width="20"></Image>
+                                                            <TextBlock Text="地点:" Foreground="Black"></TextBlock>
+                                                            <TextBlock Text="{Binding Place}" Foreground="Black" ></TextBlock>
                                                         </StackPanel>
-                                                        <TextBlock HorizontalAlignment="Right" Text="1天" Foreground="Black" FontFamily="Global User Interface"></TextBlock>
-                                                    </Grid>
+                                                        <!--约定时间-->
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="Assets/ic_time.png" Width="20"></Image>
+                                                            <TextBlock Text="时间:" Foreground="Black"></TextBlock>
+                                                            <TextBlock Text="{Binding Date_time}" Foreground="Black"></TextBlock>
+                                                        </StackPanel>
+                                                        <!--谁掏钱-->
+                                                        <Grid>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Source="Assets/ic_cost.png" Width="20"></Image>
+                                                                <TextBlock Text="费用:" Foreground="Black"></TextBlock>
+                                                                <TextBlock Text="{Binding Cost_model}" Foreground="Black"></TextBlock>
+                                                            </StackPanel>
+                                                            <TextBlock HorizontalAlignment="Right" Text="1天" Foreground="Black" FontFamily="Global User Interface"></TextBlock>
+                                                        </Grid>
+                                                    </StackPanel>
                                                 </StackPanel>
                                             </Grid>
                                         </DataTemplate>

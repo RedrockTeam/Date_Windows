@@ -83,34 +83,35 @@ namespace Date
                 JObject obj = JObject.Parse(datelist);
                 if (Int32.Parse(obj["status"].ToString()) == 200)
                 {
-                    JArray dateListArray = Utils.ReadJso(datelist);
+                JArray dateListArray = Utils.ReadJso(datelist);
 
-                    for (int i = 0; i < dateListArray.Count; i++)
-                    {
-                        JObject jobj = (JObject)dateListArray[i];
-                        DateList d = new DateList();
-                        d.Head = jobj["head"].ToString();
-                        d.Nickname = jobj["nickname"].ToString();
-                        if (jobj["nickname"].ToString() == "1")
-                            d.Gender = "ms-appx:///Assets/ic_man.png";
-                        else if ((jobj["nickname"].ToString() == "2"))
-                            d.Gender = "ms-appx:///Assets/ic_woman.png";
-                        d.Signature = jobj["signature"].ToString();
-                        d.Title = jobj["title"].ToString();
-                        d.Place = jobj["place"].ToString();
-                        d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
-                        if (jobj["cost_model"].ToString() == "1")
-                            d.Cost_model = "AA";
-                        else if ((jobj["cost_model"].ToString() == "2"))
-                            d.Cost_model = "你请客";
-                        else if ((jobj["cost_model"].ToString() == "3"))
-                            d.Cost_model = "我买单";
-                        d.Date_type = jobj["date_type"].ToString();
-                        mdatelist.Add(d);
-                    }
-                    dateListView.ItemsSource = mdatelist;
+                for (int i = 0; i < dateListArray.Count; i++)
+                {
+                    JObject jobj = (JObject)dateListArray[i];
+                    DateList d = new DateList();
+                    d.Head = jobj["head"].ToString();
+                    d.Nickname = jobj["nickname"].ToString();
+                    if (jobj["nickname"].ToString() == "1")
+                        d.Gender = "ms-appx:///Assets/ic_man.png";
+                    else if ((jobj["nickname"].ToString() == "2"))
+                        d.Gender = "ms-appx:///Assets/ic_woman.png";
+                    d.Signature = jobj["signature"].ToString();
+                    d.Title = jobj["title"].ToString();
+                    d.Place = jobj["place"].ToString();
+                    d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
+                    d.Created_at = Utils.GetTime(jobj["created_at"].ToString()).ToString();
+                    if (jobj["cost_model"].ToString() == "1")
+                        d.Cost_model = "AA";
+                    else if ((jobj["cost_model"].ToString() == "2"))
+                        d.Cost_model = "你请客";
+                    else if ((jobj["cost_model"].ToString() == "3"))
+                        d.Cost_model = "我买单";
+                    d.Date_type = jobj["date_type"].ToString();
+                    mdatelist.Add(d);
                 }
+                dateListView.ItemsSource = mdatelist;
             }
+        }
         }
 
         private async void getDatetypeInfor()

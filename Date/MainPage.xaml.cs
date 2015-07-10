@@ -95,6 +95,7 @@ namespace Date
                     d.Title = jobj["title"].ToString();
                     d.Place = jobj["place"].ToString();
                     d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
+                    d.Created_at = Utils.GetTime(jobj["created_at"].ToString()).ToString();
                     if (jobj["cost_model"].ToString() == "1")
                         d.Cost_model = "AA";
                     else if ((jobj["cost_model"].ToString() == "2"))

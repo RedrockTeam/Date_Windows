@@ -136,7 +136,7 @@ namespace Date.Util
         /// <returns>C#格式时间</returns>
         public static DateTime GetTime(string timeStamp)
         {
-            DateTime dtStart = new DateTime(1970, 1, 1);
+            DateTime dtStart = new DateTime(1970, 1, 1,8,0,0);
             long lTime = long.Parse(timeStamp + "0000000");
             TimeSpan toNow = new TimeSpan(lTime);
             return dtStart.Add(toNow);

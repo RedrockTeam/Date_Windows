@@ -103,6 +103,7 @@
     <Compile Include="SetHeadPage.xaml.cs">
       <DependentUpon>SetHeadPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\CreatedTimeValueConverter.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />
   </ItemGroup>

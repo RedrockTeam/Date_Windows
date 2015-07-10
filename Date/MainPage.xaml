@@ -5,9 +5,12 @@
     xmlns:local="using:Date"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:util="using:Date.Util"
     mc:Ignorable="d"
     Background="#f8f8f8">
-
+    <Page.Resources>
+        <util:CreatedTimeValueConverter x:Key="Friendlytimespan"/>
+    </Page.Resources>
     <Grid>
         <StackPanel Name="StatusStackPanel" VerticalAlignment="Top">
             <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
@@ -68,7 +71,7 @@
                                                         <StackPanel>
                                                             <StackPanel Orientation="Vertical" Margin="10,15,5,0">
                                                                 <TextBlock Text="{Binding Nickname}" Foreground="Black" FontSize="18" />
-                                                                <TextBlock Text="这里加创建时间" Foreground="Black" FontSize="14"></TextBlock>
+                                                                <TextBlock Text="{Binding Created_at,Converter={StaticResource Friendlytimespan}}" Foreground="Black" FontSize="12"></TextBlock>
                                                                 <Image Source="{Binding Gender}"></Image>
                                                             </StackPanel>
                                                             <TextBlock Text="{Binding Signature}"></TextBlock>
@@ -104,7 +107,6 @@
                                             </Grid>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
-
                                 </ListView>
                             </StackPanel>
                         </ScrollViewer>

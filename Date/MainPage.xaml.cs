@@ -54,7 +54,7 @@ namespace Date
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
 
-            dateScrollViewer.Height = Utils.getPhoneHeight() - 100 - 85;
+            dateScrollViewer.Height = Utils.getPhoneHeight() - 80 - 85;
 
             getAcademyInfor(); //获取学院列表
             getGradeInfor(); //获取年级列表
@@ -75,37 +75,41 @@ namespace Date
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("date_type", date_type.ToString()));
-            string datelist = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datelist",paramList));
+            string datelist = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datelist", paramList));
             Debug.WriteLine("datelist" + datelist);
+
             if (datelist != "")
             {
-                JArray dateListArray = Utils.ReadJso(datelist);
-
-                for (int i = 0; i < dateListArray.Count; i++)
+                JObject obj = JObject.Parse(datelist);
+                if (Int32.Parse(obj["status"].ToString()) == 200)
                 {
-                    JObject jobj = (JObject)dateListArray[i];
-                    DateList d = new DateList();
-                    d.Head = jobj["head"].ToString();
-                    d.Nickname = jobj["nickname"].ToString();
-                    if (jobj["nickname"].ToString() == "1")
-                        d.Gender = "ms-appx:///Assets/ic_man.png";
-                    else if ((jobj["nickname"].ToString() == "2"))
-                        d.Gender = "ms-appx:///Assets/ic_woman.png";
-                    d.Signature = jobj["signature"].ToString();
-                    d.Title = jobj["title"].ToString();
-                    d.Place = jobj["place"].ToString();
-                    d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
-                    d.Created_at = Utils.GetTime(jobj["created_at"].ToString()).ToString();
-                    if (jobj["cost_model"].ToString() == "1")
-                        d.Cost_model = "AA";
-                    else if ((jobj["cost_model"].ToString() == "2"))
-                        d.Cost_model = "你请客";
-                    else if ((jobj["cost_model"].ToString() == "3"))
-                        d.Cost_model = "我买单";
-                    d.Date_type = jobj["date_type"].ToString();
-                    mdatelist.Add(d);
+                    JArray dateListArray = Utils.ReadJso(datelist);
+
+                    for (int i = 0; i < dateListArray.Count; i++)
+                    {
+                        JObject jobj = (JObject)dateListArray[i];
+                        DateList d = new DateList();
+                        d.Head = jobj["head"].ToString();
+                        d.Nickname = jobj["nickname"].ToString();
+                        if (jobj["nickname"].ToString() == "1")
+                            d.Gender = "ms-appx:///Assets/ic_man.png";
+                        else if ((jobj["nickname"].ToString() == "2"))
+                            d.Gender = "ms-appx:///Assets/ic_woman.png";
+                        d.Signature = jobj["signature"].ToString();
+                        d.Title = jobj["title"].ToString();
+                        d.Place = jobj["place"].ToString();
+                        d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
+                        if (jobj["cost_model"].ToString() == "1")
+                            d.Cost_model = "AA";
+                        else if ((jobj["cost_model"].ToString() == "2"))
+                            d.Cost_model = "你请客";
+                        else if ((jobj["cost_model"].ToString() == "3"))
+                            d.Cost_model = "我买单";
+                        d.Date_type = jobj["date_type"].ToString();
+                        mdatelist.Add(d);
+                    }
+                    dateListView.ItemsSource = mdatelist;
                 }
-                dateListView.ItemsSource = mdatelist;
             }
         }
 
@@ -239,7 +243,7 @@ namespace Date
                 await Task.Delay(2000);
                 isExit = false;
                 StatusTextBlock.Visibility = Visibility.Collapsed;
-                StatusStackPanel.Background = null;
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
             }
             else
                 Application.Current.Exit();
@@ -250,7 +254,7 @@ namespace Date
 
             StatusProgressBar.Visibility = Visibility.Visible;
             StatusTextBlock.Visibility = Visibility.Visible;
-            StatusStackPanel.Background = null;
+            StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("username", appSetting.Values["username"].ToString()));
@@ -293,6 +297,7 @@ namespace Date
 
                 await Task.Delay(2000);
                 StatusTextBlock.Visibility = Visibility.Collapsed;
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
 
             }
         }
@@ -483,7 +488,7 @@ namespace Date
             if (value == 1)
                 StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
             else
-                StatusStackPanel.Background = null;
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
             StatusTextBlock.Text = text;
 
             if (ProgressBarvisibility == Visibility.Collapsed)
@@ -492,7 +497,7 @@ namespace Date
                 StatusTextBlock.Visibility = Visibility.Collapsed;
                 StatusStackPanel.Visibility = Visibility.Collapsed;
                 StatusProgressBar.Visibility = Visibility.Collapsed;
-                StatusStackPanel.Background = null;
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
             }
         }
 

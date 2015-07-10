@@ -5,19 +5,16 @@
     xmlns:local="using:Date"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:util="using:Date.Util"
     mc:Ignorable="d"
     Background="#f8f8f8">
-    <Page.Resources>
-        <util:CreatedTimeValueConverter x:Key="Friendlytimespan"/>
-    </Page.Resources>
+
     <Grid>
-        <StackPanel Name="StatusStackPanel" VerticalAlignment="Top">
+        <StackPanel Name="StatusStackPanel" VerticalAlignment="Top" Background="#efefef">
             <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
             <TextBlock Name="StatusTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,5"  Visibility="Collapsed"/>
         </StackPanel>
         <!--<TextBlock Text="约" Foreground="Red" FontSize="20" Margin="20,20,0,20"/>-->
-        <Hub Name="DateHub" Margin="0,50,0,0" SectionsInViewChanged="DateHub_SectionsInViewChanged">
+        <Hub Background="#efefef" Name="DateHub" Margin="0,50,0,0" SectionsInViewChanged="DateHub_SectionsInViewChanged">
             <HubSection Name="DateListHubSection">
                 <HubSection.Header>
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -45,7 +42,7 @@
                                         </FlipView.ItemTemplate>
                                     </FlipView>
                                 </Grid>
-                                <Grid>
+                                <Grid Background="White">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition />
@@ -54,12 +51,12 @@
                                     <TextBlock Name="typeTextBlock" Text="全部分类" Foreground="Black"  HorizontalAlignment="Center" Grid.Column="0" Margin="10" FontWeight="Normal" Tapped="typeTextBlock_Tapped"/>
                                     <TextBlock Name="sortTextBlock" Text="默认排序" Foreground="Black" HorizontalAlignment="Center" Grid.Column="1" Margin="10" FontWeight="Normal" Tapped="sortTextBlock_Tapped"/>
                                 </Grid>
-                                <ListView Name="dateListView">
+                                <ListView Name="dateListView" Background="#efefef">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Grid Background="#efefef" Margin="0,5">
+                                            <Grid  Margin="0,5">
                                                 <Line Stroke="#efefef" X2="99999" StrokeThickness="1"></Line>
-                                                <StackPanel Margin="5" Background="White">
+                                                <StackPanel  Background="White">
                                                     <StackPanel Orientation="Horizontal">
                                                         <!--头像-->
                                                         <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,0">
@@ -71,7 +68,7 @@
                                                         <StackPanel>
                                                             <StackPanel Orientation="Vertical" Margin="10,15,5,0">
                                                                 <TextBlock Text="{Binding Nickname}" Foreground="Black" FontSize="18" />
-                                                                <TextBlock Text="{Binding Created_at,Converter={StaticResource Friendlytimespan}}" Foreground="Black" FontSize="12"></TextBlock>
+                                                                <TextBlock Text="这里加创建时间" Foreground="Black" FontSize="14"></TextBlock>
                                                                 <Image Source="{Binding Gender}"></Image>
                                                             </StackPanel>
                                                             <TextBlock Text="{Binding Signature}"></TextBlock>
@@ -107,6 +104,7 @@
                                             </Grid>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
+
                                 </ListView>
                             </StackPanel>
                         </ScrollViewer>

@@ -119,6 +119,7 @@
     <Content Include="Assets\ic_address.png" />
     <Content Include="Assets\ic_cost.png" />
     <Content Include="Assets\ic_date.png" />
+    <Content Include="Assets\ic_failed.png" />
     <Content Include="Assets\ic_man.png" />
     <Content Include="Assets\ic_person.png" />
     <Content Include="Assets\ic_time.png" />

@@ -124,10 +124,18 @@ namespace Date
                             mdatelist.Add(d);
                         }
                         dateListView.ItemsSource = mdatelist;
+                        DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                     }
+                    else
+                        DateListFailedStackPanel.Visibility = Visibility.Visible;
                 }
+                else
+                    DateListFailedStackPanel.Visibility = Visibility.Visible;
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                DateListFailedStackPanel.Visibility = Visibility.Visible;
+            }
         }
 
         /// <summary>
@@ -558,6 +566,21 @@ namespace Date
 
         private void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            DateListProgressStackPanel.Visibility = Visibility.Visible;
+            List<DateList> mdatelist = new List<DateList>();
+            dateListView.ItemsSource = mdatelist; 
+            getDatelist(0, 1, order);
+        }
+
+        /// <summary>
+        /// 失败重试点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DateListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            DateListProgressStackPanel.Visibility = Visibility.Visible;
+            DateListFailedStackPanel.Visibility = Visibility.Collapsed;
             getDatelist(0, 1, order);
         }
 

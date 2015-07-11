@@ -25,6 +25,7 @@ using Date.DataModel;
 using Date.Util;
 using System.Collections.ObjectModel;
 using Date.Data;
+using Windows.UI.Core;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
@@ -49,6 +50,9 @@ namespace Date
         List<DateList> mdatelist = new List<DateList>();
 
         private int order = 0;//约会列表排序选项
+        private int page = 1;//约会列表排序选项
+        public bool IsLoading = false;
+        private object o = new object();
         public MainPage()
         {
             this.InitializeComponent();
@@ -68,7 +72,7 @@ namespace Date
             InitFlipView();
             _timer.Tick += ChangeImage;
 
-
+            dateListView.ContainerContentChanging += dateListView_ContainerContentChanging;
         }
 
         /// <summary>
@@ -77,9 +81,12 @@ namespace Date
         /// <param name="date_type"></param>
         /// <param name="page"></param>
         /// <param name="order"></param>
-        private async void getDatelist(int date_type, int page = 1, int order = 0)
+        private async void getDatelist(int date_type, int page = 1, int order = 0, bool isrefresh = true)
         {
-            mdatelist.Clear();
+            if (isrefresh)
+            {
+                mdatelist.Clear();
+            }
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
@@ -87,6 +94,8 @@ namespace Date
             paramList.Add(new KeyValuePair<string, string>("date_type", date_type.ToString()));
             paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
             paramList.Add(new KeyValuePair<string, string>("order", order.ToString()));
+            paramList.Add(new KeyValuePair<string, string>("size", "5"));
+
             string datelist = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datelist", paramList));
             Debug.WriteLine("datelist" + datelist);
 
@@ -98,7 +107,8 @@ namespace Date
                     if (Int32.Parse(obj["status"].ToString()) == 200)
                     {
                         JArray dateListArray = Utils.ReadJso(datelist);
-
+                        List<DateList> mdatelistuse = new List<DateList>();
+                        mdatelistuse.AddRange(mdatelist);
                         for (int i = 0; i < dateListArray.Count; i++)
                         {
                             JObject jobj = (JObject)dateListArray[i];
@@ -110,7 +120,12 @@ namespace Date
                             else if ((jobj["nickname"].ToString() == "2"))
                                 d.Gender = "ms-appx:///Assets/ic_woman.png";
                             d.Signature = jobj["signature"].ToString();
-                            d.Title = jobj["title"].ToString();
+
+                            if (isrefresh)
+                                d.Title = jobj["title"].ToString();
+                            else
+                                d.Title ="继续加载:" + jobj["title"].ToString();
+
                             d.Place = jobj["place"].ToString();
                             d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
                             d.Created_at = Utils.GetTime(jobj["created_at"].ToString()).ToString();
@@ -121,13 +136,53 @@ namespace Date
                             else if ((jobj["cost_model"].ToString() == "3"))
                                 d.Cost_model = "我买单";
                             d.Date_type = jobj["date_type"].ToString();
+                            mdatelistuse.Add(d);
                             mdatelist.Add(d);
                         }
-                        dateListView.ItemsSource = mdatelist;
+                        dateListView.ItemsSource = mdatelistuse;
+                        DateListProgressStackPanel.Visibility = Visibility.Collapsed;
+                        DateListFailedStackPanel.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                        if (isrefresh)
+                            DateListFailedStackPanel.Visibility = Visibility.Visible;
+                }
+                else
+                    if (isrefresh)
+                        DateListFailedStackPanel.Visibility = Visibility.Visible;
+            }
+            catch (Exception)
+            {
+                DateListFailedStackPanel.Visibility = Visibility.Visible;
+            }
+        }
+
+        void dateListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            lock (o)
+            {
+                if (!IsLoading)
+                {
+                    if (args.ItemIndex == dateListView.Items.Count - 1)
+                    {
+                        IsLoading = true;
+                        Task.Factory.StartNew(async () =>
+                        {
+                            await Task.Delay(2000);
+                            await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            {
+                                
+                                
+                                
+                                
+                                getDatelist(0, ++page, order, false);
+                            });
+                            await Task.Delay(2000);
+                            IsLoading = false;
+                        });
                     }
                 }
             }
-            catch (Exception) { }
         }
 
         /// <summary>
@@ -529,8 +584,10 @@ namespace Date
                         order = 4;
                         break;
                 }
+                page = 1;
                 List<DateList> mdatelist = new List<DateList>();
                 dateListView.ItemsSource = mdatelist;
+                DateListProgressStackPanel.Visibility = Visibility.Visible;
                 getDatelist(0, 1, order);
             }
         }
@@ -556,8 +613,29 @@ namespace Date
             }
         }
 
+        /// <summary>
+        /// DateList刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            page = 1;
+            DateListProgressStackPanel.Visibility = Visibility.Visible;
+            List<DateList> mdatelist = new List<DateList>();
+            dateListView.ItemsSource = mdatelist;
+            getDatelist(0, 1, order);
+        }
+
+        /// <summary>
+        /// 失败重试点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DateListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            DateListProgressStackPanel.Visibility = Visibility.Visible;
+            DateListFailedStackPanel.Visibility = Visibility.Collapsed;
             getDatelist(0, 1, order);
         }
 

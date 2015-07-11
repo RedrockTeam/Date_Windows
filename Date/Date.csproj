@@ -90,6 +90,7 @@
     <Compile Include="Data\DateList.cs" />
     <Compile Include="Data\DateType.cs" />
     <Compile Include="Data\GradeList.cs" />
+    <Compile Include="Data\PersonInfo.cs" />
     <Compile Include="grzxPage.xaml.cs">
       <DependentUpon>grzxPage.xaml</DependentUpon>
     </Compile>

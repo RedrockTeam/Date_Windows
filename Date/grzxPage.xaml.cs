@@ -19,6 +19,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Date.Data;
+using Date.Util;
+using Newtonsoft.Json.Linq;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -31,6 +34,8 @@ namespace Date
     {
         private ApplicationDataContainer appSetting;
         private FileOpenPickerContinuationEventArgs _filePickerEventArgs = null;
+        private bool IsHeadExistOffline = false;
+        private PersonInfo personInfo;
         public grzxPage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
@@ -41,19 +46,67 @@ namespace Date
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("grzxPage");
-
-            SetHeadPage();
+            SetHead();
         }
 
+        private void SetHead()
+        {
+            if (IsHeadExistOffline == true)
+            {
+                SetHeadPage();
+            }
+            else
+            {
+                GetHeadImg();
+            }
+        }
         private async void SetHeadPage()
         {
             try
             {
                 IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
                 IStorageFile storageFileRE = await applicationFolder.GetFileAsync("head.png");
-                img.Source = new BitmapImage(new Uri(storageFileRE.Path));
+                img.ImageSource = new BitmapImage(new Uri(storageFileRE.Path));
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+            }
+        }
+
+        private async void GetHeadImg()
+        {
+            try
+            {
+
+                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("get_uid", appSetting.Values["uid"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+                string personinfo = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
+                Debug.WriteLine("个人信息" + personinfo);
+                if (personinfo != "")
+                {
+                    JObject obj = JObject.Parse(personinfo);
+
+                        JArray PersoninfoArray = Utils.ReadJso(personinfo);
+
+                        int id = Int32.Parse(obj["id"].ToString());
+                        string nickname = obj["nickname"].ToString();
+                        string signature = obj["signature"].ToString();
+                        string gender = obj["gender"].ToString();
+                        string telephone = obj["telephone"].ToString();
+                        string grade = obj["grade"].ToString();
+                        string academy = obj["academy"].ToString();
+                        string qq = obj["qq"].ToString();
+                        string weixin = obj["weixin"].ToString();
+                        PersonInfo p=new PersonInfo(id,nickname,signature,gender,grade,academy,telephone,qq,weixin);
+                        personInfo = p;
+                    
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         //离开页面时，取消事件
@@ -76,7 +129,7 @@ namespace Date
             }
         }
 
-
+        //退出登录
         private void logoutAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             appSetting.Values.Remove("username");
@@ -118,7 +171,7 @@ namespace Date
                 StorageFile file = args.Files[0];
                 Frame.Navigate(typeof (SetHeadPage),file);
                 BitmapImage bitmapImage = new BitmapImage(new Uri(file.Path));
-                img.Source = bitmapImage;
+                img.ImageSource = bitmapImage;
             }
         }
 

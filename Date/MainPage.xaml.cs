@@ -77,9 +77,12 @@ namespace Date
         /// <param name="date_type"></param>
         /// <param name="page"></param>
         /// <param name="order"></param>
-        private async void getDatelist(int date_type, int page = 1, int order = 0)
+        private async void getDatelist(int date_type, int page = 1, int order = 0, bool isrefresh = true)
         {
-            mdatelist.Clear();
+            if (isrefresh)
+            {
+                mdatelist.Clear();
+            }
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
@@ -568,7 +571,7 @@ namespace Date
         {
             DateListProgressStackPanel.Visibility = Visibility.Visible;
             List<DateList> mdatelist = new List<DateList>();
-            dateListView.ItemsSource = mdatelist; 
+            dateListView.ItemsSource = mdatelist;
             getDatelist(0, 1, order);
         }
 

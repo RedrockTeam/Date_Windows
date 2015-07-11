@@ -47,6 +47,8 @@ namespace Date
         List<AcademyList> acalist = new List<AcademyList>();
         List<DateType> datetypelist = new List<DateType>();
         List<DateList> mdatelist = new List<DateList>();
+
+        private int order = 0;//约会列表排序选项
         public MainPage()
         {
             this.InitializeComponent();
@@ -54,7 +56,7 @@ namespace Date
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
 
-            dateScrollViewer.Height = Utils.getPhoneHeight() - 80 - 85;
+            dateScrollViewer.Height = Utils.getPhoneHeight() - 85 - 85;
 
             getAcademyInfor(); //获取学院列表
             getGradeInfor(); //获取年级列表
@@ -69,51 +71,68 @@ namespace Date
 
         }
 
-        private async void getDatelist(int date_type)
+        /// <summary>
+        /// 获取约会列表
+        /// </summary>
+        /// <param name="date_type"></param>
+        /// <param name="page"></param>
+        /// <param name="order"></param>
+        private async void getDatelist(int date_type, int page = 1, int order = 0)
         {
+            mdatelist.Clear();
+
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("date_type", date_type.ToString()));
+            paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
+            paramList.Add(new KeyValuePair<string, string>("order", order.ToString()));
             string datelist = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datelist", paramList));
             Debug.WriteLine("datelist" + datelist);
 
-            if (datelist != "")
+            try
             {
-                JObject obj = JObject.Parse(datelist);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
+                if (datelist != "")
                 {
-                JArray dateListArray = Utils.ReadJso(datelist);
+                    JObject obj = JObject.Parse(datelist);
+                    if (Int32.Parse(obj["status"].ToString()) == 200)
+                    {
+                        JArray dateListArray = Utils.ReadJso(datelist);
 
-                for (int i = 0; i < dateListArray.Count; i++)
-                {
-                    JObject jobj = (JObject)dateListArray[i];
-                    DateList d = new DateList();
-                    d.Head = jobj["head"].ToString();
-                    d.Nickname = jobj["nickname"].ToString();
-                    if (jobj["nickname"].ToString() == "1")
-                        d.Gender = "ms-appx:///Assets/ic_man.png";
-                    else if ((jobj["nickname"].ToString() == "2"))
-                        d.Gender = "ms-appx:///Assets/ic_woman.png";
-                    d.Signature = jobj["signature"].ToString();
-                    d.Title = jobj["title"].ToString();
-                    d.Place = jobj["place"].ToString();
-                    d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
-                    d.Created_at = Utils.GetTime(jobj["created_at"].ToString()).ToString();
-                    if (jobj["cost_model"].ToString() == "1")
-                        d.Cost_model = "AA";
-                    else if ((jobj["cost_model"].ToString() == "2"))
-                        d.Cost_model = "你请客";
-                    else if ((jobj["cost_model"].ToString() == "3"))
-                        d.Cost_model = "我买单";
-                    d.Date_type = jobj["date_type"].ToString();
-                    mdatelist.Add(d);
+                        for (int i = 0; i < dateListArray.Count; i++)
+                        {
+                            JObject jobj = (JObject)dateListArray[i];
+                            DateList d = new DateList();
+                            d.Head = jobj["head"].ToString();
+                            d.Nickname = jobj["nickname"].ToString();
+                            if (jobj["nickname"].ToString() == "1")
+                                d.Gender = "ms-appx:///Assets/ic_man.png";
+                            else if ((jobj["nickname"].ToString() == "2"))
+                                d.Gender = "ms-appx:///Assets/ic_woman.png";
+                            d.Signature = jobj["signature"].ToString();
+                            d.Title = jobj["title"].ToString();
+                            d.Place = jobj["place"].ToString();
+                            d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
+                            d.Created_at = Utils.GetTime(jobj["created_at"].ToString()).ToString();
+                            if (jobj["cost_model"].ToString() == "1")
+                                d.Cost_model = "AA";
+                            else if ((jobj["cost_model"].ToString() == "2"))
+                                d.Cost_model = "你请客";
+                            else if ((jobj["cost_model"].ToString() == "3"))
+                                d.Cost_model = "我买单";
+                            d.Date_type = jobj["date_type"].ToString();
+                            mdatelist.Add(d);
+                        }
+                        dateListView.ItemsSource = mdatelist;
+                    }
                 }
-                dateListView.ItemsSource = mdatelist;
             }
-        }
+            catch (Exception) { }
         }
 
+        /// <summary>
+        /// 获取约会类型
+        /// </summary>
         private async void getDatetypeInfor()
         {
 
@@ -140,6 +159,9 @@ namespace Date
             //Debug.WriteLine(dateType.Id.ToString());
         }
 
+        /// <summary>
+        /// 获取年级列表
+        /// </summary>
         private async void getGradeInfor()
         {
             //年级
@@ -162,6 +184,9 @@ namespace Date
             }
         }
 
+        /// <summary>
+        /// 获取学院列表
+        /// </summary>
         private async void getAcademyInfor()
         {
             string academy = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/academy", new List<KeyValuePair<String, String>>()));
@@ -300,6 +325,8 @@ namespace Date
                 await Task.Delay(2000);
                 StatusTextBlock.Text = "";
                 StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
+                Frame.Navigate(typeof(LoginPage));
+
             }
         }
 
@@ -462,7 +489,10 @@ namespace Date
         {
             MenuFlyout sortMenuFlyout = new MenuFlyout();
             sortMenuFlyout.Items.Add(getsortMenuFlyoutItem("默认排序"));
-            sortMenuFlyout.Items.Add(getsortMenuFlyoutItem("时间排序"));
+            sortMenuFlyout.Items.Add(getsortMenuFlyoutItem("创建时间"));
+            sortMenuFlyout.Items.Add(getsortMenuFlyoutItem("剩余时间"));
+            sortMenuFlyout.Items.Add(getsortMenuFlyoutItem("参与人数"));
+            sortMenuFlyout.Items.Add(getsortMenuFlyoutItem("用户信用"));
             sortMenuFlyout.ShowAt(sortTextBlock);
 
         }
@@ -475,10 +505,34 @@ namespace Date
             return menuFlyoutItem;
         }
 
-        private void sortMenuFlyoutItem_click(object sender, RoutedEventArgs e)
+        private async void sortMenuFlyoutItem_click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
-            sortTextBlock.Text = menuFlyoutItem.Text;
+            if (sortTextBlock.Text != menuFlyoutItem.Text)
+            {
+                sortTextBlock.Text = menuFlyoutItem.Text;
+                switch (menuFlyoutItem.Text)
+                {
+                    case "默认排序":
+                        order = 0;
+                        break;
+                    case "创建时间":
+                        order = 1;
+                        break;
+                    case "剩余时间":
+                        order = 2;
+                        break;
+                    case "参与人数":
+                        order = 3;
+                        break;
+                    case "用户信用":
+                        order = 4;
+                        break;
+                }
+                List<DateList> mdatelist = new List<DateList>();
+                dateListView.ItemsSource = mdatelist;
+                getDatelist(0, 1, order);
+            }
         }
 
         private async void showStatus(string text, int value, Windows.UI.Xaml.Visibility ProgressBarvisibility)
@@ -500,6 +554,11 @@ namespace Date
                 StatusProgressBar.Visibility = Visibility.Collapsed;
                 StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
             }
+        }
+
+        private void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            getDatelist(0, 1, order);
         }
 
 

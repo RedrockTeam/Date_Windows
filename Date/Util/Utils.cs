@@ -17,6 +17,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Windows.UI.Xaml.Media.Imaging;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Storage.Streams;
 
 namespace Date.Util
 {
@@ -168,6 +172,76 @@ namespace Date.Util
             }
         }
 
+        //public static async void GetImages(BitmapImage bitmap,string filename)
+        //{
 
+        //    WriteableBitmap wb=new WriteableBitmap(bitmap.PixelWidth,bitmap.PixelHeight);
+        // //   wb.SetSourceAsync();
+        //    RandomAccessStreamReference rasr=RandomAccessStreamReference.CreateFromUri(bitmap.UriSource);
+        //    var streamWithcontent = await rasr.OpenReadAsync();
+        //    byte[] buffer=new byte[streamWithcontent.Size];
+        //    await streamWithcontent.ReadAsync(buffer.AsBuffer(), (uint) streamWithcontent.Size, InputStreamOptions.None);
+        //    //IRandomAccessStream stream = new Stream();
+        //   // editab wbmp=new WriteableBitmap(128,128);
+        //    //wbmp.SetSourceAsync(stream);
+        //    StorageFolder folder = ApplicationData.Current.LocalFolder;
+        //    StorageFile file = await folder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+        //   // IBuffer buffer = RandomAccessStreamToBuffer(bitmap);
+        //    MemoryStream ss=new MemoryStream();
+        //    bitmap.
+
+        //}
+        //public static IBuffer RandomAccessStreamToBuffer(IRandomAccessStream randomstream)
+        //{
+
+        //    Stream stream = WindowsRuntimeStreamExtensions.AsStreamForRead(randomstream.GetInputStreamAt(0));
+
+        //    MemoryStream memoryStream = new MemoryStream();
+
+        //    if (stream != null)
+        //    {
+
+        //        byte[] bytes = ConvertStreamTobyte(stream);
+
+        //        if (bytes != null)
+        //        {
+
+        //            var binaryWriter = new BinaryWriter(memoryStream);
+
+        //            binaryWriter.Write(bytes);
+
+        //        }
+
+        //    }
+
+        //    IBuffer buffer = WindowsRuntimeBufferExtensions.GetWindowsRuntimeBuffer(memoryStream, 0, (int)memoryStream.Length);
+
+        //    return buffer;
+
+        //}
+        //public static byte[] ConvertStreamTobyte(Stream input)
+        //{
+
+        //    byte[] buffer = new byte[16 * 1024];
+
+
+
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+
+        //        int read;
+
+        //        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+        //        {
+
+        //            ms.Write(buffer, 0, read);
+
+        //        }
+
+        //        return ms.ToArray();
+
+        //    }
+
+        //}
     }
 }

@@ -55,15 +55,18 @@ namespace Date
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             BitmapImage bitmapImage = new BitmapImage(new Uri(((StorageFile)e.Parameter).Path));
             headImage.Source = bitmapImage;
+
             UmengSDK.UmengAnalytics.TrackPageStart("SetHeadPage");
 
         }
 
         //离开页面时，取消事件
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
-            UmengSDK.UmengAnalytics.TrackPageEnd("SetHeadPage");
+            //UmengSDK.UmengAnalytics.TrackPageEnd("SetHeadPage");
+            await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 255, 61, 61), Colors.White, text: "约");
+
 
         }
 
@@ -167,6 +170,7 @@ namespace Date
             StatusTextBlock.Visibility = Visibility.Visible;
             if (value == 1)
                 StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+
             else
                 StatusStackPanel.Background = null;
             StatusTextBlock.Text = text;

@@ -58,7 +58,7 @@
                                 <Grid VerticalAlignment="Stretch">
                                     <!--Date列表的ListView-->
                                     <ListView Name="dateListView" Background="#efefef" >
-                                        <ListView.ItemTemplate x:Uid="i12">
+                                        <ListView.ItemTemplate >
                                             <DataTemplate>
                                                 <Grid  Margin="0,5">
                                                     <Line Stroke="#efefef" X2="99999" StrokeThickness="1"></Line>

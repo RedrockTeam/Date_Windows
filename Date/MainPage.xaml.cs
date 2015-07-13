@@ -55,7 +55,7 @@ namespace Date
         public bool IsLoading = false;
         public bool IsOver = false;
         private object o = new object();
-        
+
 
 
         public MainPage()
@@ -128,7 +128,7 @@ namespace Date
                                 d.Gender = "ms-appx:///Assets/ic_woman.png";
                             d.Signature = jobj["signature"].ToString();
 
-                                d.Title = jobj["title"].ToString();
+                            d.Title = jobj["title"].ToString();
 
                             d.Place = jobj["place"].ToString();
                             d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
@@ -321,6 +321,11 @@ namespace Date
             if (!isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
                 Login();
+            }
+            else
+            {
+                StatusTextBlock.Visibility = Visibility.Visible;
+                StatusTextBlock.Text = "";
             }
             _timer.Start();
             UmengSDK.UmengAnalytics.TrackPageStart("MainPage");

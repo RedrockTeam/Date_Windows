@@ -33,6 +33,7 @@ namespace Date
         public grzxPage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
+            GetPerInfo();
             this.InitializeComponent();
         }
 
@@ -181,6 +182,7 @@ namespace Date
                     }
                 }
                 this.DataContext = pi;
+                MyDatesList.ItemsSource = MyDates;
             }
         }
 

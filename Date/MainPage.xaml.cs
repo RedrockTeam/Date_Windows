@@ -52,7 +52,7 @@ namespace Date
 
         private int order = 0;//约会列表排序选项
         private int page = 1;//约会列表排序选项
-        private int size = 10;//约会列表数量
+        private int size = 40;//约会列表数量
         public bool IsLoading = false;
         public bool IsOver = false;
         private object o = new object();

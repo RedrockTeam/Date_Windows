@@ -187,6 +187,7 @@ namespace Date
             }
             catch (Exception)
             {
+                Debug.WriteLine("发布约，分类数据加载异常");
                 isType = false;
             }
             if (!isType)

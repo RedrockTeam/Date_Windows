@@ -51,14 +51,21 @@ namespace Date
 
         private int order = 0;//约会列表排序选项
         private int page = 1;//约会列表排序选项
+        private int size = 40;//约会列表数量
         public bool IsLoading = false;
+        public bool IsOver = false;
         private object o = new object();
+        
+
+
         public MainPage()
         {
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
+
+
 
             dateScrollViewer.Height = Utils.getPhoneHeight() - 85 - 85;
 
@@ -94,7 +101,7 @@ namespace Date
             paramList.Add(new KeyValuePair<string, string>("date_type", date_type.ToString()));
             paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
             paramList.Add(new KeyValuePair<string, string>("order", order.ToString()));
-            paramList.Add(new KeyValuePair<string, string>("size", "5"));
+            paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
 
             string datelist = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datelist", paramList));
             Debug.WriteLine("datelist" + datelist);
@@ -108,7 +115,7 @@ namespace Date
                     {
                         JArray dateListArray = Utils.ReadJso(datelist);
                         List<DateList> mdatelistuse = new List<DateList>();
-                        mdatelistuse.AddRange(mdatelist);
+                        mdatelist.Clear();
                         for (int i = 0; i < dateListArray.Count; i++)
                         {
                             JObject jobj = (JObject)dateListArray[i];
@@ -124,7 +131,7 @@ namespace Date
                             if (isrefresh)
                                 d.Title = jobj["title"].ToString();
                             else
-                                d.Title ="继续加载:" + jobj["title"].ToString();
+                                d.Title = "继续加载:" + jobj["title"].ToString();
 
                             d.Place = jobj["place"].ToString();
                             d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
@@ -136,10 +143,29 @@ namespace Date
                             else if ((jobj["cost_model"].ToString() == "3"))
                                 d.Cost_model = "我买单";
                             d.Date_type = jobj["date_type"].ToString();
-                            mdatelistuse.Add(d);
-                            mdatelist.Add(d);
+                            if (isrefresh)
+                                mdatelistuse.Add(d);
+                            else
+                                mdatelist.Add(d);
                         }
-                        dateListView.ItemsSource = mdatelistuse;
+                        if (isrefresh)
+                            dateListView.ItemsSource = mdatelistuse;
+                        else
+                        {
+                            if (mdatelist.Count == size)
+                            {
+                                ListView ll = new ListView();
+                                ll.ItemTemplate = dateListView.ItemTemplate;
+                                ll.ItemsSource = mdatelist;
+                                ll.IsItemClickEnabled = true;
+
+                                ll.ItemClick += dateListView_ItemClick;
+                                ll.ContainerContentChanging += dateListView_ContainerContentChanging;
+                                dateStackPanel.Children.Add(ll);
+                            }
+                            else
+                                IsOver = true;
+                        }
                         DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                         DateListFailedStackPanel.Visibility = Visibility.Collapsed;
                     }
@@ -161,25 +187,24 @@ namespace Date
         {
             lock (o)
             {
-                if (!IsLoading)
+                if (!IsOver)
                 {
-                    if (args.ItemIndex == dateListView.Items.Count - 1)
+                    if (!IsLoading)
                     {
-                        IsLoading = true;
-                        Task.Factory.StartNew(async () =>
+                        if (args.ItemIndex == dateListView.Items.Count - 1)
                         {
-                            await Task.Delay(2000);
-                            await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            IsLoading = true;
+                            Task.Factory.StartNew(async () =>
                             {
-                                
-                                
-                                
-                                
-                                getDatelist(0, ++page, order, false);
+                                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                {
+
+                                    getDatelist(0, ++page, order, false);
+
+                                });
+                                IsLoading = false;
                             });
-                            await Task.Delay(2000);
-                            IsLoading = false;
-                        });
+                        }
                     }
                 }
             }
@@ -637,6 +662,12 @@ namespace Date
             DateListProgressStackPanel.Visibility = Visibility.Visible;
             DateListFailedStackPanel.Visibility = Visibility.Collapsed;
             getDatelist(0, 1, order);
+        }
+
+        private void dateListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+            Debug.WriteLine("你点击了：" + ((DateList)e.ClickedItem).Title);
         }
 
 

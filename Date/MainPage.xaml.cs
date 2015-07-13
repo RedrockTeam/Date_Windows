@@ -26,6 +26,7 @@ using Date.Util;
 using System.Collections.ObjectModel;
 using Date.Data;
 using Windows.UI.Core;
+using Windows.UI.Text;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
@@ -55,8 +56,10 @@ namespace Date
         public bool IsLoading = false;
         public bool IsOver = false;
         private object o = new object();
-        
 
+        private StackPanel AddDateListProgressStackPanel = new StackPanel();
+        private ProgressBar AddDateListProgressProgressBar = new ProgressBar();
+        private TextBlock AddDateListProgressTextBlock = new TextBlock();
 
         public MainPage()
         {
@@ -72,14 +75,37 @@ namespace Date
             getAcademyInfor(); //获取学院列表
             getGradeInfor(); //获取年级列表
             getDatetypeInfor(); //获取约分类列表
-            getDatelist(0); //获取约列表
-
 
             _timer.Interval = TimeSpan.FromSeconds(7.0);
             InitFlipView();
             _timer.Tick += ChangeImage;
 
+            BuildAddDateListProgressStackPanel();
+
             dateListView.ContainerContentChanging += dateListView_ContainerContentChanging;
+        }
+
+        private void BuildAddDateListProgressStackPanel()
+        {
+            AddDateListProgressProgressBar.IsIndeterminate = true;
+            AddDateListProgressTextBlock.Text = "疯狂加载中...";
+            AddDateListProgressTextBlock.HorizontalAlignment = HorizontalAlignment.Center;
+            AddDateListProgressTextBlock.FontSize = 15;
+            AddDateListProgressTextBlock.FontWeight = FontWeights.Light;
+            AddDateListProgressTextBlock.Foreground = new SolidColorBrush(Colors.Gray);
+            AddDateListProgressTextBlock.Margin = new Thickness(0, 5, 0, 5);
+            AddDateListProgressStackPanel.Orientation = Orientation.Vertical;
+            AddDateListProgressStackPanel.Children.Add(AddDateListProgressProgressBar);
+            AddDateListProgressStackPanel.Children.Add(AddDateListProgressTextBlock);
+            AddDateListProgressStackPanel.Tapped += AddDateListProgressStackPanel_Tapped;
+        }
+
+        void AddDateListProgressStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if(AddDateListProgressTextBlock.Text == "加载失败 T_T")
+            {
+                getDatelist(0, page, order, false);
+            }
         }
 
         /// <summary>
@@ -128,7 +154,7 @@ namespace Date
                                 d.Gender = "ms-appx:///Assets/ic_woman.png";
                             d.Signature = jobj["signature"].ToString();
 
-                                d.Title = jobj["title"].ToString();
+                            d.Title = jobj["title"].ToString();
 
                             d.Place = jobj["place"].ToString();
                             d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();
@@ -149,7 +175,7 @@ namespace Date
                             dateListView.ItemsSource = mdatelistuse;
                         else
                         {
-                            if (mdatelist.Count == size)
+                            if (mdatelist.Count != 0)
                             {
                                 ListView ll = new ListView();
                                 ll.ItemTemplate = dateListView.ItemTemplate;
@@ -158,10 +184,17 @@ namespace Date
 
                                 ll.ItemClick += dateListView_ItemClick;
                                 ll.ContainerContentChanging += dateListView_ContainerContentChanging;
+                                dateStackPanel.Children.Remove(AddDateListProgressStackPanel);
                                 dateStackPanel.Children.Add(ll);
                             }
-                            else
+                            if (mdatelist.Count < size)
+                            {
                                 IsOver = true;
+                                AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
+                                AddDateListProgressTextBlock.Text = "到底喽~";
+                                dateStackPanel.Children.Add(AddDateListProgressStackPanel);
+                                Debug.WriteLine("加载完了");
+                            }
                         }
                         DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                         DateListFailedStackPanel.Visibility = Visibility.Collapsed;
@@ -169,13 +202,24 @@ namespace Date
                     else
                         if (isrefresh)
                             DateListFailedStackPanel.Visibility = Visibility.Visible;
+                        else
+                        {
+                            AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
+                            AddDateListProgressTextBlock.Text = "加载失败 T_T";
+                        }
                 }
                 else
                     if (isrefresh)
                         DateListFailedStackPanel.Visibility = Visibility.Visible;
+                    else
+                    {
+                        AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
+                        AddDateListProgressTextBlock.Text = "加载失败 T_T";
+                    }
             }
             catch (Exception)
             {
+                Debug.WriteLine("主页，列表网络异常");
                 DateListFailedStackPanel.Visibility = Visibility.Visible;
             }
         }
@@ -195,7 +239,15 @@ namespace Date
                             {
                                 await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                                 {
-
+                                    try
+                                    {
+                                        AddDateListProgressProgressBar.Visibility = Visibility.Visible;
+                                        AddDateListProgressTextBlock.Text = "疯狂加载中...";
+                                        dateStackPanel.Children.Add(AddDateListProgressStackPanel);
+                                    }
+                                    catch (Exception) {
+                                        Debug.WriteLine("主页，列表瀑布流加载控件异常");
+                                    }
                                     getDatelist(0, ++page, order, false);
 
                                 });
@@ -302,7 +354,9 @@ namespace Date
                 Debug.WriteLine(dataFlipView.SelectedIndex);
                 dataFlipView.SelectionChanged += dataFlipView_SelectionChanged;
             }
-            catch (Exception) { }
+            catch (Exception) {
+                Debug.WriteLine("主页，图片切换异常");
+            }
         }
 
 
@@ -321,6 +375,11 @@ namespace Date
             if (!isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
                 Login();
+            }
+            else
+            {
+                StatusTextBlock.Visibility = Visibility.Visible;
+                StatusTextBlock.Text = "";
             }
             _timer.Start();
             UmengSDK.UmengAnalytics.TrackPageStart("MainPage");
@@ -385,6 +444,8 @@ namespace Date
                     appSetting.Values["token"] = obj["token"].ToString();
                     isLogin = true;
 
+                    getDatelist(0); //获取约列表
+
                     StatusProgressBar.Visibility = Visibility.Collapsed;
                     StatusTextBlock.Text = "登陆成功...";
 
@@ -447,7 +508,9 @@ namespace Date
                     //HoldPlaceImg.Visibility = Visibility.Collapsed;
                     dataFlipView.SelectedIndex = 1;
                 }
-                catch (Exception) { }
+                catch (Exception) {
+                    Debug.WriteLine("主页，图片加载异常");
+                }
             }
         }
 
@@ -539,6 +602,7 @@ namespace Date
             }
             catch (Exception)
             {
+                Debug.WriteLine("主页，分类数据加载异常");
                 isType = false;
             }
             if (!isType)
@@ -607,8 +671,18 @@ namespace Date
                         break;
                 }
                 page = 1;
+                IsOver = false;
                 List<DateList> mdatelist = new List<DateList>();
                 dateListView.ItemsSource = mdatelist;
+                try
+                {
+                    dateStackPanel.Children.RemoveAt(1);
+                    dateStackPanel.Children.Remove(AddDateListProgressStackPanel);
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("主页，切换分类移除控件异常");
+                }
                 DateListProgressStackPanel.Visibility = Visibility.Visible;
                 getDatelist(0, 1, order);
             }
@@ -643,9 +717,19 @@ namespace Date
         private void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             page = 1;
+            IsOver = false;
             DateListProgressStackPanel.Visibility = Visibility.Visible;
             List<DateList> mdatelist = new List<DateList>();
             dateListView.ItemsSource = mdatelist;
+            try
+            {
+                dateStackPanel.Children.RemoveAt(1);
+                dateStackPanel.Children.Remove(AddDateListProgressStackPanel);
+            }
+            catch(Exception)
+            {
+                Debug.WriteLine("主页，刷新移除控件异常");
+            }
             getDatelist(0, 1, order);
         }
 
@@ -656,8 +740,19 @@ namespace Date
         /// <param name="e"></param>
         private void DateListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            page = 1;
+            IsOver = false;
             DateListProgressStackPanel.Visibility = Visibility.Visible;
             DateListFailedStackPanel.Visibility = Visibility.Collapsed;
+            try
+            {
+                dateStackPanel.Children.RemoveAt(1);
+                dateStackPanel.Children.Remove(AddDateListProgressStackPanel);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("主页，失败重试移除控件异常");
+            }
             getDatelist(0, 1, order);
         }
 

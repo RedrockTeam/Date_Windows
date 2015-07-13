@@ -117,7 +117,9 @@ namespace Date
                 head = Utils.ConvertUnicodeStringToChinese(await response.Content.ReadAsStringAsync().AsTask(_cts.Token));
                 Debug.WriteLine(head);
             }
-            catch (Exception) { }
+            catch (Exception) {
+                Debug.WriteLine("设置头像，保存新头像异常");
+            }
             if (head != "")
             {
                 JObject obj = JObject.Parse(head);

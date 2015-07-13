@@ -1,17 +1,8 @@
-﻿using Date.Util;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Phone.UI.Input;
@@ -21,13 +12,13 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
+using Date.Util;
+using Newtonsoft.Json.Linq;
+using UmengSDK;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -56,7 +47,7 @@ namespace Date
             BitmapImage bitmapImage = new BitmapImage(new Uri(((StorageFile)e.Parameter).Path));
             headImage.Source = bitmapImage;
 
-            UmengSDK.UmengAnalytics.TrackPageStart("SetHeadPage");
+            UmengAnalytics.TrackPageStart("SetHeadPage");
 
         }
 
@@ -65,8 +56,6 @@ namespace Date
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
             //UmengSDK.UmengAnalytics.TrackPageEnd("SetHeadPage");
-            await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 255, 61, 61), Colors.White, text: "约");
-
 
         }
 
@@ -90,11 +79,8 @@ namespace Date
             string head = "";
             try
             {
-
                 HttpClient _httpClient = new HttpClient();
                 CancellationTokenSource _cts = new CancellationTokenSource();
-
-
                 RenderTargetBitmap mapBitmap = new RenderTargetBitmap();
                 await mapBitmap.RenderAsync(headScrollViewer);
                 var pixelBuffer = await mapBitmap.GetPixelsAsync();
@@ -103,7 +89,6 @@ namespace Date
                 using (var fileStream = await saveFile.OpenAsync(FileAccessMode.ReadWrite))
                 {
                     var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, fileStream);
-
                     encoder.SetPixelData(
                         BitmapPixelFormat.Bgra8,
                         BitmapAlphaMode.Ignore,
@@ -163,7 +148,7 @@ namespace Date
 
         }
 
-        private async void showStatus(string text, int value, Windows.UI.Xaml.Visibility ProgressBarvisibility)
+        private async void showStatus(string text, int value, Visibility ProgressBarvisibility)
         {
             StatusStackPanel.Visibility = Visibility.Visible;
             StatusProgressBar.Visibility = ProgressBarvisibility;

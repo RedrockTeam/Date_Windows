@@ -47,7 +47,7 @@ namespace Date
 
         private void SetHead()
         {
-            if (IsHeadExistOffline == true)
+            if (appSetting.Values.ContainsKey("IsHeadExistOffline")&&bool.Parse(appSetting.Values["IsHeadExistOffline"].ToString()))
             {
                 SetHeadPage();
             }
@@ -73,34 +73,10 @@ namespace Date
         {
             try
             {
-
-                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("get_uid", appSetting.Values["uid"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-                string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
-                Debug.WriteLine("个人信息" + pc);
-                if (pc != "")
-                {
-                    JObject obj = JObject.Parse(pc);
-                     if (Int32.Parse(obj["status"].ToString()) == 200)
-                    {
-                      pi.GetAttribute(obj);
-                         JArray mydatelist=JArray.Parse(obj["data"]["mydate"].ToString());
-                        for (int i = 0; i < mydatelist.Count; i++)
-                        {
-                            JObject temp = JObject.Parse(mydatelist[i].ToString());
-                            MyDate md=new MyDate();
-                            md.GetAttribute(temp);
-                            MyDates.Add(md);
-
-                        }
-                    }
-                    this.DataContext = pi;
-                }
-
+                GetPerInfo();
                 BitmapImage head=new BitmapImage(new Uri(pi.Head));
                 img.ImageSource = head;
+                RenderTargetBitmap cutimg=new RenderTargetBitmap();
 
             }
             catch (Exception )
@@ -173,8 +149,39 @@ namespace Date
                 Frame.Navigate(typeof(SetHeadPage), file);
                 BitmapImage bitmapImage = new BitmapImage(new Uri(file.Path));
                 img.ImageSource = bitmapImage;
+                //IsHeadExistOffline 
+                appSetting.Values["IsHeadExistOffline"] = true;
+
             }
 
+        }
+
+        private async void GetPerInfo()
+        {
+             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("get_uid", appSetting.Values["uid"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+                string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
+                Debug.WriteLine("个人信息" + pc);
+            if (pc != "")
+            {
+                JObject obj = JObject.Parse(pc);
+                if (Int32.Parse(obj["status"].ToString()) == 200)
+                {
+                    pi.GetAttribute(obj);
+                    JArray mydatelist = JArray.Parse(obj["data"]["mydate"].ToString());
+                    for (int i = 0; i < mydatelist.Count; i++)
+                    {
+                        JObject temp = JObject.Parse(mydatelist[i].ToString());
+                        MyDate md = new MyDate();
+                        md.GetAttribute(temp);
+                        MyDates.Add(md);
+
+                    }
+                }
+                this.DataContext = pi;
+            }
         }
 
     }

@@ -118,6 +118,7 @@
     <Content Include="Assets\bg_nav.jpg" />
     <Content Include="Assets\bg_nav2.jpg" />
     <Content Include="Assets\bg_nav3.jpg" />
+    <Content Include="Assets\doge.jpg" />
     <Content Include="Assets\ic_address.png" />
     <Content Include="Assets\ic_cost.png" />
     <Content Include="Assets\ic_date.png" />

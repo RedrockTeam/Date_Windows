@@ -9,6 +9,7 @@ using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Date.Data;
@@ -183,6 +184,22 @@ namespace Date
                 }
                 this.DataContext = pi;
                 MyDatesList.ItemsSource = MyDates;
+            }
+        }
+
+        private void MyCenter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MyCenter.SelectedIndex == 0)
+            {
+                BaseInfo.Foreground =new SolidColorBrush(Color.FromArgb(255,0,0,0));
+                DateHistory.Foreground = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
+
+            }
+            else
+            {
+                BaseInfo.Foreground = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
+                DateHistory.Foreground = new SolidColorBrush(Color.FromArgb(255,0,0, 0));
+
             }
         }
 

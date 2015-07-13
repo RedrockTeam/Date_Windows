@@ -9,8 +9,7 @@
     mc:Ignorable="d"
     Background="#f8f8f8">
     <Page.Resources>
-   
-
+        <util:CreatedTimeValueConverter x:Key="Friendlytimespan" />
         <DataTemplate x:Key="DateListDataTemplateKey" x:Name="DateListDataTemplateName">
             <Grid  Margin="0,5">
                 <Line Stroke="#efefef" X2="99999" StrokeThickness="1"></Line>

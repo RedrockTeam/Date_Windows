@@ -55,7 +55,7 @@ namespace Date
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
-            //UmengSDK.UmengAnalytics.TrackPageEnd("SetHeadPage");
+            UmengSDK.UmengAnalytics.TrackPageEnd("SetHeadPage");
 
         }
 

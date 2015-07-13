@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Activation;
+using Windows.Graphics.Display;
+using Windows.Graphics.Imaging;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -49,14 +52,11 @@ namespace Date
 
         private void SetHead()
         {
-            if (appSetting.Values.ContainsKey("IsHeadExistOffline")&&bool.Parse(appSetting.Values["IsHeadExistOffline"].ToString()))
+            if (appSetting.Values.ContainsKey("IsHeadExistOffline") && bool.Parse(appSetting.Values["IsHeadExistOffline"].ToString()))
             {
                 SetHeadPage();
             }
-            else
-            {
-                GetHeadImg();
-            }
+
         }
         private async void SetHeadPage()
         {
@@ -70,24 +70,6 @@ namespace Date
             {
             }
         }
-
-        private async void GetHeadImg()
-        {
-            try
-            {
-                GetPerInfo();
-                BitmapImage head=new BitmapImage(new Uri(pi.Head));
-                img.ImageSource = head;
-                RenderTargetBitmap cutimg=new RenderTargetBitmap();
-
-            }
-            catch (Exception )
-            {
-                Debug.WriteLine("马丹出错了");
-            }
-        }
-
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -160,12 +142,12 @@ namespace Date
 
         private async void GetPerInfo()
         {
-             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("get_uid", appSetting.Values["uid"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-                string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
-                Debug.WriteLine("个人信息" + pc);
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("get_uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+            string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
+            Debug.WriteLine("个人信息" + pc);
             if (pc != "")
             {
                 JObject obj = JObject.Parse(pc);
@@ -184,6 +166,7 @@ namespace Date
                 }
                 this.DataContext = pi;
                 MyDatesList.ItemsSource = MyDates;
+                img.ImageSource = new BitmapImage(new Uri(pi.Head));
             }
         }
 
@@ -191,17 +174,18 @@ namespace Date
         {
             if (MyCenter.SelectedIndex == 0)
             {
-                BaseInfo.Foreground =new SolidColorBrush(Color.FromArgb(255,0,0,0));
-                DateHistory.Foreground = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
+                BaseInfo.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+                DateHistory.Foreground = new SolidColorBrush(Color.FromArgb(255, 220, 220, 220));
 
             }
             else
             {
-                BaseInfo.Foreground = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
-                DateHistory.Foreground = new SolidColorBrush(Color.FromArgb(255,0,0, 0));
+                BaseInfo.Foreground = new SolidColorBrush(Color.FromArgb(255, 220, 220, 220));
+                DateHistory.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
 
             }
         }
 
     }
 }
+

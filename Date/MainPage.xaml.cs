@@ -102,7 +102,7 @@ namespace Date
 
         void AddDateListProgressStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if(AddDateListProgressTextBlock.Text == "加载失败 T_T")
+            if (AddDateListProgressTextBlock.Text == "加载失败 T_T")
             {
                 getDatelist(0, page, order, false);
             }
@@ -245,7 +245,8 @@ namespace Date
                                         AddDateListProgressTextBlock.Text = "疯狂加载中...";
                                         dateStackPanel.Children.Add(AddDateListProgressStackPanel);
                                     }
-                                    catch (Exception) {
+                                    catch (Exception)
+                                    {
                                         Debug.WriteLine("主页，列表瀑布流加载控件异常");
                                     }
                                     getDatelist(0, ++page, order, false);
@@ -354,7 +355,8 @@ namespace Date
                 Debug.WriteLine(dataFlipView.SelectedIndex);
                 dataFlipView.SelectionChanged += dataFlipView_SelectionChanged;
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 Debug.WriteLine("主页，图片切换异常");
             }
         }
@@ -508,7 +510,8 @@ namespace Date
                     //HoldPlaceImg.Visibility = Visibility.Collapsed;
                     dataFlipView.SelectedIndex = 1;
                 }
-                catch (Exception) {
+                catch (Exception)
+                {
                     Debug.WriteLine("主页，图片加载异常");
                 }
             }
@@ -726,7 +729,7 @@ namespace Date
                 dateStackPanel.Children.RemoveAt(1);
                 dateStackPanel.Children.Remove(AddDateListProgressStackPanel);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Debug.WriteLine("主页，刷新移除控件异常");
             }

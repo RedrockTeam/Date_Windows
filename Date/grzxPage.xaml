@@ -8,35 +8,87 @@
     mc:Ignorable="d"
     Background="#f8f8f8">
 
+    <Page.Resources>
+
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#666666"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="10,10,10,10"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="FontFamily" Value="Segoe UI"></Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
-    
         <StackPanel Name="StatusStackPanel" VerticalAlignment="Top">
             <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
             <TextBlock Name="StatusTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,5"  Visibility="Collapsed"/>
         </StackPanel>
-    <Grid Background="White">
+        <Grid Background="#efefef">
             <Grid.RowDefinitions >
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
+            <StackPanel Grid.Row="0" Background="White">
                 <Rectangle RadiusX="64" RadiusY="64"  Width="128" Height="128" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,0">
-                <Rectangle.Fill>
-                    <ImageBrush x:Name="img" Stretch="Fill" />
-                </Rectangle.Fill>
+                    <Rectangle.Fill>
+                        <ImageBrush x:Name="img" Stretch="Fill" />
+                    </Rectangle.Fill>
                 </Rectangle>
+                <StackPanel  >
+                    <TextBlock x:Name="nkname" Text="{Binding Nickname}" HorizontalAlignment="Center" Foreground="Black" Margin="0,10,0,0" Style="{StaticResource TextBlockStyle}" FontSize="16"></TextBlock>
+                    <TextBlock x:Name="signa" Text="{Binding Signature}" HorizontalAlignment="Center" Foreground="Black" Margin="10" Style="{StaticResource TextBlockStyle}" FontSize="16"></TextBlock>
+                </StackPanel>
             </StackPanel>
-        <Grid Grid.Row="1" >
-            <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Line Y1="0" Y2="30"  Stroke="Black" StrokeThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Name="typeTextBlock" Text="基本资料" Foreground="Black"  HorizontalAlignment="Center" Grid.Column="0" Margin="10" FontWeight="Normal" />
-        <TextBlock Name="sortTextBlock" Text="约会记录" Foreground="Black" HorizontalAlignment="Center" Grid.Column="1" Margin="10" FontWeight="Normal" />
+            <StackPanel Grid.Row="1" Margin="0,10,0,5" Background="White">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Line Y1="0" Y2="30"  Stroke="Black" StrokeThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Name="typeTextBlock" Text="基本资料" Style="{StaticResource TextBlockStyle}"  HorizontalAlignment="Center" Grid.Column="0" Margin="10" FontWeight="Normal" />
+                    <TextBlock Name="sortTextBlock" Text="约会记录" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Center" Grid.Column="1" Margin="10" FontWeight="Normal" />
+                </Grid>
+            </StackPanel>
+
+            <Grid Grid.Row="2" Background="#efefef">
+
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White" Margin="0,0,0,0">
+                    <TextBlock Text="学院 :" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                    <TextBlock Text="{Binding Academy}" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Background="White" Margin="0,2,0,0">
+                    <TextBlock Text="年级 :" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                    <TextBlock Text="{Binding Grade}" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Background="White" Margin="0,2,0,0">
+                    <TextBlock Text="电话 :" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                    <TextBlock Text="{Binding Telephone}" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Background="White" Margin="0,2,0,0">
+                    <TextBlock Text="QQ  :" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                    <TextBlock Text="{Binding Qq}" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Row="4" Orientation="Horizontal" Background="White" Margin="0,2,0,0">
+                    <TextBlock Text="微信 :" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                    <TextBlock Text="{Binding Weixin}" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                </StackPanel>
+            </Grid>
+
+
         </Grid>
-    </Grid>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar>

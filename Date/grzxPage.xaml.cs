@@ -2,26 +2,19 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Date.Data;
 using Date.Util;
 using Newtonsoft.Json.Linq;
+using UmengSDK;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -35,17 +28,20 @@ namespace Date
         private ApplicationDataContainer appSetting;
         private FileOpenPickerContinuationEventArgs _filePickerEventArgs = null;
         private bool IsHeadExistOffline = false;
-        private PersonInfo personInfo;
+        List<MyDate> MyDates = new List<MyDate>();
+        PersonInfo pi = new PersonInfo();
         public grzxPage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 255, 61, 61), Colors.White, text: "约");
+
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-            UmengSDK.UmengAnalytics.TrackPageStart("grzxPage");
+            UmengAnalytics.TrackPageStart("grzxPage");
             SetHead();
         }
 
@@ -82,38 +78,43 @@ namespace Date
                 paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("get_uid", appSetting.Values["uid"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-                string personinfo = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
-                Debug.WriteLine("个人信息" + personinfo);
-                if (personinfo != "")
+                string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
+                Debug.WriteLine("个人信息" + pc);
+                if (pc != "")
                 {
-                    JObject obj = JObject.Parse(personinfo);
+                    JObject obj = JObject.Parse(pc);
+                     if (Int32.Parse(obj["status"].ToString()) == 200)
+                    {
+                      pi.GetAttribute(obj);
+                         JArray mydatelist=JArray.Parse(obj["data"]["mydate"].ToString());
+                        for (int i = 0; i < mydatelist.Count; i++)
+                        {
+                            JObject temp = JObject.Parse(mydatelist[i].ToString());
+                            MyDate md=new MyDate();
+                            md.GetAttribute(temp);
+                            MyDates.Add(md);
 
-                        JArray PersoninfoArray = Utils.ReadJso(personinfo);
-
-                        int id = Int32.Parse(obj["id"].ToString());
-                        string nickname = obj["nickname"].ToString();
-                        string signature = obj["signature"].ToString();
-                        string gender = obj["gender"].ToString();
-                        string telephone = obj["telephone"].ToString();
-                        string grade = obj["grade"].ToString();
-                        string academy = obj["academy"].ToString();
-                        string qq = obj["qq"].ToString();
-                        string weixin = obj["weixin"].ToString();
-                        PersonInfo p=new PersonInfo(id,nickname,signature,gender,grade,academy,telephone,qq,weixin);
-                        personInfo = p;
-                    
+                        }
+                    }
+                    this.DataContext = pi;
                 }
+
+                BitmapImage head=new BitmapImage(new Uri(pi.Head));
+                img.ImageSource = head;
+
             }
-            catch (Exception)
+            catch (Exception )
             {
+                Debug.WriteLine("马丹出错了");
             }
         }
+
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
-            UmengSDK.UmengAnalytics.TrackPageEnd("grzxPage");
+            UmengAnalytics.TrackPageEnd("grzxPage");
 
         }
 
@@ -169,10 +170,11 @@ namespace Date
             if ((args.ContinuationData["Operation"] as string) == "img" && args.Files != null && args.Files.Count > 0)
             {
                 StorageFile file = args.Files[0];
-                Frame.Navigate(typeof (SetHeadPage),file);
+                Frame.Navigate(typeof(SetHeadPage), file);
                 BitmapImage bitmapImage = new BitmapImage(new Uri(file.Path));
                 img.ImageSource = bitmapImage;
             }
+
         }
 
     }

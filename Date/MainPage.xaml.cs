@@ -128,10 +128,7 @@ namespace Date
                                 d.Gender = "ms-appx:///Assets/ic_woman.png";
                             d.Signature = jobj["signature"].ToString();
 
-                            if (isrefresh)
                                 d.Title = jobj["title"].ToString();
-                            else
-                                d.Title = "继续加载:" + jobj["title"].ToString();
 
                             d.Place = jobj["place"].ToString();
                             d.Date_time = Utils.GetTime(jobj["date_time"].ToString()).ToString();

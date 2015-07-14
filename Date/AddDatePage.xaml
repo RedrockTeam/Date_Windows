@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    FontFamily="Microsoft YaHei UI"
     Background="#f8f8f8">
 
     <Grid>
@@ -15,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="#ff3d3d" Height="60">
-            <TextBlock Text="发布约" FontSize="30" VerticalAlignment="Center" Margin="15,0"/>
+            <TextBlock Text="发布约" FontSize="30" VerticalAlignment="Center" Margin="15,0" FontFamily="Microsoft YaHei UI"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -23,16 +24,16 @@
                 <ScrollViewer.Content>
                     <StackPanel >
                         <Grid Name="AddDateTypeGrid" Margin="0,15" Background="White" Tapped="AddDateTypeGrid_Tapped">
-                            <TextBlock Margin="15" Text="约什么" Foreground="#ff3d3d"  FontSize="15"></TextBlock>
-                            <TextBox Name="AddDateTypeTextBox" VerticalAlignment="Center" IsEnabled="False" FontSize="15" TextAlignment="Right" PlaceholderText="点击更改" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                            <TextBlock Margin="15" FontFamily="Microsoft YaHei UI" Text="约什么" Foreground="#ff3d3d"  FontSize="15"></TextBlock>
+                            <TextBox Name="AddDateTypeTextBox" FontFamily="Microsoft YaHei UI" VerticalAlignment="Center" IsEnabled="False" FontSize="15" TextAlignment="Right" PlaceholderText="点击更改" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" />
                         </Grid>
                         <StackPanel Margin="0,15" Background="White">
                             <Grid>
-                                <TextBlock VerticalAlignment="Center" Margin="15" FontSize="15" Text="标题(限10字)" Foreground="Black"></TextBlock>
-                                <TextBox Name="AddDateTitleTextBox" VerticalAlignment="Center" MaxLength="10"   FontSize="15" PlaceholderText="请输入" Foreground="Gray" TextAlignment="Right" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                                <TextBlock VerticalAlignment="Center" Margin="15" FontSize="15" Text="标题(限10字)" Foreground="Black" FontFamily="Microsoft YaHei UI"></TextBlock>
+                                <TextBox Name="AddDateTitleTextBox" VerticalAlignment="Center" MaxLength="10"   FontSize="15" PlaceholderText="请输入" Foreground="Gray" TextAlignment="Right" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI"/>
                             </Grid>
                             <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
-                            <TextBox Name="AddDateContentTextBox" FontSize="15" Height="150" PlaceholderText="内容" Foreground="Gray" BorderThickness="0" Margin="10" TextWrapping="Wrap" FontFamily="Global User Interface"/>
+                            <TextBox Name="AddDateContentTextBox" FontSize="15" Height="150" PlaceholderText="内容" Foreground="Gray" BorderThickness="0" Margin="10" TextWrapping="Wrap" FontFamily="Microsoft YaHei UI"/>
                         </StackPanel>
 
 
@@ -41,9 +42,9 @@
                             <Grid Name="AddDateTimeGrid" Tapped="AddDateTimeGrid_Tapped" Background="White">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Source="Assets/ic_time.png" Width="20" Margin="15,0,5,0"></Image>
-                                    <TextBlock  Text="约会时间" Foreground="Black" FontSize="15"></TextBlock>
+                                    <TextBlock  Text="约会时间" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 </StackPanel>
-                                <TextBox Name="AddDateTimeTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                                <TextBox Name="AddDateTimeTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" />
                             </Grid>
 
                             <!--约会地点-->
@@ -51,9 +52,9 @@
                             <Grid >
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Source="Assets/ic_address.png" Width="20" Margin="15,0,5,0"></Image>
-                                    <TextBlock  Text="约会地点" Foreground="Black" FontSize="15"></TextBlock>
+                                    <TextBlock  Text="约会地点" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 </StackPanel>
-                                <TextBox Name="AddDatePlaceTextBox" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
+                                <TextBox Name="AddDatePlaceTextBox" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" TextAlignment="Right" />
                             </Grid>
 
                             <!--约会人数-->
@@ -61,9 +62,9 @@
                             <Grid >
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                                     <Image Source="Assets/ic_person.png" Width="20" Margin="15,0,5,0"></Image>
-                                    <TextBlock  Text="约会人数" Foreground="Black" FontSize="15"></TextBlock>
+                                    <TextBlock  Text="约会人数" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 </StackPanel>
-                                <TextBox Name="AddDatePeopleTextBox" InputScope="Number" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" TextAlignment="Right" />
+                                <TextBox Name="AddDatePeopleTextBox" InputScope="Number" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" TextAlignment="Right" />
                             </Grid>
 
                             <!--花费-->
@@ -71,17 +72,17 @@
                             <Grid Background="White" Name="AddDateCostGrid" Tapped="AddDateCostGrid_Tapped">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Source="Assets/ic_cost.png" Width="20" Margin="15,0,5,0"></Image>
-                                    <TextBlock  Text="花费" Foreground="Black" FontSize="15"></TextBlock>
+                                    <TextBlock  Text="花费" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 </StackPanel>
-                                <TextBox Name="AddDateCostTextBox" VerticalAlignment="Center" FontSize="15" PlaceholderText="请选择" TextAlignment="Right" IsEnabled="False" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                                <TextBox Name="AddDateCostTextBox" VerticalAlignment="Center" FontSize="15" PlaceholderText="请选择" TextAlignment="Right" IsEnabled="False" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" />
                             </Grid>
                         </StackPanel>
 
                         <StackPanel Margin="0,15" Background="White">
                             <!--性别要求-->
                             <Grid Name="AddDateSexGrid" Tapped="AddDateSexGrid_Tapped" Background="White">
-                                <TextBlock  Text="性别要求" Foreground="Black" FontSize="15" VerticalAlignment="Center" Margin="20,0"></TextBlock>
-                                <TextBox Name="AddDateSexTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                                <TextBlock  Text="性别要求" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI" VerticalAlignment="Center" Margin="20,0"></TextBlock>
+                                <TextBox Name="AddDateSexTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" />
                             </Grid>
 
                             <!--年级要求-->
@@ -103,12 +104,12 @@
                                             <CheckBox Foreground="Black" Background="#FFFF3D3D" Name="twoCheckBox" Content="大二" Grid.Column="1" Grid.Row="0"/>
                                             <CheckBox Foreground="Black" Background="#FFFF3D3D" Name="threeCheckBox" Content="大三" Grid.Column="0" Grid.Row="1" Margin="20,0"/>
                                             <CheckBox Foreground="Black" Background="#FFFF3D3D" Name="fourCheckBox" Content="大四" Grid.Column="1" Grid.Row="1"/>
-                                            <Button Name="FlyoutButton" Content="确定" Background="Black" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="15,0" Click="FlyoutButton_Click"></Button>
+                                            <Button FontFamily="Microsoft YaHei UI" Name="FlyoutButton" Content="确定" Background="Black" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="15,0" Click="FlyoutButton_Click"></Button>
                                         </Grid>
                                     </Flyout>
                                 </FlyoutBase.AttachedFlyout>
-                                <TextBlock  Text="年级要求" Foreground="Black" FontSize="15" VerticalAlignment="Center" Margin="20,0"></TextBlock>
-                                <TextBox Name="AddDateGradeTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Global User Interface" />
+                                <TextBlock FontFamily="Microsoft YaHei UI" Text="年级要求" Foreground="Black" FontSize="15" VerticalAlignment="Center" Margin="20,0"></TextBlock>
+                                <TextBox FontFamily="Microsoft YaHei UI" Name="AddDateGradeTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0"  />
                             </Grid>
                         </StackPanel>
                     </StackPanel>
@@ -117,7 +118,7 @@
             
             <StackPanel Name="StatusStackPanel" VerticalAlignment="Top" Visibility="Collapsed">
                 <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
-                <TextBlock Name="StatusTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,5"  Visibility="Collapsed"/>
+                <TextBlock FontFamily="Microsoft YaHei UI" Name="StatusTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,5"  Visibility="Collapsed"/>
             </StackPanel>
         </Grid>
     </Grid>

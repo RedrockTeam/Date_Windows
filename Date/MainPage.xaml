@@ -18,43 +18,42 @@
                         <!--头像-->
                         <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,0">
                             <Rectangle.Fill>
-                                <ImageBrush Stretch="Fill" ImageSource ="{Binding  Head}"/>
+                                <ImageBrush Stretch="Fill" ImageSource ="{Binding Head}"/>
                             </Rectangle.Fill>
                         </Rectangle>
                         <!--昵称，创建时间，个性签名-->
-                        <StackPanel>
-                            <StackPanel Orientation="Vertical" Margin="10,15,5,0">
-                                <TextBlock Text="{Binding Nickname}" Foreground="Black" FontSize="18" FontWeight="Light" />
-                                <TextBlock Text="{Binding Signature}" Foreground="Black" FontSize="12" FontWeight="Light"></TextBlock>
-                                <Image Source="{Binding Gender}"></Image>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10,5,5,0">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="{Binding Nickname}" Foreground="Black" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                <Image Source="{Binding Gender}" Width="18" Height="18" Margin="5,0"></Image>
                             </StackPanel>
-                            <TextBlock Text="{Binding Signature}" FontWeight="Light"></TextBlock>
+                            <TextBlock Text="{Binding Signature}" FontWeight="Light" Foreground="Black" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                     </StackPanel>
                     <!--约会详情-->
                     <StackPanel x:Name="DateDetail" Margin="10,0,5,5">
                         <!--标题-->
-                        <TextBlock Text="{Binding Title}" Foreground="Coral" FontSize="17" Margin="5" FontWeight="Light"></TextBlock>
+                        <TextBlock Text="{Binding Title}" Foreground="Coral" FontSize="17" Margin="5" FontFamily="Microsoft YaHei UI" FontWeight="Light"></TextBlock>
                         <!--地点-->
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Assets/ic_address.png" Width="20"></Image>
-                            <TextBlock Text="地点:" Foreground="Black" FontWeight="Light"></TextBlock>
-                            <TextBlock Text="{Binding Place}" Foreground="Black" FontWeight="Light"></TextBlock>
+                            <TextBlock Text="地点:" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
+                            <TextBlock Text="{Binding Place}" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                         <!--约定时间-->
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Assets/ic_time.png" Width="20"></Image>
-                            <TextBlock Text="时间:" Foreground="Black" FontWeight="Light"></TextBlock>
-                            <TextBlock Text="{Binding Date_time}" Foreground="Black" FontWeight="Light"></TextBlock>
+                            <TextBlock Text="时间:" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
+                            <TextBlock Text="{Binding Date_time}" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                         <!--谁掏钱-->
                         <Grid>
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="Assets/ic_cost.png" Width="20"></Image>
-                                <TextBlock Text="费用:" Foreground="Black" FontWeight="Light"></TextBlock>
-                                <TextBlock Text="{Binding Cost_model}" Foreground="Black" FontWeight="Light"></TextBlock>
+                                <TextBlock Text="费用:" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
+                                <TextBlock Text="{Binding Cost_model}" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                             </StackPanel>
-                            <TextBlock HorizontalAlignment="Right" Text="{Binding Created_at,Converter={StaticResource Friendlytimespan}}" Foreground="Black" FontFamily="Global User Interface" FontWeight="Light"></TextBlock>
+                            <TextBlock HorizontalAlignment="Right" Text="{Binding Created_at,Converter={StaticResource Friendlytimespan}}" Foreground="Black" FontFamily="Microsoft YaHei UI" FontWeight="Light"></TextBlock>
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -65,14 +64,14 @@
     <Grid>
         <StackPanel Name="StatusStackPanel" VerticalAlignment="Top" Background="#efefef">
             <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
-            <TextBlock Name="StatusTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,2,0,8"  Visibility="Collapsed"/>
+            <TextBlock Name="StatusTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,2,0,8" FontFamily="Microsoft YaHei UI" Visibility="Collapsed"/>
         </StackPanel>
         <!--<TextBlock Text="约" Foreground="Red" FontSize="20" Margin="20,20,0,20"/>-->
         <Hub Background="#efefef" Name="DateHub" Margin="0,55,0,0" SectionsInViewChanged="DateHub_SectionsInViewChanged">
             <HubSection Name="DateListHubSection">
                 <HubSection.Header>
                     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <TextBlock Text="约列表" Foreground="#ff3d3d" FontSize="30" FontWeight="Light"/>
+                        <TextBlock Text="约列表" Foreground="#ff3d3d" FontSize="30" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
 
                         <ScrollViewer Name="dateScrollViewer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                             <StackPanel>
@@ -89,7 +88,7 @@
                                                 <Grid>
                                                     <Image x:Name="BannerImage" Source="{Binding Src}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     <Border Background="#A5000000" Height="40" VerticalAlignment="Bottom">
-                                                        <TextBlock Text="{Binding Url}" FontSize="20" Foreground="#88FFFFFF"  Padding="5,5"/>
+                                                        <TextBlock Text="{Binding Url}" FontSize="20" Foreground="#88FFFFFF" FontFamily="Microsoft YaHei UI" Padding="5,5"/>
                                                     </Border>
                                                 </Grid>
                                             </DataTemplate>
@@ -102,8 +101,8 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Line Y1="0" Y2="30"  Stroke="Black" StrokeThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Name="typeTextBlock" Text="全部分类" Foreground="Black"  HorizontalAlignment="Center" Grid.Column="0" Margin="10" FontWeight="Normal" Tapped="typeTextBlock_Tapped"/>
-                                    <TextBlock Name="sortTextBlock" Text="默认排序" Foreground="Black" HorizontalAlignment="Center" Grid.Column="1" Margin="10" FontWeight="Normal" Tapped="sortTextBlock_Tapped"/>
+                                    <TextBlock Name="typeTextBlock" Text="全部分类" Foreground="Black"  HorizontalAlignment="Center" Grid.Column="0" Margin="10" FontWeight="Normal" Tapped="typeTextBlock_Tapped" FontFamily="Microsoft YaHei UI"/>
+                                    <TextBlock Name="sortTextBlock" Text="默认排序" Foreground="Black" HorizontalAlignment="Center" Grid.Column="1" Margin="10" FontWeight="Normal" Tapped="sortTextBlock_Tapped" FontFamily="Microsoft YaHei UI"/>
                                 </Grid>
 
                                 <Grid VerticalAlignment="Stretch">
@@ -114,12 +113,12 @@
                                     <!--Date列表的加载条-->
                                     <StackPanel Name="DateListProgressStackPanel" VerticalAlignment="Center" Background="#efefef" Margin="0,20">
                                         <ProgressBar IsIndeterminate="True" />
-                                        <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5"  />
+                                        <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
                                     </StackPanel>
                                     <!--Date列表的失败报错-->
                                     <StackPanel Name="DateListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Background="#efefef" Margin="0,20" Tapped="DateListFailedStackPanel_Tapped">
                                         <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
-                                        <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15"  />
+                                        <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
                                     </StackPanel>
                                 </Grid>
 
@@ -133,22 +132,22 @@
             <HubSection Name="MeHubSection">
                 <HubSection.Header>
                     <StackPanel>
-                        <TextBlock Text="我" Foreground="#ff3d3d" FontSize="30" FontWeight="Light"/>
+                        <TextBlock Text="我" Foreground="#ff3d3d" FontSize="30" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
                         <GridView>
                             <GridView.Items>
                                 <Grid Background="#F25022" Width="150" Height="150" Margin="5">
-                                    <TextBlock Text="我的私信" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                    <TextBlock Text="我的私信" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
                                 </Grid>
                                 <Grid Background="#7FBA00" Width="150" Height="150" Margin="5">
-                                    <TextBlock Text="我的收藏" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                    <TextBlock Text="我的收藏" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
 
                                 </Grid>
                                 <Grid Background="#01A4EF" Width="150" Height="150" Margin="5">
-                                    <TextBlock Text="我的约过" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                    <TextBlock Text="我的约过" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
 
                                 </Grid>
                                 <Grid Name="grzxGrid" Background="#FFB901" Width="150" Height="150" Margin="5" Tapped="grzxGrid_Tapped">
-                                    <TextBlock Text="个人中心" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                    <TextBlock Text="个人中心" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
                                 </Grid>
                             </GridView.Items>
 
@@ -161,14 +160,14 @@
             <HubSection Name="MoreHubSection">
                 <HubSection.Header>
                     <StackPanel>
-                        <TextBlock Text="更多" Foreground="#ff3d3d" FontSize="30" FontWeight="Light"/>
+                        <TextBlock Text="更多" Foreground="#ff3d3d" FontSize="30" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
                         <GridView>
                             <GridView.Items>
                                 <Grid Background="#ff3d3d" Width="150" Height="150" Margin="5">
-                                    <TextBlock Text="设置" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                    <TextBlock Text="设置" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
                                 </Grid>
                                 <Grid Background="#ff3d3d" Width="150" Height="150" Margin="5">
-                                    <TextBlock Text="关于" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                    <TextBlock Text="关于" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
                                 </Grid>
                             </GridView.Items>
 

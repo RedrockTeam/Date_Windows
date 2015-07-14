@@ -44,6 +44,25 @@ namespace Date
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("DetailDatePage");
 
+            var datelistNavigate = (DateList)e.Parameter;
+            DetailHeadImage.ImageSource = new BitmapImage(new Uri(datelistNavigate.head, UriKind.Absolute));
+            DetailNameTextBlock.Text = datelistNavigate.nickname;
+            if (datelistNavigate.gender == "1")
+                DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_man.png", UriKind.Absolute));
+            else if ((datelistNavigate.gender == "2"))
+                DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_woman.png", UriKind.Absolute));
+            DetailSignatureTextBlock.Text = datelistNavigate.signature;
+            DetailTitleTextBlock.Text = datelistNavigate.title;
+            DetailPlaceTextBlock.Text = datelistNavigate.place;
+            DetailTimeTextBlock.Text = datelistNavigate.date_time;
+            if (datelistNavigate.cost_model == "1")
+                DetailCostTextBlock.Text = "AA";
+            else if (datelistNavigate.cost_model == "2")
+                DetailCostTextBlock.Text = "你请客";
+            else if (datelistNavigate.cost_model == "3")
+                DetailCostTextBlock.Text = "我买单"; 
+
+
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("date_id", "118"));
@@ -76,23 +95,7 @@ namespace Date
 
 
 
-            var datelistNavigate = (DateList)e.Parameter;
-            DetailHeadImage.ImageSource = new BitmapImage(new Uri(datelistNavigate.Head, UriKind.Absolute));
-            DetailNameTextBlock.Text = datelistNavigate.Nickname;
-            if (datelistNavigate.Gender == "1")
-                DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_man.png", UriKind.Absolute));
-            else if ((datelistNavigate.Gender == "2"))
-                DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_woman.png", UriKind.Absolute));
-            DetailSignatureTextBlock.Text = datelistNavigate.Signature;
-            DetailTitleTextBlock.Text = datelistNavigate.Title;
-            DetailPlaceTextBlock.Text = datelistNavigate.Place;
-            DetailTimeTextBlock.Text = Utils.GetTime(datelistNavigate.Date_time).ToString();
-            if(datelistNavigate.Cost_model =="1")
-                DetailCostTextBlock.Text = "AA"; 
-            else if(datelistNavigate.Cost_model =="2")
-                DetailCostTextBlock.Text = "你请客"; 
-            else if(datelistNavigate.Cost_model =="3")
-                DetailCostTextBlock.Text = "我买单"; 
+            
 
         }
 

@@ -10,7 +10,7 @@ namespace Date.Data
     public class DateList
     {
         public DateList() { }
-        public DateList(int date_id,string head ,string nickname,string gender,string signature,string title,string Place ,string date_time,string cost_model )
+        public DateList(int date_id,string head ,string nickname,string gender,string signature,string title,string place ,string date_time,string cost_model )
         {
             this.date_id = date_id;
             this.head = head;
@@ -18,28 +18,28 @@ namespace Date.Data
             this.gender = gender;
             this.signature = signature;
             this.title = title;
-            this.Place = Place;
+            this.place = place;
             this.date_time = date_time;
             this.cost_model = cost_model;
         }
 
-        private int date_id;
-        private int user_id;
-        private string head;
-        private string created_at;
-        private string date_time;
-        private string place;
-        private string title;
-        private string date_type;
-        private string cost_model;
-        private string nickname;
-        private string gender;
-        private int category_id;
-        private string signature;
-        private string timescore;
-        private int userscore;
-        private string datepercent;
-        private int total;
+        public int date_id;
+        public int user_id;
+        public string head;
+        public string created_at;
+        public string date_time;
+        public string place;
+        public string title;
+        public string date_type;
+        public string cost_model;
+        public string nickname;
+        public string gender;
+        public int category_id;
+        public string signature;
+        public string timescore;
+        public int userscore;
+        public string datepercent;
+        public int total;
 
         public int Date_id { get; set; }
         public int User_id { get; set; }

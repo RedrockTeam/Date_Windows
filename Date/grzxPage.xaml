@@ -62,13 +62,14 @@
             <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
             <TextBlock Name="StatusTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,5"  Visibility="Collapsed"/>
         </StackPanel>
-        <Pivot Foreground="#666666" x:Name="MyCenter" SelectionChanged="MyCenter_SelectionChanged" >
-            <Pivot.Title>
-                <TextBlock Text="个人中心" FontFamily="Microsoft Yahei UI"></TextBlock>
-            </Pivot.Title>
+
+        <Grid Background="#ff3d3d" Height="60" VerticalAlignment="Top">
+            <TextBlock Text="个人中心" FontFamily="Microsoft Yahei UI" FontSize="30" Foreground="White" VerticalAlignment="Center" Margin="15,0" />
+        </Grid>
+        <Pivot Foreground="#666666" x:Name="MyCenter" SelectionChanged="MyCenter_SelectionChanged" Margin="0,60,0,0">
             <PivotItem Foreground="#666666" >
                 <PivotItem.Header>
-                    <TextBlock x:Name="BaseInfo" Text="基本资料" Foreground="Black" FontFamily="Microsoft Yahei UI" FontSize="50" Margin="5"></TextBlock>
+                    <TextBlock x:Name="BaseInfo" Text="基本资料" Foreground="Black" FontFamily="Microsoft Yahei UI" FontSize="50" Margin="5"/>
                 </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>

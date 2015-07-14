@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Data\AademyList.cs" />
     <Compile Include="Data\Banner.cs" />
+    <Compile Include="Data\DateDetail.cs" />
     <Compile Include="Data\DateList.cs" />
     <Compile Include="Data\DateType.cs" />
     <Compile Include="Data\GradeList.cs" />

@@ -33,61 +33,61 @@
                         <!--昵称，创建时间，个性签名-->
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10,5,5,0">
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Name="DetailNameTextBlock" Text="昵称" Foreground="Black" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI" />
+                                <TextBlock Name="DetailNameTextBlock"  Foreground="Black" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI" />
                                 <Image Name="DetailGenderImage" Width="18" Height="18" Margin="5,0"></Image>
                             </StackPanel>
-                            <TextBlock Name="DetailSignatureTextBlock" Text="个性签名" FontWeight="Light" Foreground="Black" FontFamily="Microsoft YaHei UI"></TextBlock>
+                            <TextBlock Name="DetailSignatureTextBlock"  FontWeight="Light" Foreground="Black" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                     </StackPanel>
-                    <Line Stroke="#efefef" X2="99999" StrokeThickness="1" Margin="0,10"></Line>
+                    <Line Stroke="Gray" X2="99999" StrokeThickness="1" Margin="0,10"></Line>
                     <!--标题正文-->
                     <StackPanel Orientation="Vertical" Margin="10,0">
-                        <TextBlock Name="DetailTitleTextBlock" Text="标题" Margin="0,0,0,5" Foreground="Black" FontWeight="Light" FontSize="25" FontFamily="Microsoft YaHei UI"/>
-                        <TextBlock Name="DetailContentTextBlock" Text="内容" Foreground="Black" FontWeight="Light" FontSize="20" FontFamily="Microsoft YaHei UI"/>
+                        <TextBlock Name="DetailTitleTextBlock"  Margin="0,0,0,5" Foreground="Black" FontWeight="Light" FontSize="22" FontFamily="Microsoft YaHei UI"/>
+                        <TextBlock Name="DetailContentTextBlock" Text="内容加载中..." Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
                     </StackPanel>
-                    <Line Stroke="#efefef" X2="99999" StrokeThickness="1" Margin="0,10"></Line>
+                    <Line Stroke="Gray" X2="99999" StrokeThickness="1" Margin="0,10"></Line>
                     <!--约属性-->
                     <StackPanel  Margin="10,0">
                         <!--地点-->
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Assets/ic_address.png" Width="20"></Image>
                             <TextBlock Text="地点:" FontSize="18" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
-                            <TextBlock Name="DetailPlaceTextBlock" FontSize="18" Text="地点" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
+                            <TextBlock Name="DetailPlaceTextBlock" FontSize="18"  Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                         <!--约定时间-->
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Assets/ic_time.png" Width="20"></Image>
                             <TextBlock Text="时间:" Foreground="Black" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
-                            <TextBlock Name="DetailTimeTextBlock" Text="时间" FontSize="18" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
+                            <TextBlock Name="DetailTimeTextBlock"  FontSize="18" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                         <!--谁掏钱-->
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Assets/ic_cost.png" Width="20"></Image>
                             <TextBlock Text="费用:" Foreground="Black" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
-                            <TextBlock Name="DetailCostTextBlock" Text="花费" FontSize="18" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
+                            <TextBlock Name="DetailCostTextBlock"  FontSize="18" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                     </StackPanel>
-                    <Line Stroke="#efefef" X2="99999" StrokeThickness="1" Margin="0,10"></Line>
+                    <Line Stroke="Gray" X2="99999" StrokeThickness="1" Margin="0,10"></Line>
                     <!--约要求-->
                     <StackPanel Margin="10,0">
                         <TextBlock Text="要求" Margin="0,0,0,10" Foreground="Black" FontWeight="Light" FontSize="25" FontFamily="Microsoft YaHei UI"/>
                        <!--年级-->
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="年级:" Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
-                            <TextBlock Name="DetailGradeTextBlock" Text="年级" Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
+                            <TextBlock Name="DetailGradeTextBlock" Text="加载中..." Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
                         </StackPanel>
                         <!--性别-->
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="性别:" Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
-                            <TextBlock Name="DetailGenderNeedTextBlock" Text="性别" Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
+                            <TextBlock Name="DetailGenderNeedTextBlock" Text="加载中..." Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
                         </StackPanel>
                         <!--人数-->
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="人数:" Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
-                            <TextBlock Name="DetailNumTextBlock" Text="人数" Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
+                            <TextBlock Name="DetailNumTextBlock" Text="加载中..." Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
                         </StackPanel>
                     </StackPanel>
-                    <Line Stroke="#efefef" X2="99999" StrokeThickness="5" Margin="0,10"></Line>
+                    <Line Stroke="Gray" X2="99999" StrokeThickness="1" Margin="0,10"></Line>
                     <!--已报名-->
                     <StackPanel Margin="10,0">
                         <TextBlock Text="已报名" Margin="0,0,0,10" Foreground="Black" FontWeight="Light" FontSize="25" FontFamily="Microsoft YaHei UI"/>

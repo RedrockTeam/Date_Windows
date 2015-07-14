@@ -738,6 +738,10 @@ namespace Date
             {
                 Debug.WriteLine("主页，刷新移除控件异常");
             }
+            if (!isLogin)
+            {
+                Login();
+            }
             getDatelist(0, 1, order);
         }
 

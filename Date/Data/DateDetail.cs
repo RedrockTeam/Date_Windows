@@ -187,6 +187,7 @@ namespace Date.Data
             {
                 temp[i] = Int32.Parse(gradelimit[i].ToString());
             }
+            Grade_limit = temp;
             var grade = JArray.Parse(datedetailJObject["data"]["grade"].ToString());
             string[] temp2 = new string[grade.Count];
             for (int i = 0; i < grade.Count; ++i)

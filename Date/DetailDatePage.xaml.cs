@@ -33,41 +33,20 @@ namespace Date
     {
         private ApplicationDataContainer appSetting;
         DateDetail dd = new DateDetail();
+        List<GradeList> gradelist = new List<GradeList>();
         public DetailDatePage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
+            getGradeInfor();
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("DetailDatePage");
-            //获取详细信息，存在dd里
-           // GetDetail();
 
-            //一把下面这段放到一个函数里，网络请求这个就出错。求解
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("date_id", "118"));
-            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-            string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/detaildate", paramList));
-            Debug.WriteLine("约会详情" + pc);
-            if (pc != "")
-            {
-                JObject obj = JObject.Parse(pc);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
-                {
-                    dd.GetAttribute(obj);
-                }
-
-            }
-
-
-
-
-
-
+            //先显示传进来的数据
             var datelistNavigate = (DateList)e.Parameter;
             DetailNameTextBlock.Text = datelistNavigate.nickname;
             if (datelistNavigate.gender == "1")
@@ -78,13 +57,69 @@ namespace Date
             DetailTitleTextBlock.Text = datelistNavigate.title;
             DetailPlaceTextBlock.Text = datelistNavigate.place;
             DetailTimeTextBlock.Text = datelistNavigate.date_time;
-            if (datelistNavigate.cost_model == "1")
-                DetailCostTextBlock.Text = "AA";
-            else if (datelistNavigate.cost_model == "2")
-                DetailCostTextBlock.Text = "你请客";
-            else if (datelistNavigate.cost_model == "3")
-                DetailCostTextBlock.Text = "我买单";
+            DetailCostTextBlock.Text = datelistNavigate.cost_model;
             DetailHeadImage.ImageSource = new BitmapImage(new Uri(datelistNavigate.head, UriKind.Absolute));
+
+            //获取详细信息，存在dd里
+            // GetDetail();
+
+            //一把下面这段放到一个函数里，网络请求这个就出错。求解
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("date_id", "118"));
+            string detaildate = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/detaildate", paramList));
+            Debug.WriteLine("约会详情" + detaildate);
+            if (detaildate != "")
+            {
+                JObject obj = JObject.Parse(detaildate);
+                if (Int32.Parse(obj["status"].ToString()) == 200)
+                {
+                    dd.GetAttribute(obj);
+                    DetailContentTextBlock.Text = dd.Content;
+
+                    if (dd.Grade_limit.Length == 4)
+                        DetailGradeTextBlock.Text = "不限";
+                    else
+                        DetailGradeTextBlock.Text = "";
+                    if (Array.IndexOf(dd.Grade_limit, 1) != -1)
+                    {
+                        GradeList g = gradelist.Find(p => p.Id.Equals(1));
+                        DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name + " ";
+                    }
+                    if (Array.IndexOf(dd.Grade_limit, 2) != -1)
+                    {
+                        GradeList g = gradelist.Find(p => p.Id.Equals(2));
+                        DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name + " ";
+                    }
+                    if (Array.IndexOf(dd.Grade_limit, 3) != -1)
+                    {
+                        GradeList g = gradelist.Find(p => p.Id.Equals(3));
+                        DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name + " ";
+                    }
+                    if (Array.IndexOf(dd.Grade_limit, 4) != -1)
+                    {
+                        GradeList g = gradelist.Find(p => p.Id.Equals(4));
+                        DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name;
+                    }
+
+                    if (dd.Gender_limit == 0)
+                        DetailGenderNeedTextBlock.Text = "不限";
+                    else if (dd.Gender_limit == 1)
+                        DetailGenderNeedTextBlock.Text = "男";
+                    else if (dd.Gender_limit == 2)
+                        DetailGenderNeedTextBlock.Text = "女";
+                    DetailNumTextBlock.Text = dd.People_limit.ToString();
+                }
+            }
+
+
+
+
+
+
+
+
 
         }
 
@@ -110,8 +145,33 @@ namespace Date
 
         private async void GetDetail()
         {
-            
 
+
+        }
+
+        private async void getGradeInfor()
+        {
+            //年级
+            string grade = appSetting.Values["grade_json"].ToString();
+            if (grade != "")
+            {
+                JArray gradeArray = Utils.ReadJso(grade);
+                for (int i = 0; i < gradeArray.Count; i++)
+                {
+                    JObject jobj = (JObject)gradeArray[i];
+                    var b = new GradeList
+                    {
+                        Id = Convert.ToInt32(jobj["id"].ToString()),
+                        Name = jobj["name"].ToString()
+                    };
+                    gradelist.Add(b);
+                }
+            }
+            else
+            {
+                grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
+                getGradeInfor();
+            }
         }
 
     }

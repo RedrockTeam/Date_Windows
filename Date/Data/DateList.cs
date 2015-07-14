@@ -9,7 +9,19 @@ namespace Date.Data
 {
     public class DateList
     {
-
+        public DateList() { }
+        public DateList(int date_id,string head ,string nickname,string gender,string signature,string title,string Place ,string date_time,string cost_model )
+        {
+            this.date_id = date_id;
+            this.head = head;
+            this.nickname = nickname;
+            this.gender = gender;
+            this.signature = signature;
+            this.title = title;
+            this.Place = Place;
+            this.date_time = date_time;
+            this.cost_model = cost_model;
+        }
 
         private int date_id;
         private int user_id;

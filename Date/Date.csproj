@@ -92,6 +92,9 @@
     <Compile Include="Data\GradeList.cs" />
     <Compile Include="Data\MyDate.cs" />
     <Compile Include="Data\PersonInfo.cs" />
+    <Compile Include="DetailDatePage.xaml.cs">
+      <DependentUpon>DetailDatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="grzxPage.xaml.cs">
       <DependentUpon>grzxPage.xaml</DependentUpon>
     </Compile>
@@ -142,6 +145,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AddDatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DetailDatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

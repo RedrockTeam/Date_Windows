@@ -148,9 +148,9 @@ namespace Date
                             DateList d = new DateList();
                             d.Head = jobj["head"].ToString();
                             d.Nickname = jobj["nickname"].ToString();
-                            if (jobj["nickname"].ToString() == "1")
+                            if (jobj["gender"].ToString() == "1")
                                 d.Gender = "ms-appx:///Assets/ic_man.png";
-                            else if ((jobj["nickname"].ToString() == "2"))
+                            else if ((jobj["gender"].ToString() == "2"))
                                 d.Gender = "ms-appx:///Assets/ic_woman.png";
                             d.Signature = jobj["signature"].ToString();
 
@@ -761,8 +761,9 @@ namespace Date
 
         private void dateListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
             Debug.WriteLine("你点击了：" + ((DateList)e.ClickedItem).Title);
+            DateList datelistNavigate = new DateList(((DateList)e.ClickedItem).Date_id, ((DateList)e.ClickedItem).Head, ((DateList)e.ClickedItem).Nickname, ((DateList)e.ClickedItem).Gender, ((DateList)e.ClickedItem).Signature, ((DateList)e.ClickedItem).Title, ((DateList)e.ClickedItem).Place, ((DateList)e.ClickedItem).Date_time, ((DateList)e.ClickedItem).Cost_model);
+            Frame.Navigate(typeof(DetailDatePage), datelistNavigate);
         }
 
 

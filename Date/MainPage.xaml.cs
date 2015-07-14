@@ -561,7 +561,12 @@ namespace Date
                         BarAddButton.Icon = new SymbolIcon(Symbol.Add);
                         BarAddButton.Label = "新建";
                         BarAddButton.Click += AddAppBarButton_Click;
-                        commandbar.PrimaryCommands.Add(BarAddButton);
+
+                        AppBarButton BarRefreshButton = new AppBarButton();
+                        BarRefreshButton.Icon = new SymbolIcon(Symbol.Refresh);
+                        BarRefreshButton.Label = "刷新";
+                        BarRefreshButton.Click += RefreshAppBarButton_Click;
+                        commandbar.PrimaryCommands.Add(BarRefreshButton);
 
                         break;
                     case "MeHubSection":

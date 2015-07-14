@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Date.Data;
+using Date.Util;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -14,6 +16,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Date.Data;
 using Date.Util;
@@ -71,6 +74,25 @@ namespace Date
 
 
 
+
+
+            var datelistNavigate = (DateList)e.Parameter;
+            DetailHeadImage.ImageSource = new BitmapImage(new Uri(datelistNavigate.Head, UriKind.Absolute));
+            DetailNameTextBlock.Text = datelistNavigate.Nickname;
+            if (datelistNavigate.Gender == "1")
+                DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_man.png", UriKind.Absolute));
+            else if ((datelistNavigate.Gender == "2"))
+                DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_woman.png", UriKind.Absolute));
+            DetailSignatureTextBlock.Text = datelistNavigate.Signature;
+            DetailTitleTextBlock.Text = datelistNavigate.Title;
+            DetailPlaceTextBlock.Text = datelistNavigate.Place;
+            DetailTimeTextBlock.Text = Utils.GetTime(datelistNavigate.Date_time).ToString();
+            if(datelistNavigate.Cost_model =="1")
+                DetailCostTextBlock.Text = "AA"; 
+            else if(datelistNavigate.Cost_model =="2")
+                DetailCostTextBlock.Text = "你请客"; 
+            else if(datelistNavigate.Cost_model =="3")
+                DetailCostTextBlock.Text = "我买单"; 
 
         }
 

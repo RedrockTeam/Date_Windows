@@ -1,4 +1,5 @@
 ﻿using Date.Data;
+using Date.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,6 +45,15 @@ namespace Date
                 DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_woman.png", UriKind.Absolute));
             DetailSignatureTextBlock.Text = datelistNavigate.Signature;
             DetailTitleTextBlock.Text = datelistNavigate.Title;
+            DetailPlaceTextBlock.Text = datelistNavigate.Place;
+            DetailTimeTextBlock.Text = Utils.GetTime(datelistNavigate.Date_time).ToString();
+            if(datelistNavigate.Cost_model =="1")
+                DetailCostTextBlock.Text = "AA"; 
+            else if(datelistNavigate.Cost_model =="2")
+                DetailCostTextBlock.Text = "你请客"; 
+            else if(datelistNavigate.Cost_model =="3")
+                DetailCostTextBlock.Text = "我买单"; 
+
         }
 
         //离开页面时，取消事件

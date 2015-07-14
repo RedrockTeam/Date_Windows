@@ -94,6 +94,7 @@
                                             </DataTemplate>
                                         </FlipView.ItemTemplate>
                                     </FlipView>
+                                   
                                 </Grid>
                                 <Grid Background="White">
                                     <Grid.ColumnDefinitions>

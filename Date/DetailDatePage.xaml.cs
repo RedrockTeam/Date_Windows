@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -13,6 +15,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Date.Data;
+using Date.Util;
+using Newtonsoft.Json.Linq;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -23,15 +28,50 @@ namespace Date
     /// </summary>
     public sealed partial class DetailDatePage : Page
     {
+        private ApplicationDataContainer appSetting;
+        DateDetail dd=new DateDetail();
         public DetailDatePage()
         {
+            appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("DetailDatePage");
+
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("date_id", "118"));
+            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+            string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/detaildate", paramList));
+            Debug.WriteLine("个人信息" + pc);
+            if (pc != "")
+            {
+                JObject obj = JObject.Parse(pc);
+                if (Int32.Parse(obj["status"].ToString()) == 200)
+                {
+                    dd.GetAttribute(obj);
+                    JArray mydatelist = JArray.Parse(obj["data"]["mydate"].ToString());
+                    for (int i = 0; i < mydatelist.Count; i++)
+                    {
+                        JObject temp = JObject.Parse(mydatelist[i].ToString());
+                        MyDate md = new MyDate();
+                        md.GetAttribute(temp);
+                        //MyDates.Add(md);
+
+                    }
+                }
+
+            }
+
+
+
+
+
+
+
         }
 
         //离开页面时，取消事件

@@ -128,18 +128,18 @@ namespace Date.Data
 
         public void GetAttribute(JObject obj)
         {
-            this.Id = Int32.Parse(obj["data"]["id"].ToString());
-            this.Head = obj["data"]["head"].ToString();
-            this.Signature = obj["data"]["signature"].ToString();
-            this.Nickname = obj["data"]["nickname"].ToString();
-            this.Gender = obj["data"]["gender"].ToString();
-            this.Grade_id = obj["data"]["grade_id"].ToString();
-            this.Grade = obj["data"]["grade"].ToString();
-            this.Academy_id = obj["data"]["academy_id"].ToString();
-            this.Academy = obj["data"]["academy"].ToString();
-            this.Qq = obj["data"]["qq"].ToString();
-            this.Weixin = obj["data"]["weixin"].ToString();
-            this.Telephone = obj["data"]["telephone"].ToString();
+            Id = Int32.Parse(obj["data"]["id"].ToString());
+            Head = obj["data"]["head"].ToString();
+            Signature = obj["data"]["signature"].ToString();
+            Nickname = obj["data"]["nickname"].ToString();
+            Gender = obj["data"]["gender"].ToString();
+            Grade_id = obj["data"]["grade_id"].ToString();
+            Grade = obj["data"]["grade"].ToString();
+            Academy_id = obj["data"]["academy_id"].ToString();
+            Academy = obj["data"]["academy"].ToString();
+            Qq = obj["data"]["qq"].ToString();
+            Weixin = obj["data"]["weixin"].ToString();
+            Telephone = obj["data"]["telephone"].ToString();
         }
     }
 }

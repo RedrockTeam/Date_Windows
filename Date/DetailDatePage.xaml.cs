@@ -32,7 +32,7 @@ namespace Date
     public sealed partial class DetailDatePage : Page
     {
         private ApplicationDataContainer appSetting;
-        DateDetail dd=new DateDetail();
+        DateDetail dd = new DateDetail();
         public DetailDatePage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
@@ -43,33 +43,25 @@ namespace Date
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("DetailDatePage");
+            //获取详细信息，存在dd里
+           // GetDetail();
 
+            //一把下面这段放到一个函数里，网络请求这个就出错。求解
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("date_id", "118"));
             paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
             string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/detaildate", paramList));
-            Debug.WriteLine("个人信息" + pc);
+            Debug.WriteLine("约会详情" + pc);
             if (pc != "")
             {
                 JObject obj = JObject.Parse(pc);
                 if (Int32.Parse(obj["status"].ToString()) == 200)
                 {
                     dd.GetAttribute(obj);
-                    JArray mydatelist = JArray.Parse(obj["data"]["mydate"].ToString());
-                    for (int i = 0; i < mydatelist.Count; i++)
-                    {
-                        JObject temp = JObject.Parse(mydatelist[i].ToString());
-                        MyDate md = new MyDate();
-                        md.GetAttribute(temp);
-                        //MyDates.Add(md);
-
-                    }
                 }
 
             }
-
-
 
 
 
@@ -87,12 +79,12 @@ namespace Date
             DetailTitleTextBlock.Text = datelistNavigate.Title;
             DetailPlaceTextBlock.Text = datelistNavigate.Place;
             DetailTimeTextBlock.Text = Utils.GetTime(datelistNavigate.Date_time).ToString();
-            if(datelistNavigate.Cost_model =="1")
-                DetailCostTextBlock.Text = "AA"; 
-            else if(datelistNavigate.Cost_model =="2")
-                DetailCostTextBlock.Text = "你请客"; 
-            else if(datelistNavigate.Cost_model =="3")
-                DetailCostTextBlock.Text = "我买单"; 
+            if (datelistNavigate.Cost_model == "1")
+                DetailCostTextBlock.Text = "AA";
+            else if (datelistNavigate.Cost_model == "2")
+                DetailCostTextBlock.Text = "你请客";
+            else if (datelistNavigate.Cost_model == "3")
+                DetailCostTextBlock.Text = "我买单";
 
         }
 
@@ -113,6 +105,12 @@ namespace Date
                 rootFrame.GoBack();
                 e.Handled = true;
             }
+
+        }
+
+        private async void GetDetail()
+        {
+            
 
         }
 

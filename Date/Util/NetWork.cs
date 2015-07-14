@@ -28,8 +28,9 @@ namespace Date.Util
                        HttpResponseMessage response = httpClient.PostAsync(new Uri(uri), new FormUrlEncodedContent(paramList)).Result;
                        content = response.Content.ReadAsStringAsync().Result;
                    }
-                   catch (Exception)
+                   catch (Exception e)
                    {
+                       Debug.WriteLine(e.Message+"网络请求异常");
                    }
                }
                else

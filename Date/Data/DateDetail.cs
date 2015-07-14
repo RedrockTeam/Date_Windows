@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -170,9 +171,9 @@ namespace Date.Data
             get { return user_score; }
             set { user_score = value; }
         }
-        private PersonInfo[] joined;
+        private JoinedOnes[] joined;
 
-        public PersonInfo[] Joined
+        public JoinedOnes[] Joined
         {
             get { return joined; }
             set { joined = value; }
@@ -180,7 +181,19 @@ namespace Date.Data
 
         public void GetAttribute(JObject datedetailJObject)
         {
-            var gradelimit = datedetailJObject["date"]["grade_limit"];
+            var gradelimit = JArray.Parse(datedetailJObject["data"]["grade_limit"].ToString());
+            int[] temp = new int[gradelimit.Count];
+            for (int i = 0; i < gradelimit.Count; ++i)
+            {
+                temp[i] = Int32.Parse(gradelimit[i].ToString());
+            }
+            var grade = JArray.Parse(datedetailJObject["data"]["grade"].ToString());
+            string[] temp2 = new string[grade.Count];
+            for (int i = 0; i < grade.Count; ++i)
+            {
+                temp2[i] = grade[i].ToString();
+            }
+            Grade = temp2;
             Nickname = datedetailJObject["data"]["nickname"].ToString();
             Head = datedetailJObject["data"]["head"].ToString();
             Gender = datedetailJObject["data"]["gender"].ToString();
@@ -201,14 +214,28 @@ namespace Date.Data
             Collection_status = Int32.Parse(datedetailJObject["data"]["collection_status"].ToString());
             Apply_status = Int32.Parse(datedetailJObject["data"]["apply_status"].ToString());
             User_score = Int32.Parse(datedetailJObject["data"]["user_score"].ToString());
-            //string[] sp = {","};
-            //string[] temp= gradelimit.Split(sp,StringSplitOptions.RemoveEmptyEntries);
-            //int[] gl=new int[temp.Length];
-            //for (int i = 0; i < temp.Length; i++)
-            //{
-            //    gl[i] = Int32.Parse(temp[i]);
-            //}
-            //Grade_limit = gl;
+            var joined = JArray.Parse(datedetailJObject["data"]["joined"].ToString());
+            JoinedOnes[] joineds = new JoinedOnes[joined.Count];
+            try
+            {
+
+                for (int i = 0; i < joined.Count; i++)
+                {
+                    JObject oneperson = JObject.Parse(joined[i].ToString());
+                    joineds[i]=new JoinedOnes();
+                    joineds[i].Nickname = oneperson["nickname"].ToString();
+                    joineds[i].User_id = Int32.Parse(oneperson["user_id"].ToString());
+                    joineds[i].Date_id = Int32.Parse(oneperson["date_id"].ToString());
+                    joineds[i].Gender = Int32.Parse(oneperson["gender"].ToString());
+                    joineds[i].Signature = oneperson["user_id"].ToString();
+                    joineds[i].Head = oneperson["user_id"].ToString();
+                }
+                Joined = joineds;
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception.Message + "读取参加成员异常");
+            }
         }
     }
 }

@@ -91,6 +91,7 @@
     <Compile Include="Data\DateList.cs" />
     <Compile Include="Data\DateType.cs" />
     <Compile Include="Data\GradeList.cs" />
+    <Compile Include="Data\JoinedOnes.cs" />
     <Compile Include="Data\MyDate.cs" />
     <Compile Include="Data\PersonInfo.cs" />
     <Compile Include="DetailDatePage.xaml.cs">

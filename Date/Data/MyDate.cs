@@ -39,16 +39,16 @@ namespace Date.Data
 
         public void GetAttribute(JObject temp)
         {
-            this.Nickname = temp["nickname"].ToString();
-            this.Head = temp["head"].ToString();
-            this.Gender = temp["gender"].ToString();
-            this.Date_id = temp["date_id"].ToString();
-            this.Title = temp["title"].ToString();
-            this.Place= temp["place"].ToString();
-            this.Date_time= temp["date_time"].ToString();
-            this.Created_at = temp["created_at"].ToString();
-            this.Cost_model = temp["cost_model"].ToString();
-            this.Date_status = temp["date_status"].ToString();
+            Nickname = temp["nickname"].ToString();
+            Head = temp["head"].ToString();
+            Gender = temp["gender"].ToString();
+            Date_id = temp["date_id"].ToString();
+            Title = temp["title"].ToString();
+            Place= temp["place"].ToString();
+            Date_time= temp["date_time"].ToString();
+            Created_at = temp["created_at"].ToString();
+            Cost_model = temp["cost_model"].ToString();
+            Date_status = temp["date_status"].ToString();
         }
         private string nickname;
 

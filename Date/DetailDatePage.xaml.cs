@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Date.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
@@ -32,6 +34,16 @@ namespace Date
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("DetailDatePage");
+
+            var datelistNavigate = (DateList)e.Parameter;
+            DetailHeadImage.ImageSource = new BitmapImage(new Uri(datelistNavigate.Head, UriKind.Absolute));
+            DetailNameTextBlock.Text = datelistNavigate.Nickname;
+            if (datelistNavigate.Gender == "1")
+                DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_man.png", UriKind.Absolute));
+            else if ((datelistNavigate.Gender == "2"))
+                DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_woman.png", UriKind.Absolute));
+            DetailSignatureTextBlock.Text = datelistNavigate.Signature;
+            DetailTitleTextBlock.Text = datelistNavigate.Title;
         }
 
         //离开页面时，取消事件

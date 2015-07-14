@@ -34,7 +34,7 @@
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10,5,5,0">
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Name="DetailNameTextBlock" Text="昵称" Foreground="Black" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI" />
-                                <Image Name="DetailGenderTextBlock" Width="18" Height="18" Margin="5,0"></Image>
+                                <Image Name="DetailGenderImage" Width="18" Height="18" Margin="5,0"></Image>
                             </StackPanel>
                             <TextBlock Name="DetailSignatureTextBlock" Text="个性签名" FontWeight="Light" Foreground="Black" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>

@@ -97,7 +97,8 @@ namespace Date
                             appSetting.Values["password"] = IdNumPasswordBox.Password;
                             appSetting.Values["uid"] = obj["uid"].ToString();
                             appSetting.Values["token"] = obj["token"].ToString();
-
+                            appSetting.Values["head"] = obj["head"].ToString();
+                            appSetting.Values["nickname"] = obj["nickname"].ToString();
                             //Umeng统计
 
                             UmengSDK.UmengAnalytics.TrackEvent("Login");

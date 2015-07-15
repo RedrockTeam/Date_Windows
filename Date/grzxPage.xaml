@@ -69,7 +69,7 @@
         <Pivot Foreground="#666666" x:Name="MyCenter" SelectionChanged="MyCenter_SelectionChanged" Margin="0,60,0,0">
             <PivotItem Foreground="#666666" >
                 <PivotItem.Header>
-                    <TextBlock x:Name="BaseInfo" Text="基本资料" Foreground="Black" FontFamily="Microsoft Yahei UI" FontSize="50" Margin="5"/>
+                    <TextBlock x:Name="BaseInfo" Text="基本资料" Foreground="Black" FontFamily="Microsoft Yahei UI" FontSize="40" Margin="5"/>
                 </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -127,7 +127,7 @@
             </PivotItem>
             <PivotItem Foreground="#666666">
                 <PivotItem.Header>
-                    <TextBlock x:Name="DateHistory" Text="约会记录" Foreground="Black" FontFamily="Microsoft Yahei UI" FontSize="50" Margin="5" ></TextBlock>
+                    <TextBlock x:Name="DateHistory" Text="约会记录" Foreground="Black" FontFamily="Microsoft Yahei UI" FontSize="40" Margin="5" ></TextBlock>
                 </PivotItem.Header>
                 <ScrollViewer>
                     <ScrollViewer.Content>

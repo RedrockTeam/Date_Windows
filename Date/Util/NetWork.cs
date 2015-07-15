@@ -30,13 +30,16 @@ namespace Date.Util
                    }
                    catch (Exception e)
                    {
-                       Debug.WriteLine(e.Message+"网络请求异常");
+                       Debug.WriteLine(e.Message + "网络请求异常");
                    }
                }
                else
                {
                }
-               return content;
+               if (content.IndexOf("<!DOCTYPE") == 1)
+                   return "";
+               else
+                   return content;
 
            });
         }

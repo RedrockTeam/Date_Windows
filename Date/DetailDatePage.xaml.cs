@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Navigation;
 using Date.Data;
 using Date.Util;
 using Newtonsoft.Json.Linq;
+using Windows.UI.Popups;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -35,6 +36,8 @@ namespace Date
         DateDetail dd = new DateDetail();
         List<GradeList> gradelist = new List<GradeList>();
         List<JoinedOnes> joinedOnes = new List<JoinedOnes>();
+        DateList datelistNavigate = new DateList();
+        private bool isCollected = false;
         public DetailDatePage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
@@ -50,7 +53,7 @@ namespace Date
             UmengSDK.UmengAnalytics.TrackPageStart("DetailDatePage");
 
             //先显示传进来的数据
-            var datelistNavigate = (DateList)e.Parameter;
+            datelistNavigate = (DateList)e.Parameter;
             DetailNameTextBlock.Text = datelistNavigate.nickname;
             if (datelistNavigate.gender == "1")
                 DetailGenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_man.png", UriKind.Absolute));
@@ -98,7 +101,7 @@ namespace Date
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageEnd("DetailDatePage");
-            
+
         }
 
 
@@ -157,6 +160,11 @@ namespace Date
             for (int i = 0; i < join.Length; i++)
             {
                 joinedOnes.Add(new JoinedOnes { Head = join[i].Head, Nickname = join[i].Nickname });
+                if (join[i].User_id == Int32.Parse(appSetting.Values["uid"].ToString()))
+                {
+                    EnrollAppBarToggleButton.IsEnabled = false;
+                    EnrollAppBarToggleButton.Label = "已报名";
+                }
             }
             JoinedGridView.ItemsSource = joinedOnes;
         }
@@ -189,8 +197,99 @@ namespace Date
         //已加入的Item点击事件
         private void JoinedGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Debug.WriteLine("你点击了"+((JoinedOnes)e.ClickedItem).Nickname);
+            Debug.WriteLine("你点击了" + ((JoinedOnes)e.ClickedItem).Nickname);
         }
+
+        private async void CollectAppBarToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("date_id", datelistNavigate.date_id.ToString()));
+            if (!isCollected)
+            {
+                string collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/collect", paramList));
+                if (collect != "")
+                {
+                    try
+                    {
+                        JObject obj = JObject.Parse(collect);
+                        if (Int32.Parse(obj["status"].ToString()) == 200)
+                        {
+                            await new MessageDialog("收藏成功").ShowAsync();
+                            CollectAppBarToggleButton.Icon = new SymbolIcon(Symbol.UnFavorite);
+                            CollectAppBarToggleButton.Label = "取消收藏";
+                            isCollected = true;
+                        }
+                        else
+                        {
+                            await new MessageDialog(obj["info"].ToString()).ShowAsync();
+                            if (Int32.Parse(obj["status"].ToString()) == 403)
+                                isCollected = true;
+                        }
+                    }
+                    catch (Exception) { Debug.WriteLine("约会详情，收藏约会异常"); }
+                }
+                else
+                    await new MessageDialog("收藏失败").ShowAsync();
+            }
+            else
+            {
+                string rmcollecttion = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/rmcollecttion", paramList));
+                if (rmcollecttion != "")
+                {
+                    try
+                    {
+                        JObject obj = JObject.Parse(rmcollecttion);
+                        if (Int32.Parse(obj["status"].ToString()) == 200)
+                        {
+                            await new MessageDialog("取消收藏成功").ShowAsync();
+                            CollectAppBarToggleButton.Icon = new SymbolIcon(Symbol.Favorite);
+                            CollectAppBarToggleButton.Label = "收藏";
+                            isCollected = false;
+                        }
+                        else
+                        {
+                            await new MessageDialog(obj["info"].ToString()).ShowAsync();
+                        }
+                    }
+                    catch (Exception) { Debug.WriteLine("约会详情，取消收藏异常"); }
+                }
+                else
+                    await new MessageDialog("取消收藏失败").ShowAsync();
+            }
+        }
+
+        private async void EnrollAppBarToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("date_id", datelistNavigate.date_id.ToString()));
+            string report = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/report", paramList));
+            if (report != "")
+            {
+                try
+                {
+                    JObject obj = JObject.Parse(report);
+                    if (Int32.Parse(obj["status"].ToString()) == 200)
+                    {
+                        await new MessageDialog("报名成功").ShowAsync();
+                        EnrollAppBarToggleButton.IsEnabled = false;
+                        List<JoinedOnes> joinedOnesnew = new List<JoinedOnes>();
+                        joinedOnesnew.AddRange(joinedOnes);
+                        joinedOnesnew.Add(new JoinedOnes { Head = appSetting.Values["head"].ToString(), Nickname = appSetting.Values["nickname"].ToString() });
+                        JoinedGridView.ItemsSource = joinedOnesnew;
+                    }
+                    else
+                    {
+                        await new MessageDialog(obj["info"].ToString()).ShowAsync();
+                    }
+                }
+                catch (Exception) { Debug.WriteLine("约会详情，报名异常"); }
+            }
+        }
+
 
     }
 }

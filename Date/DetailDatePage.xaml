@@ -43,7 +43,7 @@
                     <!--标题正文-->
                     <StackPanel Orientation="Vertical" Margin="10,0">
                         <TextBlock Name="DetailTitleTextBlock"  Margin="0,0,0,5" Foreground="Black" FontWeight="Light" FontSize="22" FontFamily="Microsoft YaHei UI"/>
-                        <TextBlock Name="DetailContentTextBlock" Text="内容加载中..." Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
+                        <TextBlock Name="DetailContentTextBlock" Text="内容加载中..." Foreground="Black" FontWeight="Light" FontSize="18" TextWrapping="WrapWholeWords" FontFamily="Microsoft YaHei UI"/>
                     </StackPanel>
                     <Line Stroke="Gray" X2="99999" StrokeThickness="1" Margin="0,10"></Line>
                     <!--约属性-->
@@ -120,8 +120,8 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarToggleButton Label="收藏" Icon="Favorite"/>
-            <AppBarToggleButton Label="报名" Icon="Add"/>
+            <AppBarToggleButton Name="CollectAppBarToggleButton" Label="收藏" Icon="Favorite" Click="CollectAppBarToggleButton_Click" />
+            <AppBarToggleButton Name="EnrollAppBarToggleButton" Label="报名" Icon="Tag" Click="EnrollAppBarToggleButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

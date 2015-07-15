@@ -447,6 +447,8 @@ namespace Date
                 {
                     appSetting.Values["uid"] = obj["uid"].ToString();
                     appSetting.Values["token"] = obj["token"].ToString();
+                    appSetting.Values["head"] = obj["head"].ToString();
+                    appSetting.Values["nickname"] = obj["nickname"].ToString();
                     isLogin = true;
 
                     getDatelist(0); //获取约列表
@@ -543,7 +545,23 @@ namespace Date
 
         private void grzxGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(grzxPage));
+            CheckIsLogined();
+            if (isLogin)
+                Frame.Navigate(typeof(grzxPage));
+        }
+
+        private async void CheckIsLogined()
+        {
+            if (!isLogin)
+            {
+                StatusProgressBar.Visibility = Visibility.Collapsed;
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                StatusTextBlock.Text = "oh...等等，还在登陆呢...";
+
+                await Task.Delay(2000);
+                StatusTextBlock.Text = "";
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
+            }
         }
 
         private void DateHub_SectionsInViewChanged(object sender, SectionsInViewChangedEventArgs e)

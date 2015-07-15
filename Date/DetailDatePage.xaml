@@ -20,6 +20,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
+            
             <ScrollViewer Name="DateDetailScrollViewer" VerticalScrollMode="Enabled">
                 <StackPanel Orientation="Vertical">
                     <!--个人信息-->
@@ -114,6 +115,10 @@
 
                 </StackPanel>
             </ScrollViewer>
+            <StackPanel Name="StatusStackPanel" VerticalAlignment="Top" Background="#efefef" Opacity="0.8">
+                <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" />
+                <TextBlock Name="StatusTextBlock" Text="加载中..." Foreground="Gray" FontSize="15" Margin="20,2,0,8" FontFamily="Microsoft YaHei UI" />
+            </StackPanel>
         </Grid>
 
     </Grid>

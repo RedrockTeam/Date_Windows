@@ -22,6 +22,8 @@ using Date.Data;
 using Date.Util;
 using Newtonsoft.Json.Linq;
 using Windows.UI.Popups;
+using Windows.UI;
+using System.Threading.Tasks;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -38,6 +40,7 @@ namespace Date
         List<JoinedOnes> joinedOnes = new List<JoinedOnes>();
         DateList datelistNavigate = new DateList();
         private bool isCollected = false;
+        private int failednum = 0;
         public DetailDatePage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
@@ -66,8 +69,14 @@ namespace Date
             DetailCostTextBlock.Text = datelistNavigate.cost_model;
             DetailHeadImage.ImageSource = new BitmapImage(new Uri(datelistNavigate.head, UriKind.Absolute));
 
+            getDateInfo();
 
+        }
 
+        private async void getDateInfo()
+        {
+            StatusProgressBar.Visibility = Visibility.Visible;
+            StatusTextBlock.Text = "加载中...";
             //一把下面这段放到一个函数里，网络请求这个就出错。求解
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
@@ -85,14 +94,25 @@ namespace Date
                     GetDetail();
                 }
             }
-
-
-
-
-
-
-
-
+            else
+            {
+                if (failednum > 1)
+                {
+                    StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                    StatusProgressBar.Visibility = Visibility.Collapsed;
+                    StatusTextBlock.Visibility = Visibility.Visible;
+                    StatusTextBlock.Text = "加载失败 T_T";
+                    await Task.Delay(2000);
+                    StatusTextBlock.Text = "";
+                    StatusTextBlock.Visibility = Visibility.Collapsed;
+                    StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
+                }
+                else
+                {
+                    failednum++;
+                    getDateInfo();
+                }
+            }
 
         }
 
@@ -159,7 +179,7 @@ namespace Date
             JoinedOnes[] join = dd.Joined;
             for (int i = 0; i < join.Length; i++)
             {
-                joinedOnes.Add(new JoinedOnes { Head = join[i].Head, Nickname = join[i].Nickname });
+                joinedOnes.Add(new JoinedOnes { Head = join[i].Head, Nickname = join[i].Nickname ,User_id = join[i].User_id});
                 if (join[i].User_id == Int32.Parse(appSetting.Values["uid"].ToString()))
                 {
                     EnrollAppBarToggleButton.IsEnabled = false;
@@ -167,6 +187,9 @@ namespace Date
                 }
             }
             JoinedGridView.ItemsSource = joinedOnes;
+            StatusProgressBar.Visibility = Visibility.Collapsed;
+            StatusTextBlock.Visibility = Visibility.Collapsed;
+            StatusTextBlock.Text = "";
         }
 
         private async void getGradeInfor()
@@ -198,6 +221,7 @@ namespace Date
         private void JoinedGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             Debug.WriteLine("你点击了" + ((JoinedOnes)e.ClickedItem).Nickname);
+            Frame.Navigate(typeof(PersonInfoPage), ((JoinedOnes)e.ClickedItem).User_id);
         }
 
         private async void CollectAppBarToggleButton_Click(object sender, RoutedEventArgs e)

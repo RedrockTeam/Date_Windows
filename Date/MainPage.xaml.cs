@@ -588,6 +588,7 @@ namespace Date
                         BarRefreshButton.Label = "刷新";
                         BarRefreshButton.Click += RefreshAppBarButton_Click;
                         commandbar.PrimaryCommands.Add(BarRefreshButton);
+                        commandbar.PrimaryCommands.Add(BarAddButton);
 
                         break;
                     case "MeHubSection":

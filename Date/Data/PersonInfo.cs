@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using Windows.Storage;
+using Date.Util;
 
 namespace Date.Data
 {
+
     public class PersonInfo
     {
+        private ApplicationDataContainer appSetting;
+        List<GradeList> gradelist = new List<GradeList>();
         private int id;
 
         public int Id
@@ -108,6 +113,9 @@ namespace Date.Data
             this.telephone = telephone;
             this.qq = qq;
             this.weixin = weixin;
+            appSetting = ApplicationData.Current.LocalSettings; //本地存储
+            getGradeInfor();
+
         }
 
         public PersonInfo()
@@ -124,6 +132,9 @@ namespace Date.Data
             this.telephone = "";
             this.qq = "";
             this.weixin = "";
+            appSetting = ApplicationData.Current.LocalSettings; //本地存储
+            getGradeInfor();
+
         }
 
         public void GetAttribute(JObject obj)
@@ -140,6 +151,46 @@ namespace Date.Data
             Qq = obj["data"]["qq"].ToString();
             Weixin = obj["data"]["weixin"].ToString();
             Telephone = obj["data"]["telephone"].ToString();
+        }
+
+        public void GetOtherAttribute(JObject obj)
+        {
+            Id = Int32.Parse(obj["data"]["id"].ToString());
+            Head = obj["data"]["head"].ToString();
+            Signature = obj["data"]["signature"].ToString();
+            Nickname = obj["data"]["nickname"].ToString();
+            GradeList g = gradelist.Find(p => p.Id.Equals((Int32)obj["data"]["grade"]));
+            Grade = g.Name;
+            Academy_id = obj["data"]["academy_id"].ToString();
+            Academy = obj["data"]["academy"].ToString();
+            Qq = obj["data"]["qq"].ToString();
+            Weixin = obj["data"]["weixin"].ToString();
+            Telephone = obj["data"]["telephone"].ToString();
+        }
+
+        private async void getGradeInfor()
+        {
+            //年级
+            string grade = appSetting.Values["grade_json"].ToString();
+            if (grade != "")
+            {
+                JArray gradeArray = Utils.ReadJso(grade);
+                for (int i = 0; i < gradeArray.Count; i++)
+                {
+                    JObject jobj = (JObject)gradeArray[i];
+                    var b = new GradeList
+                    {
+                        Id = Convert.ToInt32(jobj["id"].ToString()),
+                        Name = jobj["name"].ToString()
+                    };
+                    gradelist.Add(b);
+                }
+            }
+            else
+            {
+                grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
+                getGradeInfor();
+            }
         }
     }
 }

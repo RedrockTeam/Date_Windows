@@ -146,6 +146,7 @@ namespace Date
                         {
                             JObject jobj = (JObject)dateListArray[i];
                             DateList d = new DateList();
+                            d.Date_id = (Int32)jobj["date_id"];
                             d.Head = jobj["head"].ToString();
                             d.Nickname = jobj["nickname"].ToString();
                             if (jobj["gender"].ToString() == "1")
@@ -165,6 +166,8 @@ namespace Date
                                 d.Cost_model = "你请客";
                             else if ((jobj["cost_model"].ToString() == "3"))
                                 d.Cost_model = "我买单";
+                            else
+                                d.Cost_model = "AA";
                             d.Date_type = jobj["date_type"].ToString();
                             if (isrefresh)
                                 mdatelistuse.Add(d);

@@ -228,8 +228,8 @@ namespace Date.Data
                     joineds[i].User_id = Int32.Parse(oneperson["user_id"].ToString());
                     joineds[i].Date_id = Int32.Parse(oneperson["date_id"].ToString());
                     joineds[i].Gender = Int32.Parse(oneperson["gender"].ToString());
-                    joineds[i].Signature = oneperson["user_id"].ToString();
-                    joineds[i].Head = oneperson["user_id"].ToString();
+                    joineds[i].Signature = oneperson["signature"].ToString();
+                    joineds[i].Head = oneperson["head"].ToString();
                 }
                 Joined = joineds;
             }

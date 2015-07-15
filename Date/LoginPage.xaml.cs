@@ -82,26 +82,30 @@ namespace Date
 
                 if (content != "")
                 {
-                    JObject obj = JObject.Parse(content);
-                    if (Int32.Parse(obj["status"].ToString()) != 200)
+                    try
                     {
-                        Utils.Message(obj["info"].ToString());
-                        LoginProgressBar.Visibility = Visibility.Collapsed;
+                        JObject obj = JObject.Parse(content);
+                        if (Int32.Parse(obj["status"].ToString()) != 200)
+                        {
+                            Utils.Message(obj["info"].ToString());
+                            LoginProgressBar.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            LoginProgressBar.Visibility = Visibility.Collapsed;
+                            appSetting.Values["username"] = StuNumTextBox.Text;
+                            appSetting.Values["password"] = IdNumPasswordBox.Password;
+                            appSetting.Values["uid"] = obj["uid"].ToString();
+                            appSetting.Values["token"] = obj["token"].ToString();
+
+                            //Umeng统计
+
+                            UmengSDK.UmengAnalytics.TrackEvent("Login");
+
+                            Frame.Navigate(typeof(MainPage));
+                        }
                     }
-                    else
-                    {
-                        LoginProgressBar.Visibility = Visibility.Collapsed;
-                        appSetting.Values["username"] = StuNumTextBox.Text;
-                        appSetting.Values["password"] = IdNumPasswordBox.Password;
-                        appSetting.Values["uid"] = obj["uid"].ToString();
-                        appSetting.Values["token"] = obj["token"].ToString();
-
-                        //Umeng统计
-
-                        UmengSDK.UmengAnalytics.TrackEvent("Login");
-
-                        Frame.Navigate(typeof(MainPage));
-                    }
+                    catch (Exception) { }
                 }
                 else
                 {

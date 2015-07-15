@@ -34,11 +34,14 @@ namespace Date
         private ApplicationDataContainer appSetting;
         DateDetail dd = new DateDetail();
         List<GradeList> gradelist = new List<GradeList>();
+        List<JoinedOnes> joinedOnes = new List<JoinedOnes>();
         public DetailDatePage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
             getGradeInfor();
+            DateDetailScrollViewer.Height = Utils.getPhoneHeight() - 60 - 85;
+
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -60,14 +63,13 @@ namespace Date
             DetailCostTextBlock.Text = datelistNavigate.cost_model;
             DetailHeadImage.ImageSource = new BitmapImage(new Uri(datelistNavigate.head, UriKind.Absolute));
 
-            //获取详细信息，存在dd里
-            // GetDetail();
+
 
             //一把下面这段放到一个函数里，网络请求这个就出错。求解
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("date_id", "118"));
+            paramList.Add(new KeyValuePair<string, string>("date_id", datelistNavigate.date_id.ToString()));
             string detaildate = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/detaildate", paramList));
             Debug.WriteLine("约会详情" + detaildate);
             if (detaildate != "")
@@ -76,40 +78,8 @@ namespace Date
                 if (Int32.Parse(obj["status"].ToString()) == 200)
                 {
                     dd.GetAttribute(obj);
-                    DetailContentTextBlock.Text = dd.Content;
-
-                    if (dd.Grade_limit.Length == 4)
-                        DetailGradeTextBlock.Text = "不限";
-                    else
-                        DetailGradeTextBlock.Text = "";
-                    if (Array.IndexOf(dd.Grade_limit, 1) != -1)
-                    {
-                        GradeList g = gradelist.Find(p => p.Id.Equals(1));
-                        DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name + " ";
-                    }
-                    if (Array.IndexOf(dd.Grade_limit, 2) != -1)
-                    {
-                        GradeList g = gradelist.Find(p => p.Id.Equals(2));
-                        DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name + " ";
-                    }
-                    if (Array.IndexOf(dd.Grade_limit, 3) != -1)
-                    {
-                        GradeList g = gradelist.Find(p => p.Id.Equals(3));
-                        DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name + " ";
-                    }
-                    if (Array.IndexOf(dd.Grade_limit, 4) != -1)
-                    {
-                        GradeList g = gradelist.Find(p => p.Id.Equals(4));
-                        DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name;
-                    }
-
-                    if (dd.Gender_limit == 0)
-                        DetailGenderNeedTextBlock.Text = "不限";
-                    else if (dd.Gender_limit == 1)
-                        DetailGenderNeedTextBlock.Text = "男";
-                    else if (dd.Gender_limit == 2)
-                        DetailGenderNeedTextBlock.Text = "女";
-                    DetailNumTextBlock.Text = dd.People_limit.ToString();
+                    //获取详细信息，存在dd里
+                    GetDetail();
                 }
             }
 
@@ -128,6 +98,7 @@ namespace Date
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageEnd("DetailDatePage");
+            
         }
 
 
@@ -145,8 +116,49 @@ namespace Date
 
         private async void GetDetail()
         {
+            DetailContentTextBlock.Text = dd.Content;
 
+            if (dd.Grade_limit.Length == 4)
+                DetailGradeTextBlock.Text = "不限";
+            else
+            {
+                DetailGradeTextBlock.Text = "";
+                if (Array.IndexOf(dd.Grade_limit, 1) != -1)
+                {
+                    GradeList g = gradelist.Find(p => p.Id.Equals(1));
+                    DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name + " ";
+                }
+                if (Array.IndexOf(dd.Grade_limit, 2) != -1)
+                {
+                    GradeList g = gradelist.Find(p => p.Id.Equals(2));
+                    DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name + " ";
+                }
+                if (Array.IndexOf(dd.Grade_limit, 3) != -1)
+                {
+                    GradeList g = gradelist.Find(p => p.Id.Equals(3));
+                    DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name + " ";
+                }
+                if (Array.IndexOf(dd.Grade_limit, 4) != -1)
+                {
+                    GradeList g = gradelist.Find(p => p.Id.Equals(4));
+                    DetailGradeTextBlock.Text = DetailGradeTextBlock.Text + g.Name;
+                }
+            }
 
+            if (dd.Gender_limit == 0)
+                DetailGenderNeedTextBlock.Text = "不限";
+            else if (dd.Gender_limit == 1)
+                DetailGenderNeedTextBlock.Text = "男";
+            else if (dd.Gender_limit == 2)
+                DetailGenderNeedTextBlock.Text = "女";
+            DetailNumTextBlock.Text = dd.People_limit.ToString();
+
+            JoinedOnes[] join = dd.Joined;
+            for (int i = 0; i < join.Length; i++)
+            {
+                joinedOnes.Add(new JoinedOnes { Head = join[i].Head, Nickname = join[i].Nickname });
+            }
+            JoinedGridView.ItemsSource = joinedOnes;
         }
 
         private async void getGradeInfor()
@@ -172,6 +184,12 @@ namespace Date
                 grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
                 getGradeInfor();
             }
+        }
+
+        //已加入的Item点击事件
+        private void JoinedGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Debug.WriteLine("你点击了"+((JoinedOnes)e.ClickedItem).Nickname);
         }
 
     }

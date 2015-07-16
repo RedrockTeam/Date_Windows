@@ -41,7 +41,7 @@
             <TextBlock Name="TitleTextBlock" Text="我的私信" FontFamily="Microsoft Yahei UI" FontSize="30" Foreground="White" VerticalAlignment="Center" Margin="15,0" />
         </Grid>
 
-        <ScrollViewer Name="MyCollectScrollViewer" Grid.Row="1"  VerticalScrollMode="Enabled" VerticalAlignment="Stretch">
+        <ScrollViewer Name="MyLitterScrollViewer" Grid.Row="1"  VerticalScrollMode="Enabled" VerticalAlignment="Stretch">
             <ScrollViewer.Content>
                 <Grid VerticalAlignment="Stretch">
                     <!--私信列表的ListView-->

@@ -29,14 +29,16 @@ namespace Date.Pages
     public sealed partial class Letter : Page
     {
         private ApplicationDataContainer appSetting;
-        List<DateLetter>  dl=new List<DateLetter>();
+        List<DateLetter> dl = new List<DateLetter>();
 
         public Letter()
         {
             this.InitializeComponent();
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-
+            MyLitterScrollViewer.Height = Utils.getPhoneHeight() - 60 - 20;
         }
+
+
 
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。
@@ -46,9 +48,7 @@ namespace Date.Pages
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-
             getLetter();
-            
         }
 
         private async void getLetter()
@@ -114,7 +114,7 @@ namespace Date.Pages
 
         private void LetterListView_OnItemClickListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (AcceptOrReject), e.ClickedItem as DateLetter);
+            Frame.Navigate(typeof(AcceptOrReject), e.ClickedItem as DateLetter);
         }
 
         private void DateListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)

@@ -226,7 +226,7 @@ namespace Date
             {
                 Debug.WriteLine("主页，列表网络异常");
                 if (isrefresh)
-                DateListFailedStackPanel.Visibility = Visibility.Visible;
+                    DateListFailedStackPanel.Visibility = Visibility.Visible;
                 else
                 {
                     AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
@@ -573,7 +573,7 @@ namespace Date
         {
             CheckIsLogined();
             if (isLogin)
-                Frame.Navigate(typeof(MyCollectPage),1);
+                Frame.Navigate(typeof(MyCollectPage), 1);
         }
 
         /// <summary>
@@ -585,7 +585,19 @@ namespace Date
         {
             CheckIsLogined();
             if (isLogin)
-                Frame.Navigate(typeof(MyCollectPage),2);
+                Frame.Navigate(typeof(MyCollectPage), 2);
+        }
+
+        /// <summary>
+        /// 我的私信导航 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LetterGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            CheckIsLogined();
+            if (isLogin)
+                Frame.Navigate(typeof(Letter));
         }
 
         private async void CheckIsLogined()
@@ -714,7 +726,7 @@ namespace Date
             return menuFlyoutItem;
         }
 
-        private  void sortMenuFlyoutItem_click(object sender, RoutedEventArgs e)
+        private void sortMenuFlyoutItem_click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
             if (sortTextBlock.Text != menuFlyoutItem.Text)
@@ -835,11 +847,8 @@ namespace Date
             Frame.Navigate(typeof(DetailDatePage), datelistNavigate);
         }
 
-        
 
-        private void LetterGrid_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Frame.Navigate(typeof (Letter));
-        }
+
+
     }
 }

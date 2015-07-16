@@ -56,6 +56,7 @@ namespace Date.Pages
             {
                 GenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_woman.png", UriKind.Absolute));
             }
+
             if (dl.User_date_status==0)
             {
                 this.AorR.Text = "已接受";

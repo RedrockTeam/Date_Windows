@@ -212,6 +212,7 @@ namespace Date
                         }
                 }
                 else
+
                     if (isrefresh)
                         DateListFailedStackPanel.Visibility = Visibility.Visible;
                     else

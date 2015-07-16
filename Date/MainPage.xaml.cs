@@ -27,6 +27,7 @@ using System.Collections.ObjectModel;
 using Date.Data;
 using Windows.UI.Core;
 using Windows.UI.Text;
+using Date.Pages;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
@@ -706,7 +707,7 @@ namespace Date
             return menuFlyoutItem;
         }
 
-        private async void sortMenuFlyoutItem_click(object sender, RoutedEventArgs e)
+        private  void sortMenuFlyoutItem_click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
             if (sortTextBlock.Text != menuFlyoutItem.Text)
@@ -826,13 +827,12 @@ namespace Date
             DateList datelistNavigate = new DateList(((DateList)e.ClickedItem).Date_id, ((DateList)e.ClickedItem).Head, ((DateList)e.ClickedItem).Nickname, ((DateList)e.ClickedItem).Gender, ((DateList)e.ClickedItem).Signature, ((DateList)e.ClickedItem).Title, ((DateList)e.ClickedItem).Place, ((DateList)e.ClickedItem).Date_time, ((DateList)e.ClickedItem).Cost_model);
             Frame.Navigate(typeof(DetailDatePage), datelistNavigate);
         }
-
-        
-
         
 
 
-
-
+        private void LetterGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (Letter));
+        }
     }
 }

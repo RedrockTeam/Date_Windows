@@ -100,7 +100,7 @@ namespace Date
             Frame.Navigate(typeof(LoginPage));
         }
 
-        private async void headAppBarButton_Click(object sender, RoutedEventArgs e)
+        private  void headAppBarButton_Click(object sender, RoutedEventArgs e)
         {
 
             FileOpenPicker openPicker = new FileOpenPicker();

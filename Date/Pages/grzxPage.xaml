@@ -30,20 +30,20 @@
                     <TextBlock Text="{Binding Title}" Foreground="Coral" FontSize="17" Margin="5" FontWeight="Light"></TextBlock>
                     <!--地点-->
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="Assets/ic_address.png" Width="20"></Image>
+                        <Image Source="/Assets/ic_address.png" Width="20"></Image>
                         <TextBlock Text="地点:" Foreground="Black" FontWeight="Light"></TextBlock>
                         <TextBlock Text="{Binding Place}" Foreground="Black" FontWeight="Light"></TextBlock>
                     </StackPanel>
                     <!--约定时间-->
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="Assets/ic_time.png" Width="20"></Image>
+                        <Image Source="/Assets/ic_time.png" Width="20"></Image>
                         <TextBlock Text="时间:" Foreground="Black" FontWeight="Light"></TextBlock>
                         <TextBlock Text="{Binding Date_time}" Foreground="Black" FontWeight="Light"></TextBlock>
                     </StackPanel>
                     <!--谁掏钱-->
                     <Grid>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="Assets/ic_cost.png" Width="20"></Image>
+                            <Image Source="/Assets/ic_cost.png" Width="20"></Image>
                             <TextBlock Text="费用:" Foreground="Black" FontWeight="Light"></TextBlock>
                             <TextBlock Text="{Binding Cost_model}" Foreground="Black" FontWeight="Light"></TextBlock>
                         </StackPanel>

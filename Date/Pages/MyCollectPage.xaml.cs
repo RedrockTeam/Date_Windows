@@ -94,11 +94,11 @@ namespace Date
                     collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/collection", paramList));
                 else
                     collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/join", paramList));
+                App.CacheString = collect;
             }
             else
                 collect = App.CacheString;
             Debug.WriteLine("collect" + collect);
-            App.CacheString = collect;
 
             try
             {

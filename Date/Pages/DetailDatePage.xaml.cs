@@ -48,7 +48,7 @@ namespace Date
 
         }
 
-        protected  override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("DetailDatePage");
@@ -67,20 +67,29 @@ namespace Date
             DetailCostTextBlock.Text = datelistNavigate.cost_model;
             DetailHeadImage.ImageSource = new BitmapImage(new Uri(datelistNavigate.head, UriKind.Absolute));
 
-            getDateInfo();
+            if (e.NavigationMode == NavigationMode.Back)
+                getDateInfo(2);
+            else
+                getDateInfo(1);
 
         }
 
-        private async void getDateInfo()
+        private async void getDateInfo(int cc)
         {
             StatusProgressBar.Visibility = Visibility.Visible;
             StatusTextBlock.Text = "加载中...";
-            //一把下面这段放到一个函数里，网络请求这个就出错。求解
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("date_id", datelistNavigate.date_id.ToString()));
-            string detaildate = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/detaildate", paramList));
+            string detaildate = "";
+            if (cc == 1)
+            {//一把下面这段放到一个函数里，网络请求这个就出错。求解
+                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("date_id", datelistNavigate.date_id.ToString()));
+                detaildate = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/detaildate", paramList));
+                App.CacheString = detaildate;
+            }
+            else
+                detaildate = App.CacheString;
             Debug.WriteLine("约会详情" + detaildate);
             if (detaildate != "")
             {
@@ -108,7 +117,7 @@ namespace Date
                 else
                 {
                     failednum++;
-                    getDateInfo();
+                    getDateInfo(1);
                 }
             }
 
@@ -135,7 +144,7 @@ namespace Date
 
         }
 
-        private  void GetDetail()
+        private void GetDetail()
         {
             DetailContentTextBlock.Text = dd.Content;
 
@@ -177,7 +186,7 @@ namespace Date
             JoinedOnes[] join = dd.Joined;
             for (int i = 0; i < join.Length; i++)
             {
-                joinedOnes.Add(new JoinedOnes { Head = join[i].Head, Nickname = join[i].Nickname ,User_id = join[i].User_id});
+                joinedOnes.Add(new JoinedOnes { Head = join[i].Head, Nickname = join[i].Nickname, User_id = join[i].User_id });
                 if (join[i].User_id == Int32.Parse(appSetting.Values["uid"].ToString()))
                 {
                     EnrollAppBarToggleButton.IsEnabled = false;
@@ -219,7 +228,10 @@ namespace Date
         private void JoinedGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             Debug.WriteLine("你点击了" + ((JoinedOnes)e.ClickedItem).Nickname);
-            Frame.Navigate(typeof(PersonInfoPage), ((JoinedOnes)e.ClickedItem).User_id);
+            if (((JoinedOnes)e.ClickedItem).User_id.ToString() == appSetting.Values["uid"].ToString())
+                Frame.Navigate(typeof(grzxPage));
+            else
+                Frame.Navigate(typeof(PersonInfoPage), ((JoinedOnes)e.ClickedItem).User_id);
         }
 
         private async void CollectAppBarToggleButton_Click(object sender, RoutedEventArgs e)

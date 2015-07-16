@@ -46,6 +46,7 @@ namespace Date.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
+            UmengSDK.UmengAnalytics.TrackPageStart("AcceptOrReject");
             dl = e.Parameter as DateLetter;
             this.DataContext = dl;
             if (dl.User_gender == 1)

@@ -36,7 +36,7 @@ namespace Date
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
-            MyCollectScrollViewer.Height = Utils.getPhoneHeight() - 60-20;
+            MyCollectScrollViewer.Height = Utils.getPhoneHeight() - 60 - 20;
         }
 
         /// <summary>
@@ -53,7 +53,12 @@ namespace Date
             else
                 TitleTextBlock.Text = "我的约过";
             ch = (Int32)e.Parameter;
-            getMyCollect(ch);
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                getMyCollect(ch, 2);
+            }
+            else
+                getMyCollect(ch, 1);
         }
 
         //离开页面时，取消事件
@@ -76,20 +81,24 @@ namespace Date
         /// <summary>
         /// 收藏的网络请求
         /// </summary>
-        private async void getMyCollect(int ch)
+        private async void getMyCollect(int ch, int cc)
         {
-            string collect="";
+            string collect = "";
             DateListProgressStackPanel.Visibility = Visibility.Visible;
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-            if(ch==1)
-             collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/collection", paramList));
-           else
-                collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/join", paramList));
-            
-                Debug.WriteLine("collect" + collect);
-
+            if (cc == 1)
+            {
+                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+                if (ch == 1)
+                    collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/collection", paramList));
+                else
+                    collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/join", paramList));
+            }
+            else
+                collect = App.CacheString;
+            Debug.WriteLine("collect" + collect);
+            App.CacheString = collect;
 
             try
             {
@@ -149,7 +158,7 @@ namespace Date
         /// <param name="e"></param>
         private void DateListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            getMyCollect(ch);
+            getMyCollect(ch,1);
         }
 
         private void dateListView_ItemClick(object sender, ItemClickEventArgs e)

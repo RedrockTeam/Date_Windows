@@ -48,21 +48,34 @@ namespace Date.Pages
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-            getLetter();
+            UmengSDK.UmengAnalytics.TrackPageStart("Letter");
+
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                getLetter(2);
+            }
+            else
+                getLetter(1);
+
         }
 
-        private async void getLetter()
+        private async void getLetter(int cc)
         {
             DateListProgressStackPanel.Visibility = Visibility.Visible;
             DateListFailedStackPanel.Visibility = Visibility.Collapsed;
-
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("page", "1"));
-            paramList.Add(new KeyValuePair<string, string>("size", "10"));
-            string content = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/letter/getletter", paramList));
-            Debug.WriteLine("content" + content);
+            string content = "";
+            if (cc == 1)
+            {
+                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("page", "1"));
+                paramList.Add(new KeyValuePair<string, string>("size", "10"));
+                content = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/letter/getletter", paramList));
+                Debug.WriteLine("content" + content);
+            }
+            else if (cc == 2)
+                content = App.CacheString;
             try
             {
                 if (content != "")
@@ -79,7 +92,7 @@ namespace Date.Pages
                             dl.Add(d);
                         }
                         this.letterListView.ItemsSource = dl;
-
+                        App.CacheString = content;
                         DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                         DateListFailedStackPanel.Visibility = Visibility.Collapsed;
                     }
@@ -100,7 +113,7 @@ namespace Date.Pages
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
-
+            UmengSDK.UmengAnalytics.TrackPageEnd("Letter");
         }
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
         {
@@ -119,7 +132,7 @@ namespace Date.Pages
 
         private void DateListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            getLetter();
+            getLetter(1);
         }
     }
 }

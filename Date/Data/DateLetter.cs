@@ -111,7 +111,7 @@ namespace Date.Data
             Date_id = Int32.Parse(jObject["date_id"].ToString());
             Letter_status = Int32.Parse(jObject["letter_status"].ToString());
             Title = jObject["title"].ToString();
-            User_score = Int32.Parse(jObject["user_score"].ToString());
+            //User_score = Int32.Parse(jObject["user_score"].ToString());
 
         }
     }

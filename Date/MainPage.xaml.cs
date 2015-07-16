@@ -385,6 +385,7 @@ namespace Date
             {
                 StatusTextBlock.Visibility = Visibility.Visible;
                 StatusTextBlock.Text = "";
+                isLogin = true;
             }
             _timer.Start();
             UmengSDK.UmengAnalytics.TrackPageStart("MainPage");
@@ -543,11 +544,28 @@ namespace Date
             }
         }
 
+        /// <summary>
+        /// 个人中心导航
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grzxGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             CheckIsLogined();
             if (isLogin)
                 Frame.Navigate(typeof(grzxPage));
+        }
+
+        /// <summary>
+        /// 我的收藏导航
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void myCollectGird_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            CheckIsLogined();
+            if (isLogin)
+                Frame.Navigate(typeof(MyCollectPage));
         }
 
         private async void CheckIsLogined()
@@ -796,6 +814,8 @@ namespace Date
             DateList datelistNavigate = new DateList(((DateList)e.ClickedItem).Date_id, ((DateList)e.ClickedItem).Head, ((DateList)e.ClickedItem).Nickname, ((DateList)e.ClickedItem).Gender, ((DateList)e.ClickedItem).Signature, ((DateList)e.ClickedItem).Title, ((DateList)e.ClickedItem).Place, ((DateList)e.ClickedItem).Date_time, ((DateList)e.ClickedItem).Cost_model);
             Frame.Navigate(typeof(DetailDatePage), datelistNavigate);
         }
+
+        
 
 
 

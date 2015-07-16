@@ -138,7 +138,7 @@
                                 <Grid Background="#F25022" Width="150" Height="150" Margin="5">
                                     <TextBlock Text="我的私信" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
                                 </Grid>
-                                <Grid Background="#7FBA00" Width="150" Height="150" Margin="5">
+                                <Grid Name="myCollectGird" Background="#7FBA00" Width="150" Height="150" Margin="5" Tapped="myCollectGird_Tapped">
                                     <TextBlock Text="我的收藏" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
 
                                 </Grid>

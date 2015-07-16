@@ -223,7 +223,13 @@ namespace Date
             catch (Exception)
             {
                 Debug.WriteLine("主页，列表网络异常");
-                DateListFailedStackPanel.Visibility = Visibility.Visible;
+                if (isrefresh)
+                    DateListFailedStackPanel.Visibility = Visibility.Visible;
+                else
+                {
+                    AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
+                    AddDateListProgressTextBlock.Text = "加载失败 T_T";
+                }
             }
         }
 

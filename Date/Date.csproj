@@ -79,7 +79,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AddDatePage.xaml.cs">
+    <Compile Include="Data\DateLetter.cs" />
+    <Compile Include="Pages\AcceptOrReject.xaml.cs">
+      <DependentUpon>AcceptOrReject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddDatePage.xaml.cs">
       <DependentUpon>AddDatePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
@@ -94,10 +98,10 @@
     <Compile Include="Data\JoinedOnes.cs" />
     <Compile Include="Data\MyDate.cs" />
     <Compile Include="Data\PersonInfo.cs" />
-    <Compile Include="DetailDatePage.xaml.cs">
+    <Compile Include="Pages\DetailDatePage.xaml.cs">
       <DependentUpon>DetailDatePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="grzxPage.xaml.cs">
+    <Compile Include="Pages\grzxPage.xaml.cs">
       <DependentUpon>grzxPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginPage.xaml.cs">
@@ -106,14 +110,17 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MyCollectPage.xaml.cs">
+    <Compile Include="Pages\Letter.xaml.cs">
+      <DependentUpon>Letter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MyCollectPage.xaml.cs">
       <DependentUpon>MyCollectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PersonInfoPage.xaml.cs">
+    <Compile Include="Pages\PersonInfoPage.xaml.cs">
       <DependentUpon>PersonInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SetHeadPage.xaml.cs">
+    <Compile Include="Pages\SetHeadPage.xaml.cs">
       <DependentUpon>SetHeadPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\CreatedTimeValueConverter.cs" />
@@ -152,15 +159,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AddDatePage.xaml">
+    <Page Include="Pages\AcceptOrReject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DetailDatePage.xaml">
+    <Page Include="Pages\AddDatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="grzxPage.xaml">
+    <Page Include="Pages\DetailDatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\grzxPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,15 +183,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MyCollectPage.xaml">
+    <Page Include="Pages\Letter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PersonInfoPage.xaml">
+    <Page Include="Pages\MyCollectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SetHeadPage.xaml">
+    <Page Include="Pages\PersonInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SetHeadPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,7 +209,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -51,19 +51,19 @@
                     <StackPanel  Margin="10,0">
                         <!--地点-->
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="Assets/ic_address.png" Width="20"></Image>
+                            <Image Source="/Assets/ic_address.png" Width="20"></Image>
                             <TextBlock Text="地点:" FontSize="18" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                             <TextBlock Name="DetailPlaceTextBlock" FontSize="18"  Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                         <!--约定时间-->
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="Assets/ic_time.png" Width="20"></Image>
+                            <Image Source="/Assets/ic_time.png" Width="20"></Image>
                             <TextBlock Text="时间:" Foreground="Black" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                             <TextBlock Name="DetailTimeTextBlock"  FontSize="18" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                         <!--谁掏钱-->
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="Assets/ic_cost.png" Width="20"></Image>
+                            <Image Source="/Assets/ic_cost.png" Width="20"></Image>
                             <TextBlock Text="费用:" Foreground="Black" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                             <TextBlock Name="DetailCostTextBlock"  FontSize="18" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>

@@ -18,8 +18,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Date.Data;
-using Date.Util;
 using Newtonsoft.Json.Linq;
 using Windows.UI.Popups;
 using Windows.UI;
@@ -50,7 +48,7 @@ namespace Date
 
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected  override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("DetailDatePage");
@@ -137,7 +135,7 @@ namespace Date
 
         }
 
-        private async void GetDetail()
+        private  void GetDetail()
         {
             DetailContentTextBlock.Text = dd.Content;
 

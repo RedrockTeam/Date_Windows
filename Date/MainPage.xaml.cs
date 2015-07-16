@@ -27,6 +27,7 @@ using System.Collections.ObjectModel;
 using Date.Data;
 using Windows.UI.Core;
 using Windows.UI.Text;
+using Date.Pages;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
@@ -225,7 +226,7 @@ namespace Date
             {
                 Debug.WriteLine("主页，列表网络异常");
                 if (isrefresh)
-                    DateListFailedStackPanel.Visibility = Visibility.Visible;
+                DateListFailedStackPanel.Visibility = Visibility.Visible;
                 else
                 {
                     AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
@@ -713,7 +714,7 @@ namespace Date
             return menuFlyoutItem;
         }
 
-        private async void sortMenuFlyoutItem_click(object sender, RoutedEventArgs e)
+        private  void sortMenuFlyoutItem_click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
             if (sortTextBlock.Text != menuFlyoutItem.Text)
@@ -836,10 +837,9 @@ namespace Date
 
         
 
-        
-
-
-
-
+        private void LetterGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (Letter));
+        }
     }
 }

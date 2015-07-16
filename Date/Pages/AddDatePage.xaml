@@ -41,7 +41,7 @@
                             <!--约会时间-->
                             <Grid Name="AddDateTimeGrid" Tapped="AddDateTimeGrid_Tapped" Background="White">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Image Source="Assets/ic_time.png" Width="20" Margin="15,0,5,0"></Image>
+                                    <Image Source="/Assets/ic_time.png" Width="20" Margin="15,0,5,0"></Image>
                                     <TextBlock  Text="约会时间" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 </StackPanel>
                                 <TextBox Name="AddDateTimeTextBox" IsEnabled="False" VerticalAlignment="Center" FontSize="15" TextAlignment="Right" PlaceholderText="请选择" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" />
@@ -51,7 +51,7 @@
                             <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
                             <Grid >
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Image Source="Assets/ic_address.png" Width="20" Margin="15,0,5,0"></Image>
+                                    <Image Source="/Assets/ic_address.png" Width="20" Margin="15,0,5,0"></Image>
                                     <TextBlock  Text="约会地点" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 </StackPanel>
                                 <TextBox Name="AddDatePlaceTextBox" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" TextAlignment="Right" />
@@ -62,7 +62,7 @@
                             <Grid >
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                                     <Image Source="Assets/ic_person.png" Width="20" Margin="15,0,5,0"></Image>
-                                    <TextBlock  Text="约会人数" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
+                                    <TextBlock  Text="/约会人数" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 </StackPanel>
                                 <TextBox Name="AddDatePeopleTextBox" InputScope="Number" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" TextAlignment="Right" />
                             </Grid>

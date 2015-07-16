@@ -37,20 +37,20 @@
                         <TextBlock Text="{Binding Title}" Foreground="Coral" FontSize="17" Margin="5" FontFamily="Microsoft YaHei UI" FontWeight="Light"></TextBlock>
                         <!--地点-->
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="Assets/ic_address.png" Width="20"></Image>
+                            <Image Source="/Assets/ic_address.png" Width="20"></Image>
                             <TextBlock Text="地点:" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                             <TextBlock Text="{Binding Place}" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                         <!--约定时间-->
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="Assets/ic_time.png" Width="20"></Image>
+                            <Image Source="/Assets/ic_time.png" Width="20"></Image>
                             <TextBlock Text="时间:" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                             <TextBlock Text="{Binding Date_time}" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                         </StackPanel>
                         <!--谁掏钱-->
                         <Grid>
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="Assets/ic_cost.png" Width="20"></Image>
+                                <Image Source="/Assets/ic_cost.png" Width="20"></Image>
                                 <TextBlock Text="费用:" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 <TextBlock Text="{Binding Cost_model}" Foreground="Black" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
                             </StackPanel>
@@ -85,7 +85,7 @@
                     </StackPanel>
                     <!--Date列表的失败报错-->
                     <StackPanel Name="DateListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="DateListFailedStackPanel_Tapped">
-                        <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
+                        <Image Source="/Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
                         <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
                     </StackPanel>
                 </Grid>

@@ -93,6 +93,8 @@ namespace Date
                     pi.GetOtherAttribute(obj);
                     this.DataContext = pi;
                     img.ImageSource = new BitmapImage(new Uri(pi.Head));
+                    StatusTextBlock.Visibility=Visibility.Collapsed;
+                    StatusProgressBar.Visibility = Visibility.Collapsed;
                 }
                 else
                 {

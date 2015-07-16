@@ -46,12 +46,23 @@ namespace Date.Pages
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
+
+            getLetter();
+            
+        }
+
+        private async void getLetter()
+        {
+            DateListProgressStackPanel.Visibility = Visibility.Visible;
+            DateListFailedStackPanel.Visibility = Visibility.Collapsed;
+
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("page", "1"));
             paramList.Add(new KeyValuePair<string, string>("size", "10"));
             string content = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/letter/getletter", paramList));
+            Debug.WriteLine("content" + content);
             try
             {
                 if (content != "")
@@ -62,13 +73,13 @@ namespace Date.Pages
                         JArray dateListArray = Utils.ReadJso(content);
                         for (int i = 0; i < dateListArray.Count; i++)
                         {
-                            DateLetter d=new DateLetter();
+                            DateLetter d = new DateLetter();
                             JObject jobj = (JObject)dateListArray[i];
                             d.GetAttribute(jobj);
                             dl.Add(d);
                         }
                         this.letterListView.ItemsSource = dl;
-                       
+
                         DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                         DateListFailedStackPanel.Visibility = Visibility.Collapsed;
                     }
@@ -80,7 +91,8 @@ namespace Date.Pages
             }
             catch (Exception)
             {
-                Debug.WriteLine("主页，列表网络异常");
+                DateListProgressStackPanel.Visibility = Visibility.Collapsed;
+                Debug.WriteLine("私信，列表网络异常");
                 DateListFailedStackPanel.Visibility = Visibility.Visible;
             }
         }
@@ -106,7 +118,7 @@ namespace Date.Pages
 
         private void DateListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            getLetter();
         }
     }
 }

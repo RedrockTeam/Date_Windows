@@ -31,11 +31,12 @@ namespace Date
     {
         private ApplicationDataContainer appSetting;
         List<DateList> mdatelist = new List<DateList>();
+        private int ch;
         public MyCollectPage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
-            MyCollectScrollViewer.Height = Utils.getPhoneHeight() - 60;
+            MyCollectScrollViewer.Height = Utils.getPhoneHeight() - 60-20;
         }
 
         /// <summary>
@@ -47,7 +48,12 @@ namespace Date
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengAnalytics.TrackPageStart("MyCollectPage");
-            getMyCollect();
+            if ((Int32)e.Parameter == 1)
+                TitleTextBlock.Text = "我的收藏";
+            else
+                TitleTextBlock.Text = "我的约过";
+            ch = (Int32)e.Parameter;
+            getMyCollect(ch);
         }
 
         //离开页面时，取消事件
@@ -70,14 +76,19 @@ namespace Date
         /// <summary>
         /// 收藏的网络请求
         /// </summary>
-        private async void getMyCollect()
+        private async void getMyCollect(int ch)
         {
+            string collect="";
             DateListProgressStackPanel.Visibility = Visibility.Visible;
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-            string collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/collection", paramList));
-            Debug.WriteLine("collect" + collect);
+            if(ch==1)
+             collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/collection", paramList));
+           else
+                collect = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/join", paramList));
+            
+                Debug.WriteLine("collect" + collect);
 
 
             try
@@ -138,7 +149,7 @@ namespace Date
         /// <param name="e"></param>
         private void DateListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            getMyCollect();
+            getMyCollect(ch);
         }
 
         private void dateListView_ItemClick(object sender, ItemClickEventArgs e)

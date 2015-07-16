@@ -565,7 +565,19 @@ namespace Date
         {
             CheckIsLogined();
             if (isLogin)
-                Frame.Navigate(typeof(MyCollectPage));
+                Frame.Navigate(typeof(MyCollectPage),1);
+        }
+
+        /// <summary>
+        /// 我的约过导航
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void myJoinGird_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            CheckIsLogined();
+            if (isLogin)
+                Frame.Navigate(typeof(MyCollectPage),2);
         }
 
         private async void CheckIsLogined()
@@ -814,6 +826,8 @@ namespace Date
             DateList datelistNavigate = new DateList(((DateList)e.ClickedItem).Date_id, ((DateList)e.ClickedItem).Head, ((DateList)e.ClickedItem).Nickname, ((DateList)e.ClickedItem).Gender, ((DateList)e.ClickedItem).Signature, ((DateList)e.ClickedItem).Title, ((DateList)e.ClickedItem).Place, ((DateList)e.ClickedItem).Date_time, ((DateList)e.ClickedItem).Cost_model);
             Frame.Navigate(typeof(DetailDatePage), datelistNavigate);
         }
+
+        
 
         
 

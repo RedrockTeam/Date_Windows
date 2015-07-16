@@ -76,6 +76,7 @@ namespace Date
 
         private async void GetPerInfo(int User_id)
         {
+            StatusStackPanel.Visibility = Visibility.Visible;
             StatusProgressBar.Visibility = Visibility.Visible;
             StatusTextBlock.Text = "加载中...";
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
@@ -84,31 +85,43 @@ namespace Date
             paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
             string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
             Debug.WriteLine("个人信息" + pc);
-            if (pc != "")
+            try
             {
-                JObject obj = JObject.Parse(pc);
-                pi.GetOtherAttribute(obj);
-                this.DataContext = pi;
-                img.ImageSource = new BitmapImage(new Uri(pi.Head));
-            }
-            else
-            {
-                if (failednum > 1)
+                if (pc != "")
                 {
-                    StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
-                    StatusProgressBar.Visibility = Visibility.Collapsed;
-                    StatusTextBlock.Visibility = Visibility.Visible;
-                    StatusTextBlock.Text = "加载失败 T_T";
-                    await Task.Delay(2000);
-                    StatusTextBlock.Text = "";
-                    StatusTextBlock.Visibility = Visibility.Collapsed;
-                    StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
+                    JObject obj = JObject.Parse(pc);
+                    pi.GetOtherAttribute(obj);
+                    this.DataContext = pi;
+                    img.ImageSource = new BitmapImage(new Uri(pi.Head));
                 }
                 else
                 {
-                    failednum++;
-                    GetPerInfo(User_id);
+                    if (failednum > 1)
+                    {
+                        StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                        StatusProgressBar.Visibility = Visibility.Collapsed;
+                        StatusTextBlock.Visibility = Visibility.Visible;
+                        StatusTextBlock.Text = "加载失败 T_T";
+                        await Task.Delay(2000);
+                        StatusTextBlock.Text = "";
+                        StatusTextBlock.Visibility = Visibility.Collapsed;
+                        StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
+                        StatusStackPanel.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        failednum++;
+                        GetPerInfo(User_id);
+                    }
                 }
+            }
+            catch(Exception)
+            {
+                Debug.WriteLine("个人信息，网络异常");
+                StatusTextBlock.Text = "";
+                StatusTextBlock.Visibility = Visibility.Collapsed;
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
+                StatusStackPanel.Visibility = Visibility.Collapsed;
             }
         }
     }

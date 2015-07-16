@@ -96,6 +96,7 @@ namespace Date.Pages
                 DateListFailedStackPanel.Visibility = Visibility.Visible;
             }
         }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件

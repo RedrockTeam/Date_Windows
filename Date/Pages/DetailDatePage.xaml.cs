@@ -71,7 +71,6 @@ namespace Date
                 getDateInfo(2);
             else
                 getDateInfo(1);
-
         }
 
         private async void getDateInfo(int cc)

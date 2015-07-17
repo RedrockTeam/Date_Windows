@@ -47,9 +47,15 @@ namespace Date
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengAnalytics.TrackPageStart("grzxPage");
             if (e.NavigationMode == NavigationMode.Back)
+            {
                 GetPerInfo(2);
+                MyCenter.SelectedIndex = 1;
+            }
             else
+            {
                 GetPerInfo(1);
+                MyCenter.SelectedIndex = 0;
+            }
             SetHead();
         }
 

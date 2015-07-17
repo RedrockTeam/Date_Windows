@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Data\DateLetter.cs" />
     <Compile Include="Data\DateStatusValueConverter.cs" />
+    <Compile Include="Data\GenderConverter.cs" />
     <Compile Include="Data\LetterReadValueConverter.cs" />
     <Compile Include="Pages\AcceptOrReject.xaml.cs">
       <DependentUpon>AcceptOrReject.xaml</DependentUpon>

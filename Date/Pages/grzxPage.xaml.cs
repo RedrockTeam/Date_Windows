@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Date.Data;
+using Date.Pages;
 using Date.Util;
 using Newtonsoft.Json.Linq;
 using UmengSDK;
@@ -43,7 +44,6 @@ namespace Date
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 255, 61, 61), Colors.White, text: "约");
-
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengAnalytics.TrackPageStart("grzxPage");
             if (e.NavigationMode == NavigationMode.Back)
@@ -207,6 +207,11 @@ namespace Date
             Debug.WriteLine("你点击了：" + ((MyDate)e.ClickedItem).Title);
             DateList datelistNavigate = new DateList(Int32.Parse(((MyDate)e.ClickedItem).Date_id), ((MyDate)e.ClickedItem).Head, ((MyDate)e.ClickedItem).Nickname, ((MyDate)e.ClickedItem).Gender, "加载中...", ((MyDate)e.ClickedItem).Title, ((MyDate)e.ClickedItem).Place, ((MyDate)e.ClickedItem).Date_time, ((MyDate)e.ClickedItem).Cost_model);
             Frame.Navigate(typeof(DetailDatePage), datelistNavigate);
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (EditInfo), pi);
         }
 
     }

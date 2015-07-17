@@ -8,6 +8,7 @@
     xmlns:util="using:Date.Util"
     xmlns:data="using:Date.Data"
     mc:Ignorable="d"
+    FontFamily="Microsoft YaHei UI"
     Background="#f8f8f8">
 
     <Page.Resources>

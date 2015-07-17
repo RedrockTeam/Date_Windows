@@ -20,7 +20,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            
+
             <ScrollViewer Name="DateDetailScrollViewer" VerticalScrollMode="Enabled">
                 <StackPanel Orientation="Vertical">
                     <!--个人信息-->
@@ -72,7 +72,7 @@
                     <!--约要求-->
                     <StackPanel Margin="10,0">
                         <TextBlock Text="要求" Margin="0,0,0,10" Foreground="Black" FontWeight="Light" FontSize="25" FontFamily="Microsoft YaHei UI"/>
-                       <!--年级-->
+                        <!--年级-->
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="年级:" Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
                             <TextBlock Name="DetailGradeTextBlock" Text="加载中..." Foreground="Black" FontWeight="Light" FontSize="18" FontFamily="Microsoft YaHei UI"/>
@@ -92,22 +92,27 @@
                     <!--已报名-->
                     <StackPanel Margin="10,0">
                         <TextBlock Text="已报名" Margin="0,0,0,10" Foreground="Black" FontWeight="Light" FontSize="25" FontFamily="Microsoft YaHei UI"/>
-                        <GridView Name="JoinedGridView" IsItemClickEnabled="True" ItemClick="JoinedGridView_ItemClick">
-                            <GridView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Margin="5">
-                                        <!--头像-->
-                                        <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,0">
-                                            <Rectangle.Fill>
-                                                <ImageBrush Stretch="Fill" ImageSource ="{Binding Head}"/>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                        <!--名称-->
-                                        <TextBlock Text="{Binding Nickname}" Foreground="Black" FontFamily="Microsoft YaHei UI"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
+                        <Grid>
+                            <GridView Name="JoinedGridView" IsItemClickEnabled="True" ItemClick="JoinedGridView_ItemClick">
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="5">
+                                            <!--头像-->
+                                            <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,0">
+                                                <Rectangle.Fill>
+                                                    <ImageBrush Stretch="Fill" ImageSource ="{Binding Head}"/>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                            <!--名称-->
+                                            <TextBlock Text="{Binding Nickname}" Foreground="Black" FontFamily="Microsoft YaHei UI"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                            <Grid Name="NullGrid" HorizontalAlignment="Center" Visibility="Collapsed">
+                                <TextBlock Text="暂无报名信息~" Foreground="Gray" FontSize="14"/>
+                            </Grid>
+                        </Grid>
                     </StackPanel>
 
 

@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:Date.Data"
     mc:Ignorable="d"
-     Background="#efefef">
+    FontFamily="Microsoft YaHei UI"
+    Background="#efefef">
     <Page.Resources>
         <!--私信是否已读值转换器-->
         <data:LetterReadValueConverter x:Key="ReadLetter" />
@@ -20,7 +21,7 @@
                         <!--头像-->
 
                         <Grid>
-                            
+
                             <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,5">
                                 <Rectangle.Fill>
                                     <ImageBrush Stretch="Fill" ImageSource ="{Binding User_avatar}"/>
@@ -32,7 +33,7 @@
                                 </Polygon.Fill>
                             </Polygon>
                         </Grid>
-                        
+
                         <!--昵称-->
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10,5,5,5" >
                             <StackPanel Orientation="Vertical"  >
@@ -68,7 +69,7 @@
                     <!--私信列表的ListView-->
                     <StackPanel Name="dateStackPanel" VerticalAlignment="Stretch">
                         <ListView Name="letterListView" Background="#efefef" ItemTemplate="{StaticResource LetterListDataTemplateKey}" IsItemClickEnabled="True" ItemClick="LetterListView_OnItemClickListView_ItemClick"/>
-                    <TextBlock Name="NomoreItemstip" Foreground="Firebrick" FontFamily="Microsoft YaHei UI"  HorizontalAlignment="Center" Visibility="Collapsed"></TextBlock>
+                        <TextBlock Name="NomoreItemstip" Foreground="Firebrick" FontFamily="Microsoft YaHei UI"  HorizontalAlignment="Center" Visibility="Collapsed"></TextBlock>
                     </StackPanel>
                     <!--私信列表的加载条-->
                     <StackPanel Name="DateListProgressStackPanel" VerticalAlignment="Center"  Margin="0,20">

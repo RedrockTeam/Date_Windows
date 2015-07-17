@@ -139,14 +139,21 @@ namespace Date
                         DateListFailedStackPanel.Visibility = Visibility.Collapsed;
                     }
                     else
+                    {
+                        DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                         DateListFailedStackPanel.Visibility = Visibility.Visible;
+                    }
                 }
                 else
+                {
+                    DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                     DateListFailedStackPanel.Visibility = Visibility.Visible;
+                }
             }
             catch (Exception)
             {
                 Debug.WriteLine("主页，列表网络异常");
+                DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                 DateListFailedStackPanel.Visibility = Visibility.Visible;
             }
         }
@@ -158,7 +165,8 @@ namespace Date
         /// <param name="e"></param>
         private void DateListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            getMyCollect(ch,1);
+            DateListFailedStackPanel.Visibility = Visibility.Collapsed;
+            getMyCollect(ch, 1);
         }
 
         private void dateListView_ItemClick(object sender, ItemClickEventArgs e)

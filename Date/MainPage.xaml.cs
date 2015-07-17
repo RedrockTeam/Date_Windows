@@ -476,15 +476,17 @@ namespace Date
             }
             else
             {
-                StatusProgressBar.Visibility = Visibility.Collapsed;
-                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
-                StatusTextBlock.Text = "网络未连接...";
+                if (!isLogin)
+                {
+                    StatusProgressBar.Visibility = Visibility.Collapsed;
+                    StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                    StatusTextBlock.Text = "网络未连接...";
 
-                await Task.Delay(2000);
-                StatusTextBlock.Text = "";
-                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
-                Frame.Navigate(typeof(LoginPage));
-
+                    await Task.Delay(2000);
+                    StatusTextBlock.Text = "";
+                    StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
+                    Frame.Navigate(typeof(LoginPage));
+                }
             }
         }
 

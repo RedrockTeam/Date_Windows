@@ -153,7 +153,6 @@
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
             <AppBarButton Name="logoutAppBarButton" Label="注销" Icon="Switch" Click="logoutAppBarButton_Click"></AppBarButton>
-            <AppBarButton Name="headAppBarButton" Label="上传头像" Icon="Upload" Click="headAppBarButton_Click"></AppBarButton>
             <AppBarButton Name="Edit" Label="编辑" Icon="Edit" Click="Edit_Click" />
         </CommandBar>
     </Page.BottomAppBar>

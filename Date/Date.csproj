@@ -83,6 +83,9 @@
     <Compile Include="Data\DateStatusValueConverter.cs" />
     <Compile Include="Data\GenderConverter.cs" />
     <Compile Include="Data\LetterReadValueConverter.cs" />
+    <Compile Include="Pages\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AcceptOrReject.xaml.cs">
       <DependentUpon>AcceptOrReject.xaml</DependentUpon>
     </Compile>
@@ -164,6 +167,7 @@
     <Content Include="Assets\ic_wdyg.png" />
     <Content Include="Assets\ic_woman.png" />
     <Content Include="Assets\Logo.scale-240.png" />
+    <Content Include="Assets\OS Windows 8.png" />
     <Content Include="Assets\point_Black.png" />
     <Content Include="Assets\point_Gray.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
@@ -177,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Pages\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AcceptOrReject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

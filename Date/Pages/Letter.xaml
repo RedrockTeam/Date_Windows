@@ -51,7 +51,7 @@
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
             <AppBarButton Icon="Accept" Label="全部已读" Click="AllReadButton_Click" />
-            <AppBarButton Icon="Accept" Label="加载更多" Click="MoreButton_Click" />
+            <AppBarButton Icon="Page2" Label="加载更多" Click="MoreButton_Click" />
         </CommandBar>
     </Page.BottomAppBar>
     <Grid>

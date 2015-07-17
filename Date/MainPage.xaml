@@ -135,19 +135,29 @@
                         <TextBlock Text="我" Foreground="#ff3d3d" FontSize="30" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
                         <GridView>
                             <GridView.Items>
-                                <Grid Background="#F25022" Width="150" Height="150" Margin="5" Tapped="LetterGrid_Tapped">
-                                    <TextBlock Text="我的私信" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light" />
+                                <Grid Name="LetterGrid" Background="#F25022" Width="150" Height="150" Margin="5" Tapped="LetterGrid_Tapped">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Source="Assets/ic_letter.png" Width="60"/>
+                                        <TextBlock Text="我的私信" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="25" HorizontalAlignment="Center" FontWeight="Light" />
+                                    </StackPanel>
                                 </Grid>
                                 <Grid Name="myCollectGird" Background="#7FBA00" Width="150" Height="150" Margin="5" Tapped="myCollectGird_Tapped">
-                                    <TextBlock Text="我的收藏" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
-
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Source="Assets/ic_collect.png" Width="60"/>
+                                        <TextBlock Text="我的收藏" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="25"  HorizontalAlignment="Center" FontWeight="Light"/>
+                                    </StackPanel>
                                 </Grid>
                                 <Grid Name="myJoinGird" Background="#01A4EF" Width="150" Height="150" Margin="5" Tapped="myJoinGird_Tapped">
-                                    <TextBlock Text="我的约过" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
-
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Source="Assets/ic_wdyg.png" Width="60"/>
+                                        <TextBlock Text="我的约过" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="25"  HorizontalAlignment="Center" FontWeight="Light"/>
+                                    </StackPanel>
                                 </Grid>
                                 <Grid Name="grzxGrid" Background="#FFB901" Width="150" Height="150" Margin="5" Tapped="grzxGrid_Tapped">
-                                    <TextBlock Text="个人中心" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Source="Assets/ic_grzx.png" Width="60"/>
+                                        <TextBlock Text="个人中心" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="25"  HorizontalAlignment="Center" FontWeight="Light"/>
+                                    </StackPanel>
                                 </Grid>
                             </GridView.Items>
 
@@ -164,10 +174,16 @@
                         <GridView>
                             <GridView.Items>
                                 <Grid Background="#ff3d3d" Width="150" Height="150" Margin="5">
-                                    <TextBlock Text="设置" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Source="Assets/ic_setting.png" Width="60"/>
+                                        <TextBlock Text="设置" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="25"  HorizontalAlignment="Center" FontWeight="Light"/>
+                                    </StackPanel>
                                 </Grid>
                                 <Grid Background="#ff3d3d" Width="150" Height="150" Margin="5">
-                                    <TextBlock Text="关于" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Source="Assets/ic_about.png" Width="60"/>
+                                        <TextBlock Text="关于" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="25"  HorizontalAlignment="Center" FontWeight="Light"/>
+                                    </StackPanel>
                                 </Grid>
                             </GridView.Items>
 

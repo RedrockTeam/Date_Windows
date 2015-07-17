@@ -52,6 +52,7 @@ namespace Date
         List<DateList> mdatelist = new List<DateList>();
 
         private int order = 0;//约会列表排序选项
+        private int date_type = 0;//约会列表类型选项
         private int page = 1;//约会列表排序选项
         private int size = 40;//约会列表数量
         public bool IsLoading = false;
@@ -101,7 +102,7 @@ namespace Date
         {
             if (AddDateListProgressTextBlock.Text == "加载失败 T_T")
             {
-                getDatelist(0, page, order, false);
+                getDatelist(date_type, page, order, false);
             }
         }
 
@@ -256,7 +257,7 @@ namespace Date
                                     {
                                         Debug.WriteLine("主页，列表瀑布流加载控件异常");
                                     }
-                                    getDatelist(0, ++page, order, false);
+                                    getDatelist(date_type, ++page, order, false);
 
                                 });
                                 IsLoading = false;
@@ -464,7 +465,7 @@ namespace Date
                     appSetting.Values["nickname"] = obj["nickname"].ToString();
                     isLogin = true;
 
-                    getDatelist(0); //获取约列表
+                    getDatelist(date_type); //获取约列表
 
                     StatusProgressBar.Visibility = Visibility.Collapsed;
                     StatusTextBlock.Text = "登陆成功...";
@@ -709,7 +710,28 @@ namespace Date
         private void typeMenuFlyoutItem_click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
-            typeTextBlock.Text = menuFlyoutItem.Text;
+            if (typeTextBlock.Text != menuFlyoutItem.Text)
+            {
+                typeTextBlock.Text = menuFlyoutItem.Text;
+
+                DateType d = datetypelist.Find(p => p.Type.Equals(menuFlyoutItem.Text));
+                date_type = d.Id;
+                page = 1;
+                IsOver = false;
+                List<DateList> mdatelist = new List<DateList>();
+                dateListView.ItemsSource = mdatelist;
+                try
+                {
+                    dateStackPanel.Children.RemoveAt(1);
+                    dateStackPanel.Children.Remove(AddDateListProgressStackPanel);
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("主页，切换分类移除控件异常");
+                }
+                DateListProgressStackPanel.Visibility = Visibility.Visible;
+                getDatelist(date_type, 1, order);
+            }
         }
 
         private void sortTextBlock_Tapped(object sender, TappedRoutedEventArgs e)
@@ -770,7 +792,7 @@ namespace Date
                     Debug.WriteLine("主页，切换分类移除控件异常");
                 }
                 DateListProgressStackPanel.Visibility = Visibility.Visible;
-                getDatelist(0, 1, order);
+                getDatelist(date_type, 1, order);
             }
         }
 
@@ -820,7 +842,7 @@ namespace Date
             {
                 Login();
             }
-            getDatelist(0, 1, order);
+            getDatelist(date_type, 1, order);
         }
 
         /// <summary>
@@ -843,7 +865,7 @@ namespace Date
             {
                 Debug.WriteLine("主页，失败重试移除控件异常");
             }
-            getDatelist(0, 1, order);
+            getDatelist(date_type, 1, order);
         }
 
         private void dateListView_ItemClick(object sender, ItemClickEventArgs e)

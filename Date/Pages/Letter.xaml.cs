@@ -52,7 +52,7 @@ namespace Date.Pages
 
             if (e.NavigationMode == NavigationMode.Back)
             {
-                getLetter(2);
+                getLetter(1);
             }
             else
                 getLetter(1);

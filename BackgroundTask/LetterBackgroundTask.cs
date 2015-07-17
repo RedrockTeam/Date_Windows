@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Windows.ApplicationModel.Background;
 using Windows.Storage;
+using Newtonsoft.Json.Linq;
 
 namespace BackgroundTask
 {

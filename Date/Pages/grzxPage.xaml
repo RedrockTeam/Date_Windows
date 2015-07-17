@@ -6,11 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:util="using:Date.Util"
+    xmlns:data="using:Date.Data"
     mc:Ignorable="d"
     Background="#f8f8f8">
 
     <Page.Resources>
         <util:CreatedTimeValueConverter x:Key="Friendlytimespan" />
+        <data:DateStatusValueConverter x:Key="DateStatus"/>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#666666"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
@@ -49,7 +51,7 @@
                         </StackPanel>
                         <!--约会状态-->
                         <TextBlock HorizontalAlignment="Right" Text="状态 :" Margin="0,0,50,0"></TextBlock>
-                        <TextBlock HorizontalAlignment="Right" Text="{Binding Date_status}" Foreground="Black" Margin="10,0,10,0"></TextBlock>
+                        <TextBlock HorizontalAlignment="Right" Text="{Binding Date_status,Converter={StaticResource DateStatus}}" Foreground="Black" Margin="10,0,10,0"></TextBlock>
 
                     </Grid>
                 </StackPanel>

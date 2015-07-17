@@ -5,13 +5,15 @@
     xmlns:local="using:Date.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:Date.Data"
     mc:Ignorable="d"
      Background="#efefef">
     <Page.Resources>
+        <data:LetterReadValueConverter x:Key="ReadLetter" />
         <DataTemplate x:Key="LetterListDataTemplateKey" x:Name="LetterListDataTemplateName">
-            <Grid  Margin="0,5">
+            <Grid  Margin="0,5" >
             <Line Stroke="#efefef" X2="99999" StrokeThickness="1"></Line>
-                <StackPanel Background="White">
+                <StackPanel Background="{Binding Letter_status,Converter={StaticResource ReadLetter}}">
                     <StackPanel Orientation="Horizontal">
                         <!--头像-->
                         <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,5">

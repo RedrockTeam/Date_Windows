@@ -80,6 +80,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Data\DateLetter.cs" />
+    <Compile Include="Data\LetterReadValueConverter.cs" />
     <Compile Include="Pages\AcceptOrReject.xaml.cs">
       <DependentUpon>AcceptOrReject.xaml</DependentUpon>
     </Compile>

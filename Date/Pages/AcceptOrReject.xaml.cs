@@ -48,6 +48,7 @@ namespace Date.Pages
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("AcceptOrReject");
             dl = e.Parameter as DateLetter;
+            ReadLetter(dl);
             this.DataContext = dl;
             if (dl.User_gender == 1)
             {
@@ -57,16 +58,21 @@ namespace Date.Pages
             {
                 GenderImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/ic_woman.png", UriKind.Absolute));
             }
-
+           
             if (dl.User_date_status==0)
             {
-                this.AorR.Text = "已接受";
+                this.AorR.Text = "已拒绝";
                 CommandBar.Visibility=Visibility.Collapsed;
             }
             if (dl.User_date_status == 1)
             {
-                this.AorR.Text = "已拒绝";
+                this.AorR.Text = "已接受";
                 CommandBar.Visibility = Visibility.Collapsed;
+            }
+            if (dl.User_date_status == 2)
+            {
+                this.AorR.Text = "接不接受呢？";
+                CommandBar.Visibility = Visibility.Visible;
             }
 
         }
@@ -166,6 +172,16 @@ namespace Date.Pages
             }
         }
 
+        private async void ReadLetter(DateLetter dateLetter)
+        {
+            string content = "";
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("letter_id", dateLetter.Letter_id.ToString()));
+            content = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/letter/detailletter", paramList));
+            Debug.WriteLine("content" + content);
+        }
 
     }
 }

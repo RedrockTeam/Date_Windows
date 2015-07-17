@@ -71,7 +71,7 @@ namespace Date.Pages
                 paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
-                paramList.Add(new KeyValuePair<string, string>("size","10"));
+                paramList.Add(new KeyValuePair<string, string>("size", "10"));
                 content = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/letter/getletter", paramList));
                 Debug.WriteLine("content" + content);
             }
@@ -92,17 +92,23 @@ namespace Date.Pages
                             d.GetAttribute(jobj);
                             dl.Add(d);
                         }
-                        if(dl.Count<=10)
-                        this.letterListView.ItemsSource = dl;
+                        if (dl.Count <= 10)
+                            this.letterListView.ItemsSource = dl;
                         App.CacheString = content;
                         DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                         DateListFailedStackPanel.Visibility = Visibility.Collapsed;
                     }
                     else
+                    {
+                        DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                         DateListFailedStackPanel.Visibility = Visibility.Visible;
+                    }
                 }
                 else
+                {
+                    DateListProgressStackPanel.Visibility = Visibility.Collapsed;
                     DateListFailedStackPanel.Visibility = Visibility.Visible;
+                }
             }
             catch (Exception)
             {
@@ -168,15 +174,15 @@ namespace Date.Pages
         {
             int count = dl.Count;
             DateListProgressStackPanel.Visibility = Visibility.Visible;
-            getLetter(1,++letterpage);
+            getLetter(1, ++letterpage);
             DateListProgressStackPanel.Visibility = Visibility.Visible;
             if (dl.Count - count < 10)
             {
                 NomoreItemstip.Text = "没有啦>_<";
-                NomoreItemstip.Visibility=Visibility.Visible;
+                NomoreItemstip.Visibility = Visibility.Visible;
             }
         }
 
-       
+
     }
 }

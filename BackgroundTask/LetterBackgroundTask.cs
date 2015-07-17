@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Date.Util;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Windows.ApplicationModel.Background;
@@ -21,7 +23,22 @@ namespace BackgroundTask
 
         private async void GetLetter()
         {
-            throw new NotImplementedException();
+             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+            string letterstatus = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/letter/letterstatus", paramList));
+            Debug.WriteLine("letterstatus" + letterstatus);
+            try
+            {
+                if (letterstatus != "")
+                {
+                    JObject obj = JObject.Parse(letterstatus);
+                    if (Int32.Parse(obj["status"].ToString()) == 200)
+                    { }
+                }
+            }
+            catch (Exception) { Debug.WriteLine("后台任务网络异常"); }
+        
         }
 
     }

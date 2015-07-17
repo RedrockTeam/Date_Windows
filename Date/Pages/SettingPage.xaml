@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="Date.Pages.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Date.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="#efefef" FontFamily="Microsoft Yahei UI">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Name="TitleGrid" Background="#ff3d3d" Height="60" Grid.Row="0" VerticalAlignment="Top">
+            <TextBlock Name="TitleTextBlock" Text="设置" FontFamily="Microsoft Yahei UI" FontSize="30" Foreground="White" VerticalAlignment="Center" Margin="15,0" />
+        </Grid>
+
+        <StackPanel Grid.Row="1" Margin="5">
+            <ToggleSwitch Name="IsBackToggleSwitch" Header="是否打开后台" RequestedTheme="Light" FontFamily="Microsoft Yahei UI"  />
+            <TextBlock Text="使用后台任务可获得新私信的推送提醒" Foreground="Gray" FontSize="13" FontFamily="Microsoft Yahei UI"  />
+        </StackPanel>
+    </Grid>
+</Page>

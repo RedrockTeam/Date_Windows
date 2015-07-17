@@ -9,7 +9,7 @@
     Background="#efefef">
 
     <Page.Resources>
-        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+        <Style x:Key="TextBlockStyle2" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#666666"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
             <Setter Property="Margin" Value="10,10,10,10"></Setter>
@@ -42,8 +42,8 @@
                 </Rectangle>
                 <StackPanel>
                     <Image Name="invisible" Source="{Binding img}"></Image>
-                    <TextBlock x:Name="nkname" Text="{Binding Nickname}" HorizontalAlignment="Center" Foreground="Black" Margin="0,10,0,0" Style="{StaticResource TextBlockStyle}" FontSize="16"></TextBlock>
-                    <TextBlock x:Name="signa" Text="{Binding Signature}" HorizontalAlignment="Center" Foreground="Black" Margin="10" Style="{StaticResource TextBlockStyle}" FontSize="16"></TextBlock>
+                    <TextBlock x:Name="nkname" Text="{Binding Nickname}" HorizontalAlignment="Center" Foreground="Black" Margin="0,10,0,0" Style="{StaticResource TextBlockStyle2}" FontSize="16"></TextBlock>
+                    <TextBlock x:Name="signa" Text="{Binding Signature}" HorizontalAlignment="Center" Foreground="Black" Margin="10" Style="{StaticResource TextBlockStyle2}" FontSize="16"></TextBlock>
                 </StackPanel>
             </StackPanel>
             <Grid Grid.Row="2" >
@@ -53,29 +53,36 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal"  Margin="0,0,0,0">
-                    <TextBlock Text="学院 :" Style="{StaticResource TextBlockStyle}"></TextBlock>
-                    <TextBlock Text="{Binding Academy}" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0">
+                    <TextBlock Text="性别 :" Style="{StaticResource TextBlockStyle2}"></TextBlock>
+                    <ComboBox x:Name="gender" PlaceholderText="{Binding Gender}"></ComboBox>
+                    
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal"  Margin="0,0,0,0">
+                    <TextBlock Text="学院 :" Style="{StaticResource TextBlockStyle2}"></TextBlock>
+                    <TextBox PlaceholderText="{Binding Academy}"></TextBox>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1" Orientation="Horizontal"  Margin="0,2,0,0">
-                    <TextBlock Text="年级 :" Style="{StaticResource TextBlockStyle}"></TextBlock>
-                    <TextBlock Text="{Binding Grade}" Style="{StaticResource TextBlockStyle}"></TextBlock>
-                </StackPanel>
-
-                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,2,0,0">
-                    <TextBlock Text="电话 :" Style="{StaticResource TextBlockStyle}"></TextBlock>
-                    <TextBlock Text="{Binding Telephone}" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                <StackPanel Grid.Row="2" Orientation="Horizontal"  Margin="0,2,0,0">
+                    <TextBlock Text="年级 :" Style="{StaticResource TextBlockStyle2}"></TextBlock>
+                    <!--<TextBlock Text="{Binding Grade}"></TextBlock>-->
+                    <ComboBox x:Name="gradebox" PlaceholderText="微软大法"></ComboBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,2,0,0">
-                    <TextBlock Text="QQ  :" Style="{StaticResource TextBlockStyle}"></TextBlock>
-                    <TextBlock Text="{Binding Qq}" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                    <TextBlock Text="电话 :" Style="{StaticResource TextBlockStyle2}"></TextBlock>
+                    <TextBox Text="{Binding Telephone}" ></TextBox>
                 </StackPanel>
-                <StackPanel Grid.Row="4" Orientation="Horizontal"  Margin="0,2,0,0">
-                    <TextBlock Text="微信 :" Style="{StaticResource TextBlockStyle}"></TextBlock>
-                    <TextBlock Text="{Binding Weixin}" Style="{StaticResource TextBlockStyle}"></TextBlock>
+
+                <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,2,0,0">
+                    <TextBlock Text="QQ  :" Style="{StaticResource TextBlockStyle2}"></TextBlock>
+                    <TextBox Text="{Binding Qq}" />
+                </StackPanel>
+                <StackPanel Grid.Row="5" Orientation="Horizontal"  Margin="0,2,0,0">
+                    <TextBlock Text="微信 :" Style="{StaticResource TextBlockStyle2}"/>
+                    <TextBox Text="{Binding Weixin}" />
                 </StackPanel>
             </Grid>
         </Grid>

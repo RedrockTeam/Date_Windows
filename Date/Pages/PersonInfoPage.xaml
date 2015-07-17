@@ -5,6 +5,7 @@
     xmlns:local="using:Date"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:Date.Data"
     mc:Ignorable="d"
     Background="#f8f8f8">
 
@@ -16,6 +17,9 @@
             <Setter Property="FontSize" Value="15"></Setter>
             <Setter Property="FontFamily" Value="Microsoft Yahei UI"></Setter>
         </Style>
+        <data:GenderConverter x:Key="Gender"/>
+
+
     </Page.Resources>
 
     <Grid>
@@ -42,15 +46,14 @@
                 </Rectangle>
                 <StackPanel>
                     <Image Name="invisible" Source="{Binding img}"></Image>
-                    <TextBlock x:Name="nkname" Text="{Binding Nickname}" HorizontalAlignment="Center" Foreground="Black" Margin="0,10,0,0" Style="{StaticResource TextBlockStyle}" FontSize="16"></TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock x:Name="nkname" Text="{Binding Nickname}" HorizontalAlignment="Center" Foreground="Black" Margin="0,10,0,0" Style="{StaticResource TextBlockStyle}" FontSize="16"></TextBlock>
+                        <Image Source="{Binding Gender,Converter={StaticResource Gender}}" Height="18" Width="18" Margin="5,0,0,0"></Image>
+                    </StackPanel>
                     <TextBlock x:Name="signa" Text="{Binding Signature}" HorizontalAlignment="Center" Foreground="Black" Margin="10" Style="{StaticResource TextBlockStyle}" FontSize="16"></TextBlock>
                 </StackPanel>
             </StackPanel>
-
-
             <Grid Grid.Row="2" >
-
-
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>

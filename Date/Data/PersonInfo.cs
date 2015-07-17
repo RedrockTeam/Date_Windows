@@ -148,9 +148,9 @@ namespace Date.Data
             Grade = obj["data"]["grade"].ToString();
             Academy_id = obj["data"]["academy_id"].ToString();
             Academy = obj["data"]["academy"].ToString();
-            Qq = obj["data"]["qq"].ToString();
-            Weixin = obj["data"]["weixin"].ToString();
-            Telephone = obj["data"]["telephone"].ToString();
+            Qq = obj["data"]["qq"] != null ? obj["data"]["qq"].ToString() : "";
+            Weixin = obj["data"]["weixin"] != null ? obj["data"]["weixin"].ToString() : "";
+            Telephone = obj["data"]["telephone"] != null ? obj["data"]["telephone"].ToString() : "";
         }
 
         public void GetOtherAttribute(JObject obj)
@@ -163,9 +163,9 @@ namespace Date.Data
             Grade = g.Name;
             Academy_id = obj["data"]["academy_id"].ToString();
             Academy = obj["data"]["academy"].ToString();
-            Qq = obj["data"]["qq"].ToString();
-            Weixin = obj["data"]["weixin"].ToString();
-            Telephone = obj["data"]["telephone"].ToString();
+            Qq = obj["data"]["qq"] != null ? obj["data"]["qq"].ToString() : "";
+            Weixin = obj["data"]["weixin"] != null ? obj["data"]["weixin"].ToString() : "";
+            Telephone = obj["data"]["telephone"] != null ? obj["data"]["telephone"].ToString() : "";
         }
 
         private async void getGradeInfor()

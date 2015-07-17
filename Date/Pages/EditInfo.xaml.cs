@@ -45,7 +45,6 @@ namespace Date.Pages
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             PersonInfo pi=e.Parameter as PersonInfo;
             this.DataContext = pi;
-            gender.Items.Add("男");
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {

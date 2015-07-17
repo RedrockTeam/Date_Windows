@@ -99,7 +99,11 @@ namespace Date.Util
         /// <param name="text"></param>
         public static async void Message(string text, string title = "错误")
         {
-            await new MessageDialog(text, title).ShowAsync();
+            try
+            {
+                await new MessageDialog(text, title).ShowAsync();
+            }
+            catch (Exception) { Debug.WriteLine("Utils,MessageDialog异常"); }
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    FontFamily="Microsoft YaHei UI"
     Background="#efefef">
 
     <Page.Resources>
@@ -55,9 +56,10 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0">
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0" HorizontalAlignment="Stretch">
                     <TextBlock Text="性别 :" Style="{StaticResource TextBlockStyle2}"></TextBlock>
-                    <ComboBox x:Name="gender" PlaceholderText="{Binding Gender}"></ComboBox>
+                    <ComboBox></ComboBox>
+                    <ComboBox x:Name="gender" Header="你是孩子么" PlaceholderText="我是一个♂" Foreground="Blue" HorizontalAlignment="Stretch" Background="BlueViolet" BorderBrush="Brown" Margin="20,0,0,0" />
                     
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal"  Margin="0,0,0,0">

@@ -41,11 +41,31 @@
         </Grid.RowDefinitions>
         <Grid Name="TitleGrid" Background="#ff3d3d" Height="60" Grid.Row="0" VerticalAlignment="Top">
             <TextBlock Name="TitleTextBlock" Text="我的私信" FontFamily="Microsoft Yahei UI" FontSize="30" Foreground="White" VerticalAlignment="Center" Margin="15,0" />
+            <Canvas>
+
+                <!-- This polygon shape uses pre-defined color values for its Stroke and
+       Fill properties.
+       The SolidColorBrush's Opacity property affects the fill color in
+       this case by making it slightly transparent (opacity of 0.4) so
+       that it blends with any underlying color. -->
+
+                <Polygon
+    Points="300,200 400,125 400,275 300,200"
+    Stroke="Purple"
+    StrokeThickness="2">
+                    <Polygon.Fill>
+                        <SolidColorBrush Color="Blue" Opacity="0.4"/>
+                    </Polygon.Fill>
+                </Polygon>
+
+            </Canvas>
         </Grid>
 
         <ScrollViewer Name="MyLitterScrollViewer" Grid.Row="1"  VerticalScrollMode="Enabled" VerticalAlignment="Stretch">
             <ScrollViewer.Content>
+                
                 <Grid VerticalAlignment="Stretch">
+                    
                     <!--私信列表的ListView-->
                     <StackPanel Name="dateStackPanel" VerticalAlignment="Stretch">
                         <ListView Name="letterListView" Background="#efefef" ItemTemplate="{StaticResource LetterListDataTemplateKey}" IsItemClickEnabled="True" ItemClick="LetterListView_OnItemClickListView_ItemClick"/>
@@ -53,6 +73,8 @@
                     <!--私信列表的加载条-->
                     <StackPanel Name="DateListProgressStackPanel" VerticalAlignment="Center"  Margin="0,20">
                         <ProgressBar IsIndeterminate="True" />
+                        <Polygon Points="0,100,200"></Polygon>
+
                         <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
                     </StackPanel>
                     <!--私信列表的失败报错-->

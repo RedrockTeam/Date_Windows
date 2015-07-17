@@ -74,6 +74,10 @@ namespace Date.Pages
                 this.AorR.Text = "接不接受呢？";
                 CommandBar.Visibility = Visibility.Visible;
             }
+            if (!dl.Content.Equals("报名了你的约"))
+            {
+                CommandBar.Visibility = Visibility.Collapsed;
+            }
 
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)

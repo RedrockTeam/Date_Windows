@@ -80,6 +80,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Data\DateLetter.cs" />
+    <Compile Include="Data\DateStatusValueConverter.cs" />
     <Compile Include="Data\LetterReadValueConverter.cs" />
     <Compile Include="Pages\AcceptOrReject.xaml.cs">
       <DependentUpon>AcceptOrReject.xaml</DependentUpon>
@@ -101,6 +102,9 @@
     <Compile Include="Data\PersonInfo.cs" />
     <Compile Include="Pages\DetailDatePage.xaml.cs">
       <DependentUpon>DetailDatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditInfo.xaml.cs">
+      <DependentUpon>EditInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\grzxPage.xaml.cs">
       <DependentUpon>grzxPage.xaml</DependentUpon>
@@ -181,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\DetailDatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

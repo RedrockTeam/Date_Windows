@@ -71,7 +71,7 @@ namespace Date
 
 
 
-            dateScrollViewer.Height = Utils.getPhoneHeight() - 85 - 85;
+            dateScrollViewer.Height = Utils.getPhoneHeight() - 80 - 85;
 
             _timer.Interval = TimeSpan.FromSeconds(7.0);
             InitFlipView();

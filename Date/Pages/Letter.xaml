@@ -18,16 +18,21 @@
                 <StackPanel Background="White">
                     <StackPanel Orientation="Horizontal">
                         <!--头像-->
-                        <Polygon Points="0,0 0,30 20,0" Visibility="{Binding Letter_status,Converter={StaticResource ReadLetter}}" Margin="0">
-                            <Polygon.Fill>
-                                <SolidColorBrush Color="DarkOrange" Opacity="1"/>
-                            </Polygon.Fill>
-                        </Polygon>
-                        <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,5">
-                            <Rectangle.Fill>
-                                <ImageBrush Stretch="Fill" ImageSource ="{Binding User_avatar}"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
+
+                        <Grid>
+                            
+                            <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,5">
+                                <Rectangle.Fill>
+                                    <ImageBrush Stretch="Fill" ImageSource ="{Binding User_avatar}"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Polygon Points="0,0 0,30 20,0" Visibility="{Binding Letter_status,Converter={StaticResource ReadLetter}}" Margin="0">
+                                <Polygon.Fill>
+                                    <SolidColorBrush Color="DarkOrange" Opacity="1"/>
+                                </Polygon.Fill>
+                            </Polygon>
+                        </Grid>
+                        
                         <!--昵称-->
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10,5,5,5" >
                             <StackPanel Orientation="Vertical"  >

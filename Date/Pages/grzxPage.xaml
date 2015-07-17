@@ -132,7 +132,7 @@
                 <ScrollViewer>
                     <ScrollViewer.Content>
                         <StackPanel>
-                            <ListView x:Name="MyDatesList" ItemTemplate="{StaticResource MyDatesTemplate}">
+                            <ListView x:Name="MyDatesList" ItemTemplate="{StaticResource MyDatesTemplate}" IsItemClickEnabled="True" ItemClick="MyDatesList_ItemClick">
                             </ListView>
                         </StackPanel>
                     </ScrollViewer.Content>

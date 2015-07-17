@@ -29,7 +29,8 @@ namespace Date
     {
         private TransitionCollection transitions;
         private ApplicationDataContainer appSetting;
-        public static string CacheString="";
+        public static string CacheString = "";
+        public static string CacheString2 = "";
 
         /// <summary>
         /// 初始化单一实例应用程序对象。    这是执行的创作代码的第一行，

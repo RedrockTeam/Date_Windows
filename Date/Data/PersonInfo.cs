@@ -99,7 +99,7 @@ namespace Date.Data
             set { telephone = value; }
         }
 
-        public PersonInfo(int id, string nickname, string head,string signature, string gender, string grade, string grade_id, string academy, string academy_id, string telephone, string qq, string weixin)
+        public PersonInfo(int id, string nickname, string head, string signature, string gender, string grade, string grade_id, string academy, string academy_id, string telephone, string qq, string weixin)
         {
             this.id = id;
             this.nickname = nickname;
@@ -171,7 +171,9 @@ namespace Date.Data
         private async void getGradeInfor()
         {
             //年级
-            string grade = appSetting.Values["grade_json"].ToString();
+            string grade = "";
+            if (appSetting.Values.ContainsKey("grade_json"))
+                grade = appSetting.Values["grade_json"].ToString();
             if (grade != "")
             {
                 JArray gradeArray = Utils.ReadJso(grade);

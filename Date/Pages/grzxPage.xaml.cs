@@ -37,7 +37,6 @@ namespace Date
         public grzxPage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-            GetPerInfo();
             this.InitializeComponent();
         }
 
@@ -47,6 +46,10 @@ namespace Date
 
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengAnalytics.TrackPageStart("grzxPage");
+            if (e.NavigationMode == NavigationMode.Back)
+                GetPerInfo(2);
+            else
+                GetPerInfo(1);
             SetHead();
         }
 
@@ -100,7 +103,7 @@ namespace Date
             Frame.Navigate(typeof(LoginPage));
         }
 
-        private  void headAppBarButton_Click(object sender, RoutedEventArgs e)
+        private void headAppBarButton_Click(object sender, RoutedEventArgs e)
         {
 
             FileOpenPicker openPicker = new FileOpenPicker();
@@ -140,13 +143,20 @@ namespace Date
 
         }
 
-        private async void GetPerInfo()
+        private async void GetPerInfo(int cc)
         {
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("get_uid", appSetting.Values["uid"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-            string pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
+            string pc = "";
+            if (cc == 1)
+            {
+                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("get_uid", appSetting.Values["uid"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+                pc = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/userinfo", paramList));
+                App.CacheString2 = pc;
+            }
+            else
+                pc = App.CacheString2;
             Debug.WriteLine("个人信息" + pc);
             if (pc != "")
             {
@@ -184,6 +194,13 @@ namespace Date
                 DateHistory.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
 
             }
+        }
+
+        private void MyDatesList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Debug.WriteLine("你点击了：" + ((MyDate)e.ClickedItem).Title);
+            DateList datelistNavigate = new DateList(Int32.Parse(((MyDate)e.ClickedItem).Date_id), ((MyDate)e.ClickedItem).Head, ((MyDate)e.ClickedItem).Nickname, ((MyDate)e.ClickedItem).Gender, "加载中...", ((MyDate)e.ClickedItem).Title, ((MyDate)e.ClickedItem).Place, ((MyDate)e.ClickedItem).Date_time, ((MyDate)e.ClickedItem).Cost_model);
+            Frame.Navigate(typeof(DetailDatePage), datelistNavigate);
         }
 
     }

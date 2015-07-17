@@ -147,7 +147,7 @@ namespace Date
         private void GetDetail()
         {
             DetailContentTextBlock.Text = dd.Content;
-
+            DetailSignatureTextBlock.Text = dd.Signature;
             if (dd.Grade_limit.Length == 4)
                 DetailGradeTextBlock.Text = "不限";
             else

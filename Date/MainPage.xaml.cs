@@ -73,10 +73,6 @@ namespace Date
 
             dateScrollViewer.Height = Utils.getPhoneHeight() - 85 - 85;
 
-            getAcademyInfor(); //获取学院列表
-            getGradeInfor(); //获取年级列表
-            getDatetypeInfor(); //获取约分类列表
-
             _timer.Interval = TimeSpan.FromSeconds(7.0);
             InitFlipView();
             _timer.Tick += ChangeImage;
@@ -385,7 +381,7 @@ namespace Date
 
             Frame.BackStack.Clear();
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-            if (!isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
+            if (e.NavigationMode !=NavigationMode.Back && !isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
                 Login();
             }
@@ -394,6 +390,14 @@ namespace Date
                 StatusTextBlock.Visibility = Visibility.Visible;
                 StatusTextBlock.Text = "";
                 isLogin = true;
+                
+            }
+
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                getAcademyInfor(); //获取学院列表
+                getGradeInfor(); //获取年级列表
+                getDatetypeInfor(); //获取约分类列表
             }
             _timer.Start();
             UmengSDK.UmengAnalytics.TrackPageStart("MainPage");

@@ -99,7 +99,11 @@ namespace Date.Util
         /// <param name="text"></param>
         public static async void Message(string text, string title = "错误")
         {
-            await new MessageDialog(text, title).ShowAsync();
+            try
+            {
+                await new MessageDialog(text, title).ShowAsync();
+            }
+            catch (Exception) { Debug.WriteLine("Utils,MessageDialog异常"); }
         }
 
         /// <summary>
@@ -140,7 +144,7 @@ namespace Date.Util
         /// <returns>C#格式时间</returns>
         public static DateTime GetTime(string timeStamp)
         {
-            DateTime dtStart = new DateTime(1970, 1, 1,8,0,0);
+            DateTime dtStart = new DateTime(1970, 1, 1, 8, 0, 0);
             long lTime = long.Parse(timeStamp + "0000000");
             TimeSpan toNow = new TimeSpan(lTime);
             return dtStart.Add(toNow);
@@ -160,7 +164,7 @@ namespace Date.Util
                 }
                 else
                 {
-                    Message("请求失败","失败");
+                    Message("请求失败", "失败");
                     return null;
                 }
             }

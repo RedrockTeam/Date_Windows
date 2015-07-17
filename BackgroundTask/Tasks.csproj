@@ -8,8 +8,8 @@
     <ProjectGuid>{D3EDE75D-529B-4C56-B0B5-F360FC42A1E4}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BackgroundTask</RootNamespace>
-    <AssemblyName>BackgroundTask</AssemblyName>
+    <RootNamespace>Tasks</RootNamespace>
+    <AssemblyName>Tasks</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

@@ -173,13 +173,13 @@
                         <TextBlock Text="更多" Foreground="#ff3d3d" FontSize="30" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
                         <GridView>
                             <GridView.Items>
-                                <Grid Background="#ff3d3d" Width="150" Height="150" Margin="5">
+                                <Grid Name="SettingGrid" Background="#ff3d3d" Width="150" Height="150" Margin="5" Tapped="SettingGrid_Tapped">
                                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <Image Source="Assets/ic_setting.png" Width="60"/>
                                         <TextBlock Text="设置" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="25"  HorizontalAlignment="Center" FontWeight="Light"/>
                                     </StackPanel>
                                 </Grid>
-                                <Grid Background="#ff3d3d" Width="150" Height="150" Margin="5">
+                                <Grid Name="AboutGrid" Background="#ff3d3d" Width="150" Height="150" Margin="5">
                                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <Image Source="Assets/ic_about.png" Width="60"/>
                                         <TextBlock Text="关于" FontFamily="Microsoft YaHei UI" Foreground="White" FontSize="25"  HorizontalAlignment="Center" FontWeight="Light"/>

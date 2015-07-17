@@ -853,6 +853,11 @@ namespace Date
             Frame.Navigate(typeof(DetailDatePage), datelistNavigate);
         }
 
+        private void SettingGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingPage));
+        }
+
 
 
 

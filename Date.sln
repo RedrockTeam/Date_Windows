@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Date", "Date\Date.csproj", "{A1DB7EA3-7448-47BB-899C-CF3FCCC7DC6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundTask", "BackgroundTask\BackgroundTask.csproj", "{D3EDE75D-529B-4C56-B0B5-F360FC42A1E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks", "BackgroundTask\Tasks.csproj", "{D3EDE75D-529B-4C56-B0B5-F360FC42A1E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

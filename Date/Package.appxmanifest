@@ -24,6 +24,14 @@
           <m3:Rotation Preference="portrait" />
         </m3:InitialRotationPreference>
       </m3:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Tasks.LetterBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+            <Task Type="pushNotification" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>

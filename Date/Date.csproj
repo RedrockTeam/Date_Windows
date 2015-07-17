@@ -229,9 +229,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BackgroundTask\BackgroundTask.csproj">
+    <ProjectReference Include="..\BackgroundTask\Tasks.csproj">
       <Project>{d3ede75d-529b-4c56-b0b5-f360fc42a1e4}</Project>
-      <Name>BackgroundTask</Name>
+      <Name>Tasks</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

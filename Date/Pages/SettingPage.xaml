@@ -18,7 +18,7 @@
         </Grid>
 
         <StackPanel Grid.Row="1" Margin="5">
-            <ToggleSwitch Name="IsBackToggleSwitch" Header="是否打开后台" RequestedTheme="Light" FontFamily="Microsoft Yahei UI"  />
+            <ToggleSwitch Name="IsBackToggleSwitch" IsOn="True" Header="是否打开后台" RequestedTheme="Light" FontFamily="Microsoft Yahei UI" Toggled="IsBackToggleSwitch_Toggled" />
             <TextBlock Text="使用后台任务可获得新私信的推送提醒" Foreground="Gray" FontSize="13" FontFamily="Microsoft Yahei UI"  />
         </StackPanel>
     </Grid>

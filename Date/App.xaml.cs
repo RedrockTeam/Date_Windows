@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UmengSDK;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -32,6 +33,7 @@ namespace Date
         public static string CacheString = ""; //普通页面的缓存
         public static string CacheString2 = ""; //二层目录缓存
         public static string CacheString3 = ""; //三层目录缓存
+        private string exampleTaskName = "LetterBackgroundTask";
 
         /// <summary>
         /// 初始化单一实例应用程序对象。    这是执行的创作代码的第一行，
@@ -43,6 +45,46 @@ namespace Date
             this.Suspending += this.OnSuspending;
             this.Resuming += this.OnResuming;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
+            if (!appSetting.Values.ContainsKey("LetterUnRead"))
+            {
+                appSetting.Values["LetterUnRead"] = 0;
+                appSetting.Values["isBackStart"] = true;
+                addBackgroundTask();
+            }
+            if (bool.Parse(appSetting.Values["isBackStart"].ToString()))
+            {
+                addBackgroundTask();
+            }
+        }
+
+        /// <summary>
+        /// 增加后台任务
+        /// </summary>
+        private async void addBackgroundTask()
+        {
+            bool taskRegistered = false;
+            //判断是否已经注册过了
+            taskRegistered = BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name == exampleTaskName);
+
+            if (!taskRegistered)
+            {
+                BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
+                var builder = new BackgroundTaskBuilder();
+                builder.Name = exampleTaskName;
+                builder.TaskEntryPoint = "Tasks.LetterBackgroundTask";
+                //后台触发器，可多个
+                builder.SetTrigger(new SystemTrigger(SystemTriggerType.NetworkStateChange, false));
+                builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
+                //builder.SetTrigger(new MaintenanceTrigger(15, false)); //定时后台任务
+                builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+
+                BackgroundTaskRegistration task = builder.Register();
+            }
+            else
+            {
+                var cur = BackgroundTaskRegistration.AllTasks.FirstOrDefault(x => x.Value.Name == exampleTaskName);
+                BackgroundTaskRegistration task = (BackgroundTaskRegistration)(cur.Value);
+            }
 
         }
 

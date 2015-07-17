@@ -14,11 +14,11 @@ namespace Date.Data
             int? isRead = value as int?;
             if (isRead == 1)
             {
-                return "White";
+                return "Collapsed";
             }
             else
             {
-                return "#FFD800";
+                return "Visible";
             }
 
         }

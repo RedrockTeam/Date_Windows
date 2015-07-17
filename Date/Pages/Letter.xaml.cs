@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -29,8 +30,8 @@ namespace Date.Pages
     public sealed partial class Letter : Page
     {
         private ApplicationDataContainer appSetting;
-        List<DateLetter> dl = new List<DateLetter>();
-
+        ObservableCollection<DateLetter> dl = new ObservableCollection<DateLetter>();
+        private int letterpage = 1;
         public Letter()
         {
             this.InitializeComponent();
@@ -59,7 +60,7 @@ namespace Date.Pages
 
         }
 
-        private async void getLetter(int cc)
+        private async void getLetter(int cc, int page = 1)
         {
             DateListProgressStackPanel.Visibility = Visibility.Visible;
             DateListFailedStackPanel.Visibility = Visibility.Collapsed;
@@ -69,8 +70,8 @@ namespace Date.Pages
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                 paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("page", "1"));
-                paramList.Add(new KeyValuePair<string, string>("size", "10"));
+                paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
+                paramList.Add(new KeyValuePair<string, string>("size","10"));
                 content = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/letter/getletter", paramList));
                 Debug.WriteLine("content" + content);
             }
@@ -91,6 +92,7 @@ namespace Date.Pages
                             d.GetAttribute(jobj);
                             dl.Add(d);
                         }
+                        if(dl.Count<=10)
                         this.letterListView.ItemsSource = dl;
                         App.CacheString = content;
                         DateListProgressStackPanel.Visibility = Visibility.Collapsed;
@@ -134,5 +136,47 @@ namespace Date.Pages
         {
             getLetter(1);
         }
+
+        private async void AllReadButton_Click(object sender, RoutedEventArgs e)
+        {
+            string content = "";
+            DateListProgressStackPanel.Visibility = Visibility.Visible;
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
+            for (int i = 0; i < dl.Count; i++)
+            {
+                if (dl[i].Letter_status == 1)
+                {
+                    paramList.Add(new KeyValuePair<string, string>("letter_id", dl[i].Letter_id.ToString()));
+                    content = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/letter/detailletter", paramList));
+                    Debug.WriteLine("content" + content);
+                }
+            }
+            if (letterpage == 1)
+            {
+                getLetter(1);
+            }
+            else
+            {
+                getLetter(1, letterpage - 1);
+            }
+            DateListProgressStackPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void MoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            int count = dl.Count;
+            DateListProgressStackPanel.Visibility = Visibility.Visible;
+            getLetter(1,++letterpage);
+            DateListProgressStackPanel.Visibility = Visibility.Visible;
+            if (dl.Count - count < 10)
+            {
+                NomoreItemstip.Text = "没有啦>_<";
+                NomoreItemstip.Visibility=Visibility.Visible;
+            }
+        }
+
+       
     }
 }

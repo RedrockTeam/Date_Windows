@@ -9,24 +9,33 @@
     mc:Ignorable="d"
      Background="#efefef">
     <Page.Resources>
+        <!--私信是否已读值转换器-->
         <data:LetterReadValueConverter x:Key="ReadLetter" />
+        <!--列表数据模板-->
         <DataTemplate x:Key="LetterListDataTemplateKey" x:Name="LetterListDataTemplateName">
             <Grid  Margin="0,5" >
-            <Line Stroke="#efefef" X2="99999" StrokeThickness="1"></Line>
-                <StackPanel Background="{Binding Letter_status,Converter={StaticResource ReadLetter}}">
+                <Line Stroke="#efefef" X2="99999" StrokeThickness="1"></Line>
+                <StackPanel Background="White">
                     <StackPanel Orientation="Horizontal">
                         <!--头像-->
+                        <Polygon Points="0,0 0,30 20,0" Visibility="{Binding Letter_status,Converter={StaticResource ReadLetter}}" Margin="0">
+                            <Polygon.Fill>
+                                <SolidColorBrush Color="DarkOrange" Opacity="1"/>
+                            </Polygon.Fill>
+                        </Polygon>
                         <Rectangle RadiusX="32" RadiusY="32"  Width="64" Height="64" Stroke="DarkGray" StrokeThickness="2" Margin="5,5,5,5">
                             <Rectangle.Fill>
                                 <ImageBrush Stretch="Fill" ImageSource ="{Binding User_avatar}"/>
                             </Rectangle.Fill>
                         </Rectangle>
                         <!--昵称-->
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10,5,5,5">
-                            <StackPanel Orientation="Horizontal" >
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10,5,5,5" >
+                            <StackPanel Orientation="Vertical"  >
                                 <TextBlock Text="{Binding User_name}" Foreground="CornflowerBlue" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
-                                <TextBlock Text="{Binding Content}" Foreground="Black" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
-                                <TextBlock Text="{Binding Title}" Foreground="Coral" FontSize="18" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Content}" Foreground="Black" FontSize="15" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
+                                    <TextBlock Text="{Binding Title}" Foreground="Coral" FontSize="15" FontWeight="Light" FontFamily="Microsoft YaHei UI"></TextBlock>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -34,6 +43,12 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            <AppBarButton Icon="Accept" Label="全部已读" Click="AllReadButton_Click" />
+            <AppBarButton Icon="Accept" Label="加载更多" Click="MoreButton_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -41,40 +56,18 @@
         </Grid.RowDefinitions>
         <Grid Name="TitleGrid" Background="#ff3d3d" Height="60" Grid.Row="0" VerticalAlignment="Top">
             <TextBlock Name="TitleTextBlock" Text="我的私信" FontFamily="Microsoft Yahei UI" FontSize="30" Foreground="White" VerticalAlignment="Center" Margin="15,0" />
-            <Canvas>
-
-                <!-- This polygon shape uses pre-defined color values for its Stroke and
-       Fill properties.
-       The SolidColorBrush's Opacity property affects the fill color in
-       this case by making it slightly transparent (opacity of 0.4) so
-       that it blends with any underlying color. -->
-
-                <Polygon
-    Points="300,200 400,125 400,275 300,200"
-    Stroke="Purple"
-    StrokeThickness="2">
-                    <Polygon.Fill>
-                        <SolidColorBrush Color="Blue" Opacity="0.4"/>
-                    </Polygon.Fill>
-                </Polygon>
-
-            </Canvas>
         </Grid>
-
         <ScrollViewer Name="MyLitterScrollViewer" Grid.Row="1"  VerticalScrollMode="Enabled" VerticalAlignment="Stretch">
             <ScrollViewer.Content>
-                
                 <Grid VerticalAlignment="Stretch">
-                    
                     <!--私信列表的ListView-->
                     <StackPanel Name="dateStackPanel" VerticalAlignment="Stretch">
                         <ListView Name="letterListView" Background="#efefef" ItemTemplate="{StaticResource LetterListDataTemplateKey}" IsItemClickEnabled="True" ItemClick="LetterListView_OnItemClickListView_ItemClick"/>
+                    <TextBlock Name="NomoreItemstip" Foreground="Firebrick" FontFamily="Microsoft YaHei UI"  HorizontalAlignment="Center" Visibility="Collapsed"></TextBlock>
                     </StackPanel>
                     <!--私信列表的加载条-->
                     <StackPanel Name="DateListProgressStackPanel" VerticalAlignment="Center"  Margin="0,20">
                         <ProgressBar IsIndeterminate="True" />
-                        <Polygon Points="0,100,200"></Polygon>
-
                         <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
                     </StackPanel>
                     <!--私信列表的失败报错-->

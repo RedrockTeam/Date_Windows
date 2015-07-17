@@ -22,7 +22,7 @@ namespace Date.Data
             }
             else if (s=="2")
             {
-                return "成功";
+                return "正常";
             }
             else
             {

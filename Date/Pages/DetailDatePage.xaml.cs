@@ -183,16 +183,22 @@ namespace Date
             DetailNumTextBlock.Text = dd.People_limit.ToString();
 
             JoinedOnes[] join = dd.Joined;
-            for (int i = 0; i < join.Length; i++)
+            if (join.Length == 0)
+                NullGrid.Visibility = Visibility.Visible;
+            else
             {
-                joinedOnes.Add(new JoinedOnes { Head = join[i].Head, Nickname = join[i].Nickname, User_id = join[i].User_id });
-                if (join[i].User_id == Int32.Parse(appSetting.Values["uid"].ToString()))
+                for (int i = 0; i < join.Length; i++)
                 {
-                    EnrollAppBarToggleButton.IsEnabled = false;
-                    EnrollAppBarToggleButton.Label = "已报名";
+                    joinedOnes.Add(new JoinedOnes { Head = join[i].Head, Nickname = join[i].Nickname, User_id = join[i].User_id });
+                    if (join[i].User_id == Int32.Parse(appSetting.Values["uid"].ToString()))
+                    {
+                        EnrollAppBarToggleButton.IsEnabled = false;
+                        EnrollAppBarToggleButton.Label = "已报名";
+                    }
                 }
+                NullGrid.Visibility = Visibility.Collapsed;
+                JoinedGridView.ItemsSource = joinedOnes;
             }
-            JoinedGridView.ItemsSource = joinedOnes;
             StatusProgressBar.Visibility = Visibility.Collapsed;
             StatusTextBlock.Visibility = Visibility.Collapsed;
             StatusTextBlock.Text = "";

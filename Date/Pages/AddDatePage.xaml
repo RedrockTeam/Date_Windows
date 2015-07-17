@@ -61,8 +61,8 @@
                             <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
                             <Grid >
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
-                                    <Image Source="Assets/ic_person.png" Width="20" Margin="15,0,5,0"></Image>
-                                    <TextBlock  Text="/约会人数" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
+                                    <Image Source="/Assets/ic_person.png" Width="20" Margin="15,0,5,0"></Image>
+                                    <TextBlock  Text="约会人数" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 </StackPanel>
                                 <TextBox Name="AddDatePeopleTextBox" InputScope="Number" VerticalAlignment="Center" FontSize="15" PlaceholderText="请输入"  Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" TextAlignment="Right" />
                             </Grid>
@@ -71,7 +71,7 @@
                             <Line Stroke="#efefef" X2="99999" StrokeThickness="2"  ></Line>
                             <Grid Background="White" Name="AddDateCostGrid" Tapped="AddDateCostGrid_Tapped">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Image Source="Assets/ic_cost.png" Width="20" Margin="15,0,5,0"></Image>
+                                    <Image Source="/Assets/ic_cost.png" Width="20" Margin="15,0,5,0"></Image>
                                     <TextBlock  Text="花费" Foreground="Black" FontSize="15" FontFamily="Microsoft YaHei UI"></TextBlock>
                                 </StackPanel>
                                 <TextBox Name="AddDateCostTextBox" VerticalAlignment="Center" FontSize="15" PlaceholderText="请选择" TextAlignment="Right" IsEnabled="False" Foreground="Gray" HorizontalAlignment="Right" BorderThickness="0" FontFamily="Microsoft YaHei UI" />

@@ -18,9 +18,13 @@ using Newtonsoft.Json.Linq;
 using Windows.UI.Xaml.Media.Imaging;
 using System.IO;
 using System.Net;
-using System.Net.Http;
+//using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.Web.Http;
 
 namespace Date.Util
 {
@@ -177,76 +181,56 @@ namespace Date.Util
             }
         }
 
-        //public static async void GetImages(BitmapImage bitmap,string filename)
-        //{
-
-        //    WriteableBitmap wb=new WriteableBitmap(bitmap.PixelWidth,bitmap.PixelHeight);
-        // //   wb.SetSourceAsync();
-        //    RandomAccessStreamReference rasr=RandomAccessStreamReference.CreateFromUri(bitmap.UriSource);
-        //    var streamWithcontent = await rasr.OpenReadAsync();
-        //    byte[] buffer=new byte[streamWithcontent.Size];
-        //    await streamWithcontent.ReadAsync(buffer.AsBuffer(), (uint) streamWithcontent.Size, InputStreamOptions.None);
-        //    //IRandomAccessStream stream = new Stream();
-        //   // editab wbmp=new WriteableBitmap(128,128);
-        //    //wbmp.SetSourceAsync(stream);
-        //    StorageFolder folder = ApplicationData.Current.LocalFolder;
-        //    StorageFile file = await folder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
-        //   // IBuffer buffer = RandomAccessStreamToBuffer(bitmap);
-        //    MemoryStream ss=new MemoryStream();
-        //    bitmap.
-
-        //}
-        //public static IBuffer RandomAccessStreamToBuffer(IRandomAccessStream randomstream)
-        //{
-
-        //    Stream stream = WindowsRuntimeStreamExtensions.AsStreamForRead(randomstream.GetInputStreamAt(0));
-
-        //    MemoryStream memoryStream = new MemoryStream();
-
-        //    if (stream != null)
-        //    {
-
-        //        byte[] bytes = ConvertStreamTobyte(stream);
-
-        //        if (bytes != null)
-        //        {
-
-        //            var binaryWriter = new BinaryWriter(memoryStream);
-
-        //            binaryWriter.Write(bytes);
-
-        //        }
-
-        //    }
-
-        //    IBuffer buffer = WindowsRuntimeBufferExtensions.GetWindowsRuntimeBuffer(memoryStream, 0, (int)memoryStream.Length);
-
-        //    return buffer;
-
-        //}
-        //public static byte[] ConvertStreamTobyte(Stream input)
-        //{
-
-        //    byte[] buffer = new byte[16 * 1024];
+        /// <summary>
+        /// 异步从网络下载图片
+        /// </summary>
+        /// <param name="outfileName">下载保存到本地的图片文件名</param>
+        /// <param name="downloadUriString">图片uri</param>
+        /// <param name="scaleSize">图片尺寸</param>
+        /// <returns></returns>
+        public static async Task DownloadAndScale(string outfileName, string downloadUriString, Size scaleSize)
+        {
+            Uri downLoadingUri = new Uri(downloadUriString);//创建uri对象
+            HttpClient client = new HttpClient();//实例化httpclient对象
+            using (var response = await client.GetAsync(downLoadingUri))
+            {
+                var buffer = await response.Content.ReadAsBufferAsync();//从返回的数据中读取buffer
+                var memoryStream = new InMemoryRandomAccessStream();
+                await memoryStream.WriteAsync(buffer);//将buffer写入memorystream
+                await memoryStream.FlushAsync();//刷新
+                var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(memoryStream);//解密文件流
+                //确定图片大小
+                var bt = new Windows.Graphics.Imaging.BitmapTransform();
+                bt.ScaledWidth = (uint)scaleSize.Width;
+                bt.ScaledHeight = (uint)scaleSize.Height;
+                //得到像素数值
+                var pixelProvider = await decoder.GetPixelDataAsync(
+                    decoder.BitmapPixelFormat, decoder.BitmapAlphaMode, bt,
+                    ExifOrientationMode.IgnoreExifOrientation, ColorManagementMode.ColorManageToSRgb);
 
 
-
-        //    using (MemoryStream ms = new MemoryStream())
-        //    {
-
-        //        int read;
-
-        //        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-        //        {
-
-        //            ms.Write(buffer, 0, read);
-
-        //        }
-
-        //        return ms.ToArray();
-
-        //    }
-
-        //}
+                //下面保存图片
+                // Now that we have the pixel data, get the destination file
+                var localFolder = ApplicationData.Current.LocalFolder;
+                //var resultsFolder = await localFolder.CreateFolderAsync("Results", CreationCollisionOption.OpenIfExists);
+                var scaledFile = await localFolder.CreateFileAsync(outfileName, CreationCollisionOption.ReplaceExisting);
+                using (var scaledFileStream = await scaledFile.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    var encoder = await BitmapEncoder.CreateAsync(
+                        BitmapEncoder.JpegEncoderId, scaledFileStream);
+                    var pixels = pixelProvider.DetachPixelData();
+                    encoder.SetPixelData(
+                        decoder.BitmapPixelFormat,
+                        decoder.BitmapAlphaMode,
+                        (uint)scaleSize.Width,
+                        (uint)scaleSize.Height,
+                        decoder.DpiX,
+                        decoder.DpiY,
+                        pixels
+                        );
+                    await encoder.FlushAsync();
+                }
+            }
+        }
     }
 }

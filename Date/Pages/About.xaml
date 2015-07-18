@@ -39,9 +39,9 @@
                 <TextBlock Text="Windows Phone" Style="{StaticResource TextBlockStyle}" Foreground="#0cb3ee" Margin="8,0,0,1" ></TextBlock>
                 </StackPanel>
                 <TextBlock Text="重庆邮电大学" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"></TextBlock>
-                <TextBlock Text="©2015 红岩网校工作站荣誉出品" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"></TextBlock>
             </StackPanel>
         </StackPanel>
+                <TextBlock Text="©2015 红岩网校工作站" Style="{StaticResource TextBlockStyle}" FontWeight="Bold" VerticalAlignment="Bottom"></TextBlock>
 
     </Grid>
 </Page>

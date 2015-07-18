@@ -178,7 +178,6 @@ namespace Date
                         MyDate md = new MyDate();
                         md.GetAttribute(temp);
                         MyDates.Add(md);
-
                     }
                 }
                 this.DataContext = pi;

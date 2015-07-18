@@ -135,6 +135,7 @@
     <Compile Include="Pages\SetHeadPage.xaml.cs">
       <DependentUpon>SetHeadPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\CostModeValueConverter.cs" />
     <Compile Include="Util\CreatedTimeValueConverter.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Util\NetWork.cs" />

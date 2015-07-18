@@ -12,9 +12,9 @@
     Background="#f8f8f8">
 
     <Page.Resources>
-        <util:CreatedTimeValueConverter x:Key="Friendlytimespan" />
         <data:GenderConverter x:Key="Gender"/>
         <data:DateStatusValueConverter x:Key="DateStatus"/>
+        <util:CostModeValueConverter x:Key="Cosmode"/>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#666666"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
@@ -42,14 +42,14 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Assets/ic_time.png" Width="20"></Image>
                         <TextBlock Text="时间:" Foreground="Black" FontWeight="Light"></TextBlock>
-                        <TextBlock Text="{Binding Date_time}" Foreground="Black" FontWeight="Light"></TextBlock>
+                        <TextBlock Text="{Binding Date_time}" Foreground="Black" FontWeight="Light"/>
                     </StackPanel>
                     <!--谁掏钱-->
                     <Grid>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Assets/ic_cost.png" Width="20"></Image>
                             <TextBlock Text="费用:" Foreground="Black" FontWeight="Light"></TextBlock>
-                            <TextBlock Text="{Binding Cost_model}" Foreground="Black" FontWeight="Light"></TextBlock>
+                            <TextBlock Text="{Binding Cost_model,Converter={StaticResource Cosmode}}" Foreground="Black" FontWeight="Light"></TextBlock>
                         </StackPanel>
                         <!--约会状态-->
                         <TextBlock HorizontalAlignment="Right" Text="状态 :" Margin="0,0,50,0"></TextBlock>

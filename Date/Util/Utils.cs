@@ -77,6 +77,7 @@ namespace Date.Util
             return outStr;
         }
 
+
         public static async Task ShowSystemTrayAsync(Color backgroundColor, Color foregroundColor, double opacity = 1,
             string text = "", bool isIndeterminate = false)
         {

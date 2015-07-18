@@ -880,6 +880,11 @@ namespace Date
             Frame.Navigate(typeof(SettingPage));
         }
 
+        private void AboutGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (About));
+        }
+
 
 
 

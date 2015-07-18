@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using Date.Pages;
 
 // “空白应用程序”模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
@@ -205,7 +206,7 @@ namespace Date
             if (args is FileOpenPickerContinuationEventArgs)
             {
                 Frame rootFrame = Window.Current.Content as Frame;
-                var p = rootFrame.Content as grzxPage;
+                var p = rootFrame.Content as EditInfo;
                 p.FilePickerEvent = (FileOpenPickerContinuationEventArgs)args;
             }
             Window.Current.Activate();

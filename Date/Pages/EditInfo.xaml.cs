@@ -55,6 +55,7 @@ namespace Date.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
+            UmengSDK.UmengAnalytics.TrackPageStart("EditInfo");
             PersonInfo pi = e.Parameter as PersonInfo;
             getAca();
             getGradeInfor();
@@ -101,7 +102,7 @@ namespace Date.Pages
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
-
+            UmengSDK.UmengAnalytics.TrackPageEnd("EditInfo");
         }
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
         {

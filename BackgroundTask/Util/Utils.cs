@@ -12,7 +12,6 @@ using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Date.DataModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Windows.UI.Xaml.Media.Imaging;
@@ -43,9 +42,6 @@ namespace Date.Util
             ToastNotificationManager.CreateToastNotifier().Show(toast);
 
 
-            //从通知中心删除
-            await Task.Delay(3000);
-            ToastNotificationManager.History.Clear();
 
         }
 
@@ -77,21 +73,6 @@ namespace Date.Util
             return outStr;
         }
 
-        public static async Task ShowSystemTrayAsync(Color backgroundColor, Color foregroundColor, double opacity = 1,
-            string text = "", bool isIndeterminate = false)
-        {
-            StatusBar statusBar = StatusBar.GetForCurrentView();
-            statusBar.BackgroundColor = backgroundColor;
-            statusBar.ForegroundColor = foregroundColor;
-            statusBar.BackgroundOpacity = opacity;
-
-            statusBar.ProgressIndicator.Text = text;
-            if (!isIndeterminate)
-            {
-                statusBar.ProgressIndicator.ProgressValue = 0;
-            }
-            await statusBar.ProgressIndicator.ShowAsync();
-        }
 
         /// <summary>
         /// 弹出对话框
@@ -172,76 +153,5 @@ namespace Date.Util
             }
         }
 
-        //public static async void GetImages(BitmapImage bitmap,string filename)
-        //{
-
-        //    WriteableBitmap wb=new WriteableBitmap(bitmap.PixelWidth,bitmap.PixelHeight);
-        // //   wb.SetSourceAsync();
-        //    RandomAccessStreamReference rasr=RandomAccessStreamReference.CreateFromUri(bitmap.UriSource);
-        //    var streamWithcontent = await rasr.OpenReadAsync();
-        //    byte[] buffer=new byte[streamWithcontent.Size];
-        //    await streamWithcontent.ReadAsync(buffer.AsBuffer(), (uint) streamWithcontent.Size, InputStreamOptions.None);
-        //    //IRandomAccessStream stream = new Stream();
-        //   // editab wbmp=new WriteableBitmap(128,128);
-        //    //wbmp.SetSourceAsync(stream);
-        //    StorageFolder folder = ApplicationData.Current.LocalFolder;
-        //    StorageFile file = await folder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
-        //   // IBuffer buffer = RandomAccessStreamToBuffer(bitmap);
-        //    MemoryStream ss=new MemoryStream();
-        //    bitmap.
-
-        //}
-        //public static IBuffer RandomAccessStreamToBuffer(IRandomAccessStream randomstream)
-        //{
-
-        //    Stream stream = WindowsRuntimeStreamExtensions.AsStreamForRead(randomstream.GetInputStreamAt(0));
-
-        //    MemoryStream memoryStream = new MemoryStream();
-
-        //    if (stream != null)
-        //    {
-
-        //        byte[] bytes = ConvertStreamTobyte(stream);
-
-        //        if (bytes != null)
-        //        {
-
-        //            var binaryWriter = new BinaryWriter(memoryStream);
-
-        //            binaryWriter.Write(bytes);
-
-        //        }
-
-        //    }
-
-        //    IBuffer buffer = WindowsRuntimeBufferExtensions.GetWindowsRuntimeBuffer(memoryStream, 0, (int)memoryStream.Length);
-
-        //    return buffer;
-
-        //}
-        //public static byte[] ConvertStreamTobyte(Stream input)
-        //{
-
-        //    byte[] buffer = new byte[16 * 1024];
-
-
-
-        //    using (MemoryStream ms = new MemoryStream())
-        //    {
-
-        //        int read;
-
-        //        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-        //        {
-
-        //            ms.Write(buffer, 0, read);
-
-        //        }
-
-        //        return ms.ToArray();
-
-        //    }
-
-        //}
     }
 }

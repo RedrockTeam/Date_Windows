@@ -193,7 +193,9 @@ namespace Date
                                 IsOver = true;
                                 AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
                                 AddDateListProgressTextBlock.Text = "到底喽~";
-                                dateStackPanel.Children.Add(AddDateListProgressStackPanel);
+                                try
+                                { dateStackPanel.Children.Add(AddDateListProgressStackPanel); }
+                                catch (Exception) { }
                                 Debug.WriteLine("加载完了");
                             }
                         }
@@ -382,7 +384,7 @@ namespace Date
 
             Frame.BackStack.Clear();
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-            if (e.NavigationMode !=NavigationMode.Back && !isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
+            if (e.NavigationMode != NavigationMode.Back && !isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
             {
                 Login();
             }
@@ -391,7 +393,7 @@ namespace Date
                 StatusTextBlock.Visibility = Visibility.Visible;
                 StatusTextBlock.Text = "";
                 isLogin = true;
-                
+
             }
 
             if (e.NavigationMode != NavigationMode.Back)
@@ -882,7 +884,7 @@ namespace Date
 
         private void AboutGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (About));
+            Frame.Navigate(typeof(About));
         }
 
 

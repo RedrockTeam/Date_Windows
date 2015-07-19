@@ -67,6 +67,17 @@ namespace Date
             {
                 SetHeadPage();
             }
+            else
+            {
+                try
+                {
+                    img.ImageSource = new BitmapImage(new Uri(pi.Head));
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("头像设置异常");
+                }
+            }
 
         }
         private async void SetHeadPage()
@@ -205,7 +216,9 @@ namespace Date
                 }
                 this.DataContext = pi;
                 MyDatesList.ItemsSource = MyDates;
-                img.ImageSource = new BitmapImage(new Uri(pi.Head));
+                if (img.ImageSource == null)
+                    SetHead();
+                //img.ImageSource = new BitmapImage(new Uri(pi.Head));
             }
         }
 

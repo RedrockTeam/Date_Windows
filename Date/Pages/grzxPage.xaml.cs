@@ -264,6 +264,11 @@ namespace Date
             App.gotoPage = "edit";
             Frame.Navigate(typeof(EditInfo), pi);
         }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            GetPerInfo(1);
+        }
     }
 }
 

@@ -495,7 +495,7 @@ namespace Date
 
         private async void InitFlipView()
         {
-            string banner = "";//Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/banner", new List<KeyValuePair<String, String>>()));
+            string banner = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/banner", new List<KeyValuePair<String, String>>()));
             Debug.WriteLine("banner" + banner);
             if (banner != "")
             {

@@ -272,8 +272,8 @@ namespace Date.Pages
                 paramList.Add(new KeyValuePair<string, string>("academy", (Acabox.SelectedIndex + 1).ToString()));
             string result = "";
             result = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/editdata", paramList));
-            string h=await headupload();
-            success(result,h);
+            string h = await headupload();
+            success(result, h);
         }
 
         private async Task<string> headupload()
@@ -283,11 +283,20 @@ namespace Date.Pages
             HttpStringContent uidStringContent = new HttpStringContent(appSetting.Values["uid"].ToString());
             HttpStringContent tokenStringContent = new HttpStringContent(appSetting.Values["token"].ToString());
             string head = "";
+            IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+            IStorageFile saveFile;
             try
             {
+                saveFile = await applicationFolder.GetFileAsync("temphead.png");
 
-                IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
-                IStorageFile saveFile = await applicationFolder.GetFileAsync("temphead.png");
+            }
+            catch (Exception)
+            {
+
+            }
+            try
+            {
+                saveFile = await applicationFolder.GetFileAsync("head.png");
                 saveFile.RenameAsync("head.png", NameCollisionOption.ReplaceExisting);
                 // 构造需要上传的文件数据
                 IRandomAccessStreamWithContentType stream1 = await saveFile.OpenReadAsync();

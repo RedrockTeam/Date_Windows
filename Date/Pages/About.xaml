@@ -41,7 +41,8 @@
                 <TextBlock Text="重庆邮电大学" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"></TextBlock>
             </StackPanel>
         </StackPanel>
-                <TextBlock Text="©2015 红岩网校工作站" Style="{StaticResource TextBlockStyle}" FontWeight="Bold" VerticalAlignment="Bottom"></TextBlock>
+        <HyperlinkButton Content="©2015 红岩网校工作站"  Foreground="#ff3d3d" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="20" FontFamily="Microsoft Yahei UI" FontWeight="ExtraBold" NavigateUri="http://202.202.43.125"></HyperlinkButton>
+                <!--<TextBlock Text="©2015 红岩网校工作站" Style="{StaticResource TextBlockStyle}" FontWeight="Bold" VerticalAlignment="Bottom"></TextBlock>-->
 
     </Grid>
 </Page>

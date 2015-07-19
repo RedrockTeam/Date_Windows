@@ -45,7 +45,7 @@ namespace Date.Data
             Date_id = temp["date_id"].ToString();
             Title = temp["title"].ToString();
             Place= temp["place"].ToString();
-            Date_time= temp["date_time"].ToString();
+            Date_time=Util.Utils.GetTime(temp["date_time"].ToString()).ToString();
             Created_at = temp["created_at"].ToString();
             Cost_model = temp["cost_model"].ToString();
             Date_status = temp["date_status"].ToString();

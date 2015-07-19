@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Phone.UI.Input;
@@ -62,7 +63,7 @@ namespace Date
 
         private void SetHead()
         {
-            if (appSetting.Values.ContainsKey("IsHeadExistOffline") && bool.Parse(appSetting.Values["IsHeadExistOffline"].ToString()))
+            if (appSetting.Values.ContainsKey("head") || (appSetting.Values.ContainsKey("IsHeadExistOffline") && bool.Parse(appSetting.Values["IsHeadExistOffline"].ToString())))
             {
                 SetHeadPage();
             }
@@ -72,6 +73,7 @@ namespace Date
         {
             try
             {
+                nkname.Text = appSetting.Values["nickname"].ToString();
                 IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
                 IStorageFile storageFileRE = await applicationFolder.GetFileAsync("head.png");
                 img.ImageSource = new BitmapImage(new Uri(storageFileRE.Path));
@@ -107,6 +109,9 @@ namespace Date
             appSetting.Values.Remove("password");
             appSetting.Values.Remove("uid");
             appSetting.Values.Remove("token");
+            appSetting.Values.Remove("nickname");
+            appSetting.Values.Remove("head");
+            appSetting.Values.Remove("IsHeadExistOffline");
             Frame.Navigate(typeof(LoginPage));
         }
 
@@ -171,6 +176,24 @@ namespace Date
                 if (Int32.Parse(obj["status"].ToString()) == 200)
                 {
                     pi.GetAttribute(obj);
+                    if (appSetting.Values["savehead"] == null)
+                    {
+                        Size downloadSize = new Size(ico.Width, ico.Height);
+                        await Utils.DownloadAndScale("head.png", pi.Head, downloadSize);
+                        appSetting.Values["savehead"] = "1";
+                    }
+                    if (appSetting.Values["head"].ToString() != pi.Head)
+                    {
+                        appSetting.Values["head"] = pi.Head;
+                        Size downloadSize = new Size(ico.Width, ico.Height);
+                        await Utils.DownloadAndScale("head.png", pi.Head, downloadSize);
+                    }
+                    if (appSetting.Values["nickname"].ToString() != pi.Nickname)
+                    {
+                        appSetting.Values["nickname"] = pi.Nickname;
+                        nkname.Text = appSetting.Values["nickname"].ToString();
+                    }
+
                     JArray mydatelist = JArray.Parse(obj["data"]["mydate"].ToString());
                     for (int i = 0; i < mydatelist.Count; i++)
                     {
@@ -178,7 +201,6 @@ namespace Date
                         MyDate md = new MyDate();
                         md.GetAttribute(temp);
                         MyDates.Add(md);
-
                     }
                 }
                 this.DataContext = pi;
@@ -212,7 +234,7 @@ namespace Date
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (EditInfo), pi);
+            Frame.Navigate(typeof(EditInfo), pi);
         }
 
     }

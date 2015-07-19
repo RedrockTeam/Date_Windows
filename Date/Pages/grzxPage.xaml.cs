@@ -11,6 +11,7 @@ using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -220,6 +221,10 @@ namespace Date
                     SetHead();
                 //img.ImageSource = new BitmapImage(new Uri(pi.Head));
             }
+            else
+            {
+                await new MessageDialog("请检查网络！").ShowAsync();
+            }
         }
 
         private void MyCenter_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -250,6 +255,10 @@ namespace Date
             Frame.Navigate(typeof(EditInfo), pi);
         }
 
+        private void Refresh_OnClick_Click(object sender, RoutedEventArgs e)
+        {
+            GetPerInfo(1);
+        }
     }
 }
 

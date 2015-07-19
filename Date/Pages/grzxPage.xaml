@@ -66,7 +66,6 @@
             <ProgressBar Name="StatusProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
             <TextBlock Name="StatusTextBlock" Text="登陆中" Foreground="Gray" FontSize="15" Margin="20,5"  Visibility="Collapsed"/>
         </StackPanel>
-
         <Grid Background="#ff3d3d" Height="60" VerticalAlignment="Top">
             <TextBlock Text="个人中心" FontFamily="Microsoft Yahei UI" FontSize="30" Foreground="White" VerticalAlignment="Center" Margin="15,0" />
         </Grid>
@@ -96,6 +95,7 @@
                             <TextBlock x:Name="signa" Text="{Binding Signature}" HorizontalAlignment="Center" Foreground="Black" Margin="10" Style="{StaticResource TextBlockStyle}" FontSize="16"></TextBlock>
                         </StackPanel>
                     </StackPanel>
+                    
                     <Grid Grid.Row="2" >
 
 
@@ -154,6 +154,7 @@
         <CommandBar ClosedDisplayMode="Minimal">
             <AppBarButton Name="logoutAppBarButton" Label="注销" Icon="Switch" Click="logoutAppBarButton_Click"></AppBarButton>
             <AppBarButton Name="Edit" Label="编辑" Icon="Edit" Click="Edit_Click" />
+            <AppBarButton Name="Refresh" Label="刷新" Icon="Sync" Click="Refresh_OnClick_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

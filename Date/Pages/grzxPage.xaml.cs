@@ -60,6 +60,10 @@ namespace Date
                 MyCenter.SelectedIndex = 0;
             }
             SetHead();
+            if (e.Parameter as string == "EditInfoPage")
+            {
+                Frame.BackStack.RemoveAt(Frame.BackStackDepth-1);
+            }
         }
 
         private void SetHead()

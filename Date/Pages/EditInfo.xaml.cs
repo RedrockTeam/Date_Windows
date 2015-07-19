@@ -259,7 +259,7 @@ namespace Date.Pages
                 StatusTextBlock.Text = "修改成功!";
                 await Task.Delay(2000);
                 StatusStackPanel.Visibility = Visibility.Collapsed;
-                Frame.Navigate(typeof (grzxPage));
+                Frame.Navigate(typeof (grzxPage),"EditInfoPage");
                 //修改成功
             }
             else
@@ -267,7 +267,7 @@ namespace Date.Pages
                 StatusTextBlock.Text = "修改失败!";
                 await Task.Delay(2000);
                 StatusStackPanel.Visibility = Visibility.Collapsed;
-                Frame.Navigate(typeof(grzxPage));
+                Frame.Navigate(typeof(grzxPage), "EditInfoPage");
                 //修改失败
             }
         }

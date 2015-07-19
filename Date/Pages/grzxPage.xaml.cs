@@ -160,6 +160,7 @@ namespace Date
             if ((args.ContinuationData["Operation"] as string) == "img" && args.Files != null && args.Files.Count > 0)
             {
                 StorageFile file = args.Files[0];
+                App.gotoPage = "head";
                 Frame.Navigate(typeof(SetHeadPage), file);
                 BitmapImage bitmapImage = new BitmapImage(new Uri(file.Path));
                 img.ImageSource = bitmapImage;

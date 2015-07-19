@@ -37,18 +37,15 @@ namespace Tasks
                     Debug.WriteLine(letterstatus.IndexOf("letter"));
                     Debug.WriteLine(letterstatus.IndexOf("}"));
                     int letterUnRead = Int32.Parse(letterstatus.Substring(letterstatus.IndexOf("letter") + 9, letterstatus.IndexOf("}") - (letterstatus.IndexOf("letter") + 10 )));
-                    if (letterUnRead > Int32.Parse(appSetting.Values["LetterUnRead"].ToString()))
+                    if (letterUnRead > Int32.Parse(appSetting.Values["LetterUnRead"].ToString())) //仅当接口中数量>应用中保持的私信数量才推送
                     {
-                        Utils.Toast("你有" + letterUnRead + "条新的私信");
-                        appSetting.Values["LetterUnRead"] = letterUnRead;
+                        Utils.Toast("你有" + letterUnRead + "条未读私信");
                     }
+                    appSetting.Values["LetterUnRead"] = letterUnRead; //将保存数值提出来，为了防止在其他平台阅读私信后，本应用永远不推送的问题
+
                 }
             }
             catch (Exception) { Debug.WriteLine("后台任务网络异常"); }
-
-
-
-            Debug.WriteLine("111111111111111111111111111111111");
 
             deferral.Complete(); //所有的异步调用完成之后，释放延期，表示后台任务的完成
         }

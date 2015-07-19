@@ -13,7 +13,7 @@
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
             <Setter Property="Margin" Value="10,20,10,10"></Setter>
-            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
             <Setter Property="FontFamily" Value="Microsoft Yahei UI"></Setter>
         </Style>
     </Page.Resources>

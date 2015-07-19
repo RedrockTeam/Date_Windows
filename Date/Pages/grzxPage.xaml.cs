@@ -52,7 +52,10 @@ namespace Date
             if (e.NavigationMode == NavigationMode.Back)
             {
                 GetPerInfo(2);
-                MyCenter.SelectedIndex = 1;
+                if (App.gotoPage == "detail")
+                    MyCenter.SelectedIndex = 1;
+                else
+                    MyCenter.SelectedIndex = 0;
             }
             else
             {
@@ -60,10 +63,6 @@ namespace Date
                 MyCenter.SelectedIndex = 0;
             }
             SetHead();
-            if (e.Parameter as string == "EditInfoPage")
-            {
-                Frame.BackStack.RemoveAt(Frame.BackStackDepth-1);
-            }
         }
 
         private void SetHead()
@@ -251,11 +250,13 @@ namespace Date
         {
             Debug.WriteLine("你点击了：" + ((MyDate)e.ClickedItem).Title);
             DateList datelistNavigate = new DateList(Int32.Parse(((MyDate)e.ClickedItem).Date_id), ((MyDate)e.ClickedItem).Head, ((MyDate)e.ClickedItem).Nickname, ((MyDate)e.ClickedItem).Gender, "加载中...", ((MyDate)e.ClickedItem).Title, ((MyDate)e.ClickedItem).Place, ((MyDate)e.ClickedItem).Date_time, ((MyDate)e.ClickedItem).Cost_model);
+            App.gotoPage = "detail";
             Frame.Navigate(typeof(DetailDatePage), datelistNavigate);
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            App.gotoPage = "edit";
             Frame.Navigate(typeof(EditInfo), pi);
         }
 

@@ -154,7 +154,6 @@
         <CommandBar ClosedDisplayMode="Minimal">
             <AppBarButton Name="logoutAppBarButton" Label="注销" Icon="Switch" Click="logoutAppBarButton_Click"></AppBarButton>
             <AppBarButton Name="Edit" Label="编辑" Icon="Edit" Click="Edit_Click" />
-            <AppBarButton Name="Refresh" Label="刷新" Icon="Sync" Click="Refresh_OnClick_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

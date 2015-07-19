@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -12,6 +13,7 @@ using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -21,6 +23,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.Web.Http;
 using Date.Data;
 using Date.Util;
 using Newtonsoft.Json.Linq;
@@ -39,7 +42,7 @@ namespace Date.Pages
         List<AcademyList> acalist = new List<AcademyList>();
         List<GradeList> gradelist = new List<GradeList>();
         private FileOpenPickerContinuationEventArgs _filePickerEventArgs = null;
-
+        private IBuffer headBuffer;
         public EditInfo()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
@@ -52,22 +55,36 @@ namespace Date.Pages
         /// </summary>
         /// <param name="e">描述如何访问此页的事件数据。
         /// 此参数通常用于配置页。</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("EditInfo");
+
             PersonInfo pi = e.Parameter as PersonInfo;
             getAca();
             getGradeInfor();
             this.DataContext = pi;
+
             if (e.NavigationMode == NavigationMode.New)
             {
                 sethead(pi);
             }
+            else if (e.NavigationMode == NavigationMode.Back)
+            {
+                try
+                {
+                    IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+                    IStorageFile storageFileRE = await applicationFolder.GetFileAsync("temphead.png");
+                    img.ImageSource = new BitmapImage(new Uri(storageFileRE.Path));
+                }
+                catch (Exception)
+                {
+                }
+            }
             else
             {
-
                 SetHead(pi);
+
             }
             canModify(pi);
         }
@@ -113,7 +130,10 @@ namespace Date.Pages
                 e.Handled = true;
             }
         }
-
+        /// <summary>
+        /// 判断是否是第一次修改性别、年纪、学院
+        /// </summary>
+        /// <param name="p"></param>
         void canModify(PersonInfo p)
         {
             if (p.Gender != "")
@@ -149,7 +169,7 @@ namespace Date.Pages
                 Acabox.ItemsSource = acalist;
             }
         }
-        private async void getGradeInfor()
+        private void getGradeInfor()
         {
             //年级
             string grade = appSetting.Values["grade_json"].ToString();
@@ -194,7 +214,7 @@ namespace Date.Pages
             }
         }
 
-        public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
+        public void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
         {
             if ((args.ContinuationData["Operation"] as string) == "img" && args.Files != null && args.Files.Count > 0)
             {
@@ -211,7 +231,6 @@ namespace Date.Pages
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-
             int nklong = nkname.Text.Length;
             if (nklong > 10 || nklong < 1)
             {
@@ -236,7 +255,7 @@ namespace Date.Pages
                 await new MessageDialog("QQ号不对哦~").ShowAsync();
                 return;
             }
-            StatusStackPanel.Visibility=Visibility.Visible;
+            StatusStackPanel.Visibility = Visibility.Visible;
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("uid", appSetting.Values["uid"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
@@ -253,13 +272,60 @@ namespace Date.Pages
                 paramList.Add(new KeyValuePair<string, string>("academy", (Acabox.SelectedIndex + 1).ToString()));
             string result = "";
             result = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/person/editdata", paramList));
-            JObject jo = JObject.Parse(result);
-            if (!result.Contains("null") && jo["status"].ToString() == "200")
+            string h=await headupload();
+            success(result,h);
+        }
+
+        private async Task<string> headupload()
+        {
+            HttpClient _httpClient = new HttpClient();
+            CancellationTokenSource _cts = new CancellationTokenSource();
+            HttpStringContent uidStringContent = new HttpStringContent(appSetting.Values["uid"].ToString());
+            HttpStringContent tokenStringContent = new HttpStringContent(appSetting.Values["token"].ToString());
+            string head = "";
+            try
+            {
+
+                IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+                IStorageFile saveFile = await applicationFolder.GetFileAsync("temphead.png");
+                saveFile.RenameAsync("head.png", NameCollisionOption.ReplaceExisting);
+                // 构造需要上传的文件数据
+                IRandomAccessStreamWithContentType stream1 = await saveFile.OpenReadAsync();
+                HttpStreamContent streamContent = new HttpStreamContent(stream1);
+                HttpMultipartFormDataContent fileContent = new HttpMultipartFormDataContent();
+
+                fileContent.Add(streamContent, "photo", "head.png");
+                fileContent.Add(uidStringContent, "uid");
+                fileContent.Add(tokenStringContent, "token");
+
+                HttpResponseMessage response =
+                    await
+                        _httpClient.PostAsync(new Uri("http://106.184.7.12:8002/index.php/api/person/uploadimg"), fileContent)
+                            .AsTask(_cts.Token);
+                head = Utils.ConvertUnicodeStringToChinese(await response.Content.ReadAsStringAsync().AsTask(_cts.Token));
+                Debug.WriteLine(head);
+                return head;
+            }
+            catch (Exception)
+            {
+
+                Debug.WriteLine("上传头像失败,编辑页面");
+                return "";
+            }
+
+
+        }
+
+        private async void success(string info, string head)
+        {
+            JObject i = JObject.Parse(info);
+            JObject h = JObject.Parse(head);
+            if (!info.Contains("null") && i["status"].ToString() == "200" && Int32.Parse(h["status"].ToString()) == 200)
             {
                 StatusTextBlock.Text = "修改成功!";
                 await Task.Delay(2000);
                 StatusStackPanel.Visibility = Visibility.Collapsed;
-                Frame.Navigate(typeof (grzxPage),"EditInfoPage");
+                Frame.Navigate(typeof(grzxPage));
                 //修改成功
             }
             else
@@ -267,11 +333,9 @@ namespace Date.Pages
                 StatusTextBlock.Text = "修改失败!";
                 await Task.Delay(2000);
                 StatusStackPanel.Visibility = Visibility.Collapsed;
-                Frame.Navigate(typeof(grzxPage), "EditInfoPage");
+                Frame.Navigate(typeof(grzxPage));
                 //修改失败
             }
         }
-
-
     }
 }

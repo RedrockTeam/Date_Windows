@@ -10,6 +10,7 @@ using Windows.Graphics.Imaging;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -35,7 +36,6 @@ namespace Date
     {
         private ApplicationDataContainer appSetting;
         private FileOpenPickerContinuationEventArgs _filePickerEventArgs = null;
-        private bool IsHeadExistOffline = false;
         List<MyDate> MyDates = new List<MyDate>();
         PersonInfo pi = new PersonInfo();
         public grzxPage()
@@ -44,9 +44,8 @@ namespace Date
             this.InitializeComponent();
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected  override void OnNavigatedTo(NavigationEventArgs e)
         {
-            await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 255, 61, 61), Colors.White, text: "约");
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengAnalytics.TrackPageStart("grzxPage");
             if (e.NavigationMode == NavigationMode.Back)
@@ -63,6 +62,11 @@ namespace Date
                 MyCenter.SelectedIndex = 0;
             }
             SetHead();
+            if (Frame.BackStack[Frame.BackStackDepth - 1].SourcePageType.ToString() == "Date.Pages.EditInfo")
+            {
+                Frame.BackStack.RemoveAt(Frame.BackStackDepth - 1);
+                Frame.BackStack.RemoveAt(Frame.BackStackDepth - 1);
+            }
         }
 
         private void SetHead()
@@ -155,7 +159,7 @@ namespace Date
             }
         }
 
-        public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
+        public void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
         {
             if ((args.ContinuationData["Operation"] as string) == "img" && args.Files != null && args.Files.Count > 0)
             {
@@ -259,11 +263,6 @@ namespace Date
         {
             App.gotoPage = "edit";
             Frame.Navigate(typeof(EditInfo), pi);
-        }
-
-        private void Refresh_OnClick_Click(object sender, RoutedEventArgs e)
-        {
-            GetPerInfo(1);
         }
     }
 }

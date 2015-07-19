@@ -91,7 +91,7 @@ namespace Date.Pages
 
         //后台任务完成时调用，若在后台，则应用恢复时调用
         //若要处理UI，在UI线程中调用
-        async void task_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
+         void task_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
         {
         }
 

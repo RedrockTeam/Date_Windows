@@ -95,14 +95,14 @@
                                         <TextBlock Text="电话 :" Style="{StaticResource TextBlockStyle2}"></TextBlock>
                                         <TextBlock Text="人家会给你打电话哦~" Style="{StaticResource TextBlockStyle2}" Foreground="Red"></TextBlock>
                                     </StackPanel>
-                                    <TextBox  x:Name="tel"  Text="{Binding Telephone}" MaxLength="11" ></TextBox>
+                                    <TextBox  x:Name="tel"  Text="{Binding Telephone}" MaxLength="11" InputScope="Number" ></TextBox>
                                 </StackPanel>
                                 <StackPanel  Margin="0,2,0,0" Orientation="Vertical">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="QQ  :" Style="{StaticResource TextBlockStyle2}"></TextBlock>
                                         <TextBlock Text="说一下QQ嘛~" Style="{StaticResource TextBlockStyle2}" Foreground="Red"></TextBlock>
                                     </StackPanel>
-                                    <TextBox x:Name="qq" Text="{Binding Qq}" MaxLength="10" />
+                                    <TextBox x:Name="qq" Text="{Binding Qq}" MaxLength="10" InputScope="Number"  />
                                 </StackPanel>
                                 <StackPanel Margin="0,2,0,0" Orientation="Vertical">
                                     <StackPanel Orientation="Horizontal">

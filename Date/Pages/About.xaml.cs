@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml.Linq;
 using Windows.ApplicationModel.Store;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -38,7 +40,7 @@ namespace Date.Pages
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("About");
-
+            //GetVersion();
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -59,6 +61,16 @@ namespace Date.Pages
         {
             var uri = new Uri(string.Format("ms-windows-store:reviewapp?appid={0}", CurrentApp.AppId));
             await Windows.System.Launcher.LaunchUriAsync(uri);
+        }
+
+        private void GetVersion()
+        {
+            //var xElement = XDocument.Load(new Uri("ms-appx:///Package.appxmanifest"));
+            //if (xElement != null)
+            //{
+            //    string version = xElement.Element("Identity").Attribute("Version").Value;
+            //}
+            //var s=Application.Current.GetType().;
         }
     }
 }

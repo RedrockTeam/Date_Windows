@@ -38,7 +38,7 @@
                     <Image Source="../Assets/OS Windows 8.png" Height="28" Width="28"></Image>
                     <TextBlock Text="Windows Phone" Style="{StaticResource TextBlockStyle}" Foreground="#0cb3ee" Margin="8,0,0,1" ></TextBlock>
                 </StackPanel>
-                <TextBlock Text="V1.0.0" Style="{StaticResource TextBlockStyle}" Foreground="Gray" Margin="0" FontSize="15"/>
+                <TextBlock x:Name="Version" Text="V1.0.0" Style="{StaticResource TextBlockStyle}" Foreground="Gray" Margin="0" FontSize="15"/>
                 <TextBlock Text="重庆邮电大学" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"></TextBlock>
             </StackPanel>
         </StackPanel>

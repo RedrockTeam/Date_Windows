@@ -51,6 +51,7 @@ namespace Date
         List<DateType> datetypelist = new List<DateType>();
         List<DateList> mdatelist = new List<DateList>();
 
+        private int tryLoginnum = 0;
         private int order = 0;//约会列表排序选项
         private int date_type = 0;//约会列表类型选项
         private int page = 1;//约会列表排序选项
@@ -81,6 +82,65 @@ namespace Date
             BuildAddDateListProgressStackPanel();
 
             dateListView.ContainerContentChanging += dateListView_ContainerContentChanging;
+        }
+
+        /// <summary>
+        /// 在此页将要在 Frame 中显示时进行调用。
+        /// </summary>
+        /// <param name="e">描述如何访问此页的事件数据。
+        /// 此参数通常用于配置页。</param>
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 255, 61, 61), Colors.White, text: "约");
+
+            Frame.BackStack.Clear();
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
+            if (e.NavigationMode != NavigationMode.Back && !isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
+            {
+                Login();
+            }
+            else
+            {
+                StatusTextBlock.Visibility = Visibility.Visible;
+                StatusTextBlock.Text = "";
+                isLogin = true;
+
+            }
+
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                getAcademyInfor(); //获取学院列表
+                getGradeInfor(); //获取年级列表
+                getDatetypeInfor(); //获取约分类列表
+            }
+            _timer.Start();
+            UmengSDK.UmengAnalytics.TrackPageStart("MainPage");
+        }
+
+
+        //离开页面时，取消事件
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+            UmengSDK.UmengAnalytics.TrackPageEnd("MainPage");
+            _timer.Stop();
+        }
+        private async void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
+        {
+            e.Handled = true;
+            if (!isExit)
+            {
+                isExit = true;
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                StatusTextBlock.Visibility = Visibility.Visible;
+                StatusTextBlock.Text = "再次点击返回键退出...";
+                await Task.Delay(2000);
+                isExit = false;
+                StatusTextBlock.Text = "";
+                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
+            }
+            else
+                Application.Current.Exit();
         }
 
         private void BuildAddDateListProgressStackPanel()
@@ -275,25 +335,33 @@ namespace Date
         /// </summary>
         private async void getDatetypeInfor()
         {
-
             //约会类型
             string datetype = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/date/datetype", new List<KeyValuePair<String, String>>()));
             Debug.WriteLine("datetype" + datetype);
-            if (datetype != "")
+            try
             {
-                JArray datetypeArray = Utils.ReadJso(datetype);
-
-                for (int i = 0; i < datetypeArray.Count; i++)
+                if (datetype != "")
                 {
-                    JObject jobj = (JObject)datetypeArray[i];
-                    var b = new DateType();
-                    b.Id = Convert.ToInt32(jobj["id"].ToString());
-                    b.Type = jobj["type"].ToString();
-                    datetypelist.Add(b);
-                }
-                appSetting.Values["datetype_json"] = datetype;
-            }
+                    JArray datetypeArray = Utils.ReadJso(datetype);
 
+                    for (int i = 0; i < datetypeArray.Count; i++)
+                    {
+                        JObject jobj = (JObject)datetypeArray[i];
+                        var b = new DateType();
+                        b.Id = Convert.ToInt32(jobj["id"].ToString());
+                        b.Type = jobj["type"].ToString();
+                        datetypelist.Add(b);
+                    }
+                    appSetting.Values["datetype_json"] = datetype;
+                }
+                else
+                    getDatetypeInfor();
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("主页，获取约会类型异常");
+                getDatetypeInfor();
+            }
             //TODO:List键值对查询
             //DateType dateType = datetypelist.Find(p => p.Type.Equals("打牌"));
             //Debug.WriteLine(dateType.Id.ToString());
@@ -305,22 +373,32 @@ namespace Date
         private async void getGradeInfor()
         {
             //年级
-            string grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
-            Debug.WriteLine("grade" + grade);
-            if (grade != "")
+            try
             {
-                JArray gradeArray = Utils.ReadJso(grade);
-                for (int i = 0; i < gradeArray.Count; i++)
+                string grade = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/grade", new List<KeyValuePair<String, String>>()));
+                Debug.WriteLine("grade" + grade);
+                if (grade != "")
                 {
-                    JObject jobj = (JObject)gradeArray[i];
-                    var b = new GradeList
+                    JArray gradeArray = Utils.ReadJso(grade);
+                    for (int i = 0; i < gradeArray.Count; i++)
                     {
-                        Id = Convert.ToInt32(jobj["id"].ToString()),
-                        Name = jobj["name"].ToString()
-                    };
-                    gradelist.Add(b);
+                        JObject jobj = (JObject)gradeArray[i];
+                        var b = new GradeList
+                        {
+                            Id = Convert.ToInt32(jobj["id"].ToString()),
+                            Name = jobj["name"].ToString()
+                        };
+                        gradelist.Add(b);
+                    }
+                    appSetting.Values["grade_json"] = grade;
                 }
-                appSetting.Values["grade_json"] = grade;
+                else
+                    getGradeInfor();
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("主页，获取年级异常");
+                getGradeInfor();
             }
         }
 
@@ -331,20 +409,31 @@ namespace Date
         {
             string academy = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/public/academy", new List<KeyValuePair<String, String>>()));
             Debug.WriteLine("academy" + academy);
-            if (academy != "")
+
+            try
             {
-                JArray academyArray = Utils.ReadJso(academy);
-                for (int i = 0; i < academyArray.Count; i++)
+                if (academy != "")
                 {
-                    JObject jobj = (JObject)academyArray[i];
-                    var b = new AcademyList
+                    JArray academyArray = Utils.ReadJso(academy);
+                    for (int i = 0; i < academyArray.Count; i++)
                     {
-                        Id = Convert.ToInt32(jobj["id"].ToString()),
-                        Name = jobj["name"].ToString()
-                    };
-                    acalist.Add(b);
+                        JObject jobj = (JObject)academyArray[i];
+                        var b = new AcademyList
+                        {
+                            Id = Convert.ToInt32(jobj["id"].ToString()),
+                            Name = jobj["name"].ToString()
+                        };
+                        acalist.Add(b);
+                    }
+                    appSetting.Values["academy_json"] = academy;
                 }
-                appSetting.Values["academy_json"] = academy;
+                else
+                    getAcademyInfor();
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("主页，获取学院异常");
+                getAcademyInfor();
             }
         }
 
@@ -373,64 +462,7 @@ namespace Date
 
 
 
-        /// <summary>
-        /// 在此页将要在 Frame 中显示时进行调用。
-        /// </summary>
-        /// <param name="e">描述如何访问此页的事件数据。
-        /// 此参数通常用于配置页。</param>
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 255, 61, 61), Colors.White, text: "约");
 
-            Frame.BackStack.Clear();
-            HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-            if (e.NavigationMode != NavigationMode.Back && !isLogin && e.Parameter != null && e.Parameter.ToString() == "autologin")
-            {
-                Login();
-            }
-            else
-            {
-                StatusTextBlock.Visibility = Visibility.Visible;
-                StatusTextBlock.Text = "";
-                isLogin = true;
-
-            }
-
-            if (e.NavigationMode != NavigationMode.Back)
-            {
-                getAcademyInfor(); //获取学院列表
-                getGradeInfor(); //获取年级列表
-                getDatetypeInfor(); //获取约分类列表
-            }
-            _timer.Start();
-            UmengSDK.UmengAnalytics.TrackPageStart("MainPage");
-        }
-
-
-        //离开页面时，取消事件
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
-            UmengSDK.UmengAnalytics.TrackPageEnd("MainPage");
-            _timer.Stop();
-        }
-        private async void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
-        {
-            e.Handled = true;
-            if (!isExit)
-            {
-                isExit = true;
-                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
-                StatusTextBlock.Visibility = Visibility.Visible;
-                StatusTextBlock.Text = "再次点击返回键退出...";
-                await Task.Delay(2000);
-                isExit = false;
-                StatusTextBlock.Text = "";
-                StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
-            }
-            else
-                Application.Current.Exit();
-        }
 
         private async void Login()
         {
@@ -479,16 +511,24 @@ namespace Date
             }
             else
             {
-                if (!isLogin)
+                if (tryLoginnum > 1)
                 {
-                    StatusProgressBar.Visibility = Visibility.Collapsed;
-                    StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
-                    StatusTextBlock.Text = "网络未连接...";
+                    if (!isLogin)
+                    {
+                        StatusProgressBar.Visibility = Visibility.Collapsed;
+                        StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+                        StatusTextBlock.Text = "网络未连接...";
 
-                    await Task.Delay(2000);
-                    StatusTextBlock.Text = "";
-                    StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
-                    Frame.Navigate(typeof(LoginPage));
+                        await Task.Delay(2000);
+                        StatusTextBlock.Text = "";
+                        StatusStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 239, 239, 239));
+                        Frame.Navigate(typeof(LoginPage));
+                    }
+                }
+                else
+                {
+                    Login();
+                    tryLoginnum++;
                 }
             }
         }

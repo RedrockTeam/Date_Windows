@@ -85,11 +85,11 @@
     <Compile Include="Data\DateStatusValueConverter.cs" />
     <Compile Include="Data\GenderConverter.cs" />
     <Compile Include="Data\LetterReadValueConverter.cs" />
-    <Compile Include="Pages\About.xaml.cs">
-      <DependentUpon>About.xaml</DependentUpon>
+    <Compile Include="Pages\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AcceptOrReject.xaml.cs">
-      <DependentUpon>AcceptOrReject.xaml</DependentUpon>
+    <Compile Include="Pages\AcceptOrRejectPage.xaml.cs">
+      <DependentUpon>AcceptOrRejectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AddDatePage.xaml.cs">
       <DependentUpon>AddDatePage.xaml</DependentUpon>
@@ -109,8 +109,8 @@
     <Compile Include="Pages\DetailDatePage.xaml.cs">
       <DependentUpon>DetailDatePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\EditInfo.xaml.cs">
-      <DependentUpon>EditInfo.xaml</DependentUpon>
+    <Compile Include="Pages\EditInfoPage.xaml.cs">
+      <DependentUpon>EditInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\grzxPage.xaml.cs">
       <DependentUpon>grzxPage.xaml</DependentUpon>
@@ -121,8 +121,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Letter.xaml.cs">
-      <DependentUpon>Letter.xaml</DependentUpon>
+    <Compile Include="Pages\LetterPage.xaml.cs">
+      <DependentUpon>LetterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MyCollectPage.xaml.cs">
       <DependentUpon>MyCollectPage.xaml</DependentUpon>
@@ -184,11 +184,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Pages\About.xaml">
+    <Page Include="Pages\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AcceptOrReject.xaml">
+    <Page Include="Pages\AcceptOrRejectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,7 +200,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\EditInfo.xaml">
+    <Page Include="Pages\EditInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -216,7 +216,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Letter.xaml">
+    <Page Include="Pages\LetterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

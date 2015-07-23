@@ -71,8 +71,6 @@ namespace Date
             this.NavigationCacheMode = NavigationCacheMode.Required;
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
 
-
-
             dateScrollViewer.Height = Utils.getPhoneHeight() - 80 - 85;
 
             _timer.Interval = TimeSpan.FromSeconds(7.0);
@@ -663,43 +661,41 @@ namespace Date
             }
         }
 
-        private void DateHub_SectionsInViewChanged(object sender, SectionsInViewChangedEventArgs e)
+        private async void DateHub_SectionsInViewChanged(object sender, SectionsInViewChangedEventArgs e)
         {
+            await Task.Delay(50);
             var hubSection = DateHub.SectionsInView[0];
             Debug.WriteLine(hubSection.Name);
             CommandBar commandbar = ((CommandBar)this.BottomAppBar);
-
             if (hubSection.Name != hubSectionChange)
             {
-                ((CommandBar)this.BottomAppBar).PrimaryCommands.Clear();
-                //((CommandBar)this.BottomAppBar).SecondaryCommands.Clear();
                 switch (hubSection.Name)
                 {
                     case "DateListHubSection":
-                        commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
-                        AppBarButton BarAddButton = new AppBarButton();
-                        BarAddButton.Icon = new SymbolIcon(Symbol.Add);
-                        BarAddButton.Label = "新建";
-                        BarAddButton.Click += AddAppBarButton_Click;
 
-                        AppBarButton BarRefreshButton = new AppBarButton();
-                        BarRefreshButton.Icon = new SymbolIcon(Symbol.Refresh);
-                        BarRefreshButton.Label = "刷新";
-                        BarRefreshButton.Click += RefreshAppBarButton_Click;
-                        commandbar.PrimaryCommands.Add(BarRefreshButton);
-                        commandbar.PrimaryCommands.Add(BarAddButton);
+                        //commandbar.PrimaryCommands.Add(RefreshAppBarButton);
+                        //commandbar.PrimaryCommands.Add(AddAppBarButton);
+                        AddAppBarButton.Visibility = Visibility.Visible;
+                        RefreshAppBarButton.Visibility = Visibility.Visible;
+                        commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
 
                         break;
                     case "MeHubSection":
+                        AddAppBarButton.Visibility = Visibility.Collapsed;
+                        RefreshAppBarButton.Visibility = Visibility.Collapsed;
                         commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
                         break;
                     case "MoreHubSection":
+                        AddAppBarButton.Visibility = Visibility.Collapsed;
+                        RefreshAppBarButton.Visibility = Visibility.Collapsed;
                         commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
                         break;
                 }
+
             }
             hubSectionChange = hubSection.Name;
         }
+
 
         private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -926,6 +922,7 @@ namespace Date
         {
             Frame.Navigate(typeof(About));
         }
+
 
 
 

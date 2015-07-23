@@ -187,7 +187,6 @@
                                     </StackPanel>
                                 </Grid>
                             </GridView.Items>
-
                         </GridView>
                     </StackPanel>
                 </HubSection.Header>
@@ -196,8 +195,8 @@
 
     </Grid>
 
-    <Page.BottomAppBar>
-        <CommandBar>
+    <Page.BottomAppBar >
+        <CommandBar Name="AppCommandBar">
             <AppBarButton Name="RefreshAppBarButton" Icon="Refresh" Label="刷新" Click="RefreshAppBarButton_Click"></AppBarButton>
             <AppBarButton Name="AddAppBarButton" Icon="Add" Label="新建" Click="AddAppBarButton_Click"></AppBarButton>
         </CommandBar>

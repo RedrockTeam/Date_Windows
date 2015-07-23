@@ -663,7 +663,6 @@ namespace Date
 
         private async void DateHub_SectionsInViewChanged(object sender, SectionsInViewChangedEventArgs e)
         {
-            await Task.Delay(100);
             var hubSection = DateHub.SectionsInView[0];
             Debug.WriteLine(hubSection.Name);
             CommandBar commandbar = ((CommandBar)this.BottomAppBar);
@@ -675,20 +674,26 @@ namespace Date
 
                         //commandbar.PrimaryCommands.Add(RefreshAppBarButton);
                         //commandbar.PrimaryCommands.Add(AddAppBarButton);
-                        AddAppBarButton.Visibility = Visibility.Visible;
+                        //AppCommandBar.Visibility = Visibility.Visible;
+
+                        //AddAppBarButton.Visibility = Visibility.Visible;
                         RefreshAppBarButton.Visibility = Visibility.Visible;
-                        commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
+                        //commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
 
                         break;
                     case "MeHubSection":
-                        AddAppBarButton.Visibility = Visibility.Collapsed;
+                        //AppCommandBar.Visibility = Visibility.Collapsed;
+
+                        //AddAppBarButton.Visibility = Visibility.Collapsed;
                         RefreshAppBarButton.Visibility = Visibility.Collapsed;
-                        commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
+                        //commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
                         break;
                     case "MoreHubSection":
-                        AddAppBarButton.Visibility = Visibility.Collapsed;
+                        //AppCommandBar.Visibility = Visibility.Collapsed;
+
+                        //AddAppBarButton.Visibility = Visibility.Collapsed;
                         RefreshAppBarButton.Visibility = Visibility.Collapsed;
-                        commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
+                        //commandbar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
                         break;
                 }
 

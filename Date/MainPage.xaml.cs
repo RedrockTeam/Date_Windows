@@ -63,6 +63,8 @@ namespace Date
         private ProgressBar AddDateListProgressProgressBar = new ProgressBar();
         private TextBlock AddDateListProgressTextBlock = new TextBlock();
 
+
+
         public MainPage()
         {
             this.InitializeComponent();

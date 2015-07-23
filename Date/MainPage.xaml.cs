@@ -32,7 +32,6 @@ using Date.Pages;
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
 
-
 namespace Date
 {
     /// <summary>

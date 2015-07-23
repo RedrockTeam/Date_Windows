@@ -24,7 +24,7 @@ namespace Date.Util
                    try
                    {
                        HttpClient httpClient = new HttpClient();
-                       string uri = "http://106.184.7.12:8002/index.php/api" + api;
+                       string uri = "http://lich2013.com/date/api" + api;
                        HttpResponseMessage response = httpClient.PostAsync(new Uri(uri), new FormUrlEncodedContent(paramList)).Result;
                        content = response.Content.ReadAsStringAsync().Result;
                    }

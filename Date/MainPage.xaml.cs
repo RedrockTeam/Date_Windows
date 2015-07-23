@@ -663,7 +663,7 @@ namespace Date
 
         private async void DateHub_SectionsInViewChanged(object sender, SectionsInViewChangedEventArgs e)
         {
-            await Task.Delay(50);
+            await Task.Delay(100);
             var hubSection = DateHub.SectionsInView[0];
             Debug.WriteLine(hubSection.Name);
             CommandBar commandbar = ((CommandBar)this.BottomAppBar);

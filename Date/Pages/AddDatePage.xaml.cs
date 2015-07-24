@@ -38,7 +38,7 @@ namespace Date
         private string DateTimeStamp;
 
         private int gender_limit = 0;
-        private string grade_limit;
+        int[] grade_limit = new int[] { 0, 0, 0, 0 };
         private int grade_choose = 0;
         private int cost_model = 0;
 
@@ -257,7 +257,6 @@ namespace Date
         {
             AddDateGradeFlyout.ShowAt(AddDateGradeGrid);
             AddDateGradeTextBox.Text = "";
-            grade_limit = "";
             grade_choose = 0;
         }
 
@@ -271,25 +270,25 @@ namespace Date
             if (oneCheckBox.IsChecked == true)
             {
                 AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大一 ";
-                grade_limit = grade_limit + "1,";
+                grade_limit[0] = 1;
                 grade_choose++;
             }
             if (twoCheckBox.IsChecked == true)
             {
                 AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大二 ";
-                grade_limit = grade_limit + "2,";
+                grade_limit[1] = 1;
                 grade_choose++;
             }
             if (threeCheckBox.IsChecked == true)
             {
                 AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大三 ";
-                grade_limit = grade_limit + "3,";
+                grade_limit[2] = 1;
                 grade_choose++;
             }
             if (fourCheckBox.IsChecked == true)
             {
                 AddDateGradeTextBox.Text = AddDateGradeTextBox.Text + "大四 ";
-                grade_limit = grade_limit + "4,";
+                grade_limit[3] = 1;
                 grade_choose++;
             }
         }
@@ -316,7 +315,11 @@ namespace Date
 
                 if (grade_choose != 4)
                 {
-                    paramList.Add(new KeyValuePair<string, string>("grade_limit", grade_limit));
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (grade_limit[i] == 1)
+                            paramList.Add(new KeyValuePair<string, string>("grade_limit[]", (i+1).ToString()));
+                    }
                     paramList.Add(new KeyValuePair<string, string>("grade_select_model", "2"));
                 }
                 paramList.Add(new KeyValuePair<string, string>("cost_model", cost_model.ToString()));

@@ -36,7 +36,7 @@ namespace Date.Pages
         {
             this.InitializeComponent();
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-            MyLitterScrollViewer.Height = Utils.getPhoneHeight() - 60 - 20;
+            MyLitterScrollViewer.Height = Utils.getPhoneHeight() - 60 - 20 - 30;
         }
 
 
@@ -46,7 +46,7 @@ namespace Date.Pages
         /// </summary>
         /// <param name="e">描述如何访问此页的事件数据。
         /// 此参数通常用于配置页。</param>
-        protected  override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("Letter");
@@ -152,7 +152,7 @@ namespace Date.Pages
             paramList.Add(new KeyValuePair<string, string>("token", appSetting.Values["token"].ToString()));
             for (int i = 0; i < dl.Count; i++)
             {
-                if (dl[i].Letter_status == 1)
+                if (dl[i].Letter_status == 0)
                 {
                     paramList.Add(new KeyValuePair<string, string>("letter_id", dl[i].Letter_id.ToString()));
                     content = Utils.ConvertUnicodeStringToChinese(await NetWork.getHttpWebRequest("/letter/detailletter", paramList));

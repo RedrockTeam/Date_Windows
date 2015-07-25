@@ -86,7 +86,7 @@
                                     <FlipView Name="dataFlipView" Height="200" VerticalAlignment="Top" SelectionChanged="dataFlipView_SelectionChanged" >
                                         <FlipView.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid>
+                                                <Grid Name="FlipViewItemGrid" Tapped="FlipViewItemGrid_Tapped">
                                                     <Image x:Name="BannerImage" Source="{Binding Src}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                     <Border Background="#A5000000" Height="40" VerticalAlignment="Bottom">
                                                         <TextBlock Text="{Binding Url}" FontSize="20" Foreground="#88FFFFFF" FontFamily="Microsoft YaHei UI" Padding="5,5"/>

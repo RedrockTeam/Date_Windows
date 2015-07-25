@@ -28,6 +28,7 @@ using Date.Data;
 using Windows.UI.Core;
 using Windows.UI.Text;
 using Date.Pages;
+using Windows.System;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=391641 上有介绍
 
@@ -927,6 +928,12 @@ namespace Date
         private void AboutGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame.Navigate(typeof(About));
+        }
+
+        private async void FlipViewItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Banner selectBannwr = ((Grid)sender).DataContext as Banner;
+            await Launcher.LaunchUriAsync(new Uri(selectBannwr.Url)); 
         }
 
 

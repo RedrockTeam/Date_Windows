@@ -715,16 +715,17 @@ namespace Date
             bool isType = true;
             try
             {
+                datetypelist.Clear();
                 string datetype = appSetting.Values["datetype_json"].ToString();
                 if (datetype != "")
                 {
                     JArray datetypeArray = Utils.ReadJso(datetype);
+                    typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem("全部分类"));
                     datetypelist.Add(new DateType { Id = 0, Type = "全部分类" });
                     for (int i = 0; i < datetypeArray.Count; i++)
                     {
                         JObject jobj = (JObject)datetypeArray[i];
                         typeMenuFlyout.Items.Add(getTypeMenuFlyoutItem(jobj["type"].ToString()));
-                        var b = new DateType();
                         datetypelist.Add(new DateType { Id = Convert.ToInt32(jobj["id"].ToString()), Type = jobj["type"].ToString() });
                     }
                     typeMenuFlyout.ShowAt(typeTextBlock);
@@ -933,7 +934,7 @@ namespace Date
         private async void FlipViewItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Banner selectBannwr = ((Grid)sender).DataContext as Banner;
-            await Launcher.LaunchUriAsync(new Uri(selectBannwr.Url)); 
+            await Launcher.LaunchUriAsync(new Uri(selectBannwr.Url));
         }
 
 

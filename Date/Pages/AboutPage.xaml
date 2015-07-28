@@ -39,10 +39,12 @@
                     <TextBlock Text="Windows Phone" Style="{StaticResource TextBlockStyle}" Foreground="#0cb3ee" Margin="8,0,0,1" ></TextBlock>
                 </StackPanel>
                 <TextBlock Text="V1.0.0" Style="{StaticResource TextBlockStyle}" Foreground="Gray" Margin="0" FontSize="15"/>
-                <TextBlock Text="重庆邮电大学" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"></TextBlock>
             </StackPanel>
         </StackPanel>
-        <HyperlinkButton Content="©2015 红岩网校工作站"  Foreground="Gray" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="15" FontFamily="Microsoft Yahei UI" FontWeight="ExtraBold" NavigateUri="http://202.202.43.125"></HyperlinkButton>
+        <StackPanel VerticalAlignment="Bottom">
+            <TextBlock Text="重庆邮电大学" Style="{StaticResource TextBlockStyle}" Foreground="Gray" VerticalAlignment="Bottom" FontWeight="Bold" FontFamily="Microsoft Yahei UI" Margin="0"></TextBlock>
+            <HyperlinkButton Content="©2015 红岩网校工作站"  Foreground="Gray" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="15" FontFamily="Microsoft Yahei UI" FontWeight="ExtraBold" NavigateUri="http://202.202.43.125"></HyperlinkButton>
+        </StackPanel>
         <!--<TextBlock Text="©2015 红岩网校工作站" Style="{StaticResource TextBlockStyle}" FontWeight="Bold" VerticalAlignment="Bottom"></TextBlock>-->
 
     </Grid>

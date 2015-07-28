@@ -9,6 +9,15 @@
     mc:Ignorable="d"
     FontFamily="Microsoft YaHei UI"
     Background="#efefef">
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <ContinuumNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
     <Page.Resources>
         <!--私信是否已读值转换器-->
         <data:LetterReadValueConverter x:Key="ReadLetter" />

@@ -9,7 +9,15 @@
     mc:Ignorable="d"
     FontFamily="Microsoft YaHei UI"
     Background="#efefef">
-
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <ContinuumNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
     <Page.Resources>
         <util:CreatedTimeValueConverter x:Key="Friendlytimespan" />
         <DataTemplate x:Key="DateListDataTemplateKey" x:Name="DateListDataTemplateName">

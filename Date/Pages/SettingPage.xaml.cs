@@ -35,7 +35,7 @@ namespace Date.Pages
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
             IsBackToggleSwitch.IsOn = bool.Parse(appSetting.Values["isBackStart"].ToString());
-            if(bool.Parse(appSetting.Values["isBackStart"].ToString()))
+            if (bool.Parse(appSetting.Values["isBackStart"].ToString()))
             {
                 addBackgroundTask();
             }
@@ -48,29 +48,33 @@ namespace Date.Pages
         {
             bool taskRegistered = false;
             //判断是否已经注册过了
-            taskRegistered = BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name == exampleTaskName); 
-
-            if (!taskRegistered)
+            try
             {
-                BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
-                var builder = new BackgroundTaskBuilder();
-                builder.Name = exampleTaskName;
-                builder.TaskEntryPoint = "Tasks.LetterBackgroundTask";
-                //后台触发器，可多个
-                builder.SetTrigger(new SystemTrigger(SystemTriggerType.NetworkStateChange,false));
-                builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
-                //builder.SetTrigger(new MaintenanceTrigger(15, false)); //定时后台任务
-                builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+                taskRegistered = BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name == exampleTaskName);
 
-                BackgroundTaskRegistration task = builder.Register();
-                task.Completed += task_Completed;
+                if (!taskRegistered)
+                {
+                    BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
+                    var builder = new BackgroundTaskBuilder();
+                    builder.Name = exampleTaskName;
+                    builder.TaskEntryPoint = "Tasks.LetterBackgroundTask";
+                    //后台触发器，可多个
+                    builder.SetTrigger(new SystemTrigger(SystemTriggerType.NetworkStateChange, false));
+                    builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
+                    //builder.SetTrigger(new MaintenanceTrigger(15, false)); //定时后台任务
+                    builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+
+                    BackgroundTaskRegistration task = builder.Register();
+                    task.Completed += task_Completed;
+                }
+                else
+                {
+                    var cur = BackgroundTaskRegistration.AllTasks.FirstOrDefault(x => x.Value.Name == exampleTaskName);
+                    BackgroundTaskRegistration task = (BackgroundTaskRegistration)(cur.Value);
+                    task.Completed += task_Completed;
+                }
             }
-            else
-            {
-                var cur = BackgroundTaskRegistration.AllTasks.FirstOrDefault(x => x.Value.Name == exampleTaskName);
-                BackgroundTaskRegistration task = (BackgroundTaskRegistration)(cur.Value);
-                task.Completed += task_Completed;
-            }
+            catch (Exception) { }
 
         }
 
@@ -91,7 +95,7 @@ namespace Date.Pages
 
         //后台任务完成时调用，若在后台，则应用恢复时调用
         //若要处理UI，在UI线程中调用
-         void task_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
+        void task_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
         {
         }
 
@@ -137,6 +141,6 @@ namespace Date.Pages
             catch (Exception) { Debug.WriteLine("设置，开关切换异常"); }
         }
 
-        
+
     }
 }

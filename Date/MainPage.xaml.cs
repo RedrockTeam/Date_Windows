@@ -264,22 +264,22 @@ namespace Date
                     }
                     else
                         if (isrefresh)
-                            DateListFailedStackPanel.Visibility = Visibility.Visible;
-                        else
-                        {
-                            AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
-                            AddDateListProgressTextBlock.Text = "加载失败 T_T";
-                        }
-                }
-                else
-
-                    if (isrefresh)
                         DateListFailedStackPanel.Visibility = Visibility.Visible;
                     else
                     {
                         AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
                         AddDateListProgressTextBlock.Text = "加载失败 T_T";
                     }
+                }
+                else
+
+                    if (isrefresh)
+                    DateListFailedStackPanel.Visibility = Visibility.Visible;
+                else
+                {
+                    AddDateListProgressProgressBar.Visibility = Visibility.Collapsed;
+                    AddDateListProgressTextBlock.Text = "加载失败 T_T";
+                }
             }
             catch (Exception)
             {
@@ -557,7 +557,12 @@ namespace Date
                     BannerList.Add(new Banner { Url = ((JObject)jArray[0])["url"].ToString(), Src = ((JObject)jArray[0])["src"].ToString() });
                     if (Math.Abs(HoldPlaceImg.Opacity) > 0)
                     {
-                        Hideimg.Begin();
+                        try
+                        {
+                            Hideimg.Begin();
+                        }
+                        catch (Exception)
+                        { HoldPlaceImg.Opacity = 0; }
                     }
                     else
                     {

@@ -65,28 +65,32 @@ namespace Date
         private async void addBackgroundTask()
         {
             bool taskRegistered = false;
-            //判断是否已经注册过了
-            taskRegistered = BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name == exampleTaskName);
-
-            if (!taskRegistered)
+            try
             {
-                BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
-                var builder = new BackgroundTaskBuilder();
-                builder.Name = exampleTaskName;
-                builder.TaskEntryPoint = "Tasks.LetterBackgroundTask";
-                //后台触发器，可多个
-                builder.SetTrigger(new SystemTrigger(SystemTriggerType.NetworkStateChange, false));
-                builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
-                //builder.SetTrigger(new MaintenanceTrigger(15, false)); //定时后台任务
-                builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+                //判断是否已经注册过了
+                taskRegistered = BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name == exampleTaskName);
 
-                BackgroundTaskRegistration task = builder.Register();
+                if (!taskRegistered)
+                {
+                    BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
+                    var builder = new BackgroundTaskBuilder();
+                    builder.Name = exampleTaskName;
+                    builder.TaskEntryPoint = "Tasks.LetterBackgroundTask";
+                    //后台触发器，可多个
+                    builder.SetTrigger(new SystemTrigger(SystemTriggerType.NetworkStateChange, false));
+                    builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
+                    //builder.SetTrigger(new MaintenanceTrigger(15, false)); //定时后台任务
+                    builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+
+                    BackgroundTaskRegistration task = builder.Register();
+                }
+                else
+                {
+                    var cur = BackgroundTaskRegistration.AllTasks.FirstOrDefault(x => x.Value.Name == exampleTaskName);
+                    BackgroundTaskRegistration task = (BackgroundTaskRegistration)(cur.Value);
+                }
             }
-            else
-            {
-                var cur = BackgroundTaskRegistration.AllTasks.FirstOrDefault(x => x.Value.Name == exampleTaskName);
-                BackgroundTaskRegistration task = (BackgroundTaskRegistration)(cur.Value);
-            }
+            catch (Exception) { }
 
         }
 
@@ -149,12 +153,12 @@ namespace Date
                 rootFrame.ContentTransitions = null;
                 rootFrame.Navigated += this.RootFrame_FirstNavigated;
 
-                // 当导航堆栈尚未还原时，导航到第一页，
+                //当导航堆栈尚未还原时，导航到第一页，
                 // 并通过将所需信息作为导航参数传入来配置
                 // 新页面
                 if (appSetting.Values.ContainsKey("username"))
                 {
-                    if (!rootFrame.Navigate(typeof(MainPage),"autologin"))
+                    if (!rootFrame.Navigate(typeof(MainPage), "autologin"))
                     {
                         throw new Exception("Failed to create initial page");
                     }
